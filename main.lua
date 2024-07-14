@@ -50,6 +50,7 @@ local function meowfag()
     --- Optimization Stuff :3
 
     local function Noclip()
+        Workspace.Gravity = 0
         Stepped = nil
         Stepped = game:GetService("RunService").Stepped:Connect(function()
             if not nyaClipping == false then
@@ -66,8 +67,6 @@ local function meowfag()
                 Stepped:Disconnect()
             end
         end)
-        Workspace.Gravity = 0
-        Players.LocalPlayer.Character.Animate.Disabled = true
 
         local wrkspcnrml = Workspace.Normal
         if wrkspcnrml then
@@ -114,6 +113,7 @@ local function meowfag()
             warn("Murderer not found.")
             return
         end
+        print("Target found.")
 
         for _, child in pairs(Players.LocalPlayer.Character:GetDescendants()) do
             if child:IsA("BasePart") then
@@ -123,6 +123,7 @@ local function meowfag()
 
         Noclip()
         wait(.1)
+        print("Noclipped.")
 
         local bambam = Instance.new("BodyAngularVelocity")
         bambam.Name = "FFFWWEWSSDZZZ"
@@ -138,6 +139,7 @@ local function meowfag()
                 v.Velocity = Vector3.new(0, 0, 0)
             end
         end
+        print("Made part.")
 
         flinging = true
         local function flingDiedF()
@@ -160,10 +162,16 @@ local function meowfag()
             ResetCharacter()
         end
         flingDied = Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid').Died:Connect(flingDiedF)
+        print("Connected.")
 
         if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("Humanoid") then
+            print("Teleporting to target.")
             while flinging == true and targetPlayer.Character.Humanoid and targetPlayer.Character.Humanoid.Health > 0 do
-                Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, 1, 0)
+                local flingInfo = TweenInfo.new(0.1, Enum.EasingStyle.Linear)
+                local flingTween = TweenService:Create(Players.LocalPlayer.Character.HumanoidRootPart.CFrame, flingInfo, {
+                    CFrame = CFrame.new(targetPlayer.Character.HumanoidRootPart.CFrame - Vector3.new(0, 0, 0))
+                })
+                flingTween:Play()
             end
         end
     end
