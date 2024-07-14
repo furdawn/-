@@ -14,7 +14,6 @@ local function meowfag()
     local roleRemote = ReplicatedStorage.Remotes.Gameplay.RoleSelect
     local tweenInProgress = false
     local nyaClipping = false
-    local runfarm = false
 
     --- Optimization stuff :3
     Terrain.WaterWaveSize = 0
@@ -68,20 +67,22 @@ local function meowfag()
         Players.LocalPlayer.Character.Animate.Disabled = true
 
         local wrkspcnrml = Workspace.Normal
-        local mapPrimary = wrkspcnrml:FindFirstChild("Map")
-        local mapSecondary = wrkspcnrml:FindFirstChild("Parts")
-        if not mapPrimary then
-            mapSecondary:Destroy()
-        elseif mapPrimary then
-            mapPrimary:Destroy()
-        end
-        local invisParts =  wrkspcnrml:FindFirstChild("Invis")
-        local glitchToBoop = wrkspcnrml:FindFirstChild("GlitchProof")
-        if invisParts then
-            invisParts:Destroy()
-        end
-        if glitchToBoop then
-            glitchToBoop:Destroy()
+        if wrkspcnrml then
+            local mapPrimary = wrkspcnrml:FindFirstChild("Map")
+            local mapSecondary = wrkspcnrml:FindFirstChild("Parts")
+            if mapPrimary then
+                mapSecondary:Destroy()
+            elseif mapPrimary then
+                mapPrimary:Destroy()
+            end
+            local invisParts =  wrkspcnrml:FindFirstChild("Invis")
+            local glitchToBoop = wrkspcnrml:FindFirstChild("GlitchProof")
+            if invisParts then
+                invisParts:Destroy()
+            end
+            if glitchToBoop then
+                glitchToBoop:Destroy()
+            end
         end
     end
 
@@ -244,84 +245,77 @@ local function meowfag()
     end
 
     local function onGameStart()
-        runfarm = true
-
-        while runfarm do
-            local function coinContainerChecker()
-                local normalContainer = Workspace:WaitForChild("Normal", 5)
-                if not normalContainer then
-                    runfarm = false
-                    return false
-                end
-
-                local success, coinContainer = pcall(function()
-                    return normalContainer:WaitForChild("CoinContainer", 5)
-                end)
-
-                if success and coinContainer then
-                    runfarm = true
-                    return true
-                else
-                    runfarm = false
-                    return false
-                end
+        local function coinContainerChecker()
+            local normalContainer = Workspace:WaitForChild("Normal", 5)
+            if not normalContainer then
+                return false
             end
 
-            local roles = ReplicatedStorage:FindFirstChild("GetPlayerData", true):InvokeServer()
-            local muwuderer = nil
-            for i, v in pairs(roles) do
-                if v.Role == "Murderer" then
-                    muwuderer = Players:FindFirstChild(i)
-                    break
-                end
-            end
+            local success, coinContainer = pcall(function()
+                return normalContainer:WaitForChild("CoinContainer", 5)
+            end)
 
-            if muwuderer == Players.LocalPlayer then
-                print("Murderer, Not resetting :3")
+            if success and coinContainer then
+                return true
             else
-                ResetCharacter()
+                return false
             end
-
-            wait(10)
-
-            local abc = Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags:FindFirstChild("Container")
-
-            local eventAmount = tonumber(abc:WaitForChild("BeachBall").CurrencyFrame.Icon.Coins.text)
-            local coinAmount = tonumber(abc:WaitForChild("Coin").CurrencyFrame.Icon.Coins.text)
-
-            print("Game started, farming!")
-            Noclip()
-            while eventAmount < 20 and coinContainerChecker() do
-                if not tweenInProgress then
-                    local closestEvent = getClosest("BeachBall")
-                    if closestEvent then
-                        tweenInProgress = true
-                        tweenTo(closestEvent)
-                    else
-                        task.wait(3)
-                    end
-                    eventAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
-                end
-            end
-
-            while coinAmount < 40 and coinContainerChecker() do
-                if not tweenInProgress then
-                    local closestCoin = getClosest("Coin")
-                    if closestCoin then
-                        tweenInProgress = true
-                        tweenTo(closestCoin)
-                    else
-                        task.wait(3)
-                    end
-                    coinAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
-                end
-            end
-
-            if coinContainerChecker() then
-                endRound()
-            end
-            print("Game ended, waiting...")
         end
+
+        local roles = ReplicatedStorage:FindFirstChild("GetPlayerData", true):InvokeServer()
+        local muwuderer = nil
+        for i, v in pairs(roles) do
+            if v.Role == "Murderer" then
+                muwuderer = Players:FindFirstChild(i)
+                break
+            end
+        end
+
+        if muwuderer == Players.LocalPlayer then
+            print("Murderer, Not resetting :3")
+        else
+            ResetCharacter()
+        end
+
+        wait(10)
+
+        local abc = Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags:FindFirstChild("Container")
+
+        local eventAmount = tonumber(abc:WaitForChild("BeachBall").CurrencyFrame.Icon.Coins.text)
+        local coinAmount = tonumber(abc:WaitForChild("Coin").CurrencyFrame.Icon.Coins.text)
+
+        print("Game started, farming!")
+        Noclip()
+        while eventAmount < 20 and coinContainerChecker() do
+            if not tweenInProgress then
+                local closestEvent = getClosest("BeachBall")
+                if closestEvent then
+                    tweenInProgress = true
+                    tweenTo(closestEvent)
+                else
+                    task.wait(3)
+                end
+                eventAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
+            end
+        end
+
+        while coinAmount < 40 and coinContainerChecker() do
+            if not tweenInProgress then
+                local closestCoin = getClosest("Coin")
+                if closestCoin then
+                    tweenInProgress = true
+                    tweenTo(closestCoin)
+                else
+                    task.wait(3)
+                end
+                coinAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
+            end
+        end
+
+        if coinContainerChecker() then
+            endRound()
+        end
+        print("Game ended, waiting...")
     end
 
     roleRemote.OnClientEvent:Connect(onGameStart)
