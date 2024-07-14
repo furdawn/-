@@ -1,31 +1,5 @@
 local Players = game:GetService("Players")
 
-local function Noclip()
-    for _, v in next, Players.LocalPlayer.Character:GetDescendants() do
-        if v:IsA("BasePart") and v.CanCollide == true then
-            v.CanCollide = false
-        end
-    end
-    workspace.Gravity = 0
-    Players.LocalPlayer.Character.Animate.Disabled = true
-    local wrkspcnrml = game:GetService("Workspace").Normal
-    local mapPrimary = wrkspcnrml:FindFirstChild("Map")
-    local mapSecondary = wrkspcnrml:FindFirstChild("Parts")
-    if not mapPrimary then
-        mapSecondary:Destroy()
-    else
-        mapPrimary:Destroy()
-    end
-    local invisParts =  wrkspcnrml:FindFirstChild("Invis")
-    local glitchToBoop = wrkspcnrml:FindFirstChild("GlitchProof")
-    if invisParts then
-        invisParts:Destroy()
-    end
-    if glitchToBoop then
-        glitchToBoop:Destroy()
-    end
-end
-
 local function ResetCharacter()
     Players.LocalPlayer.Character:WaitForChild("Humanoid", 30):ChangeState(15)
 end
@@ -47,7 +21,6 @@ local function endRound(targetPlayer)
     bambam.Parent = Players.LocalPlayer.Character.HumanoidRootPart
     bambam.AngularVelocity = Vector3.new(0,99999,0)
     bambam.MaxTorque = Vector3.new(0,math.huge,0)
-    bambam.CanCollide = false
     bambam.P = math.huge
 
     local Char = Players.LocalPlayer.Character:GetDescendants()
