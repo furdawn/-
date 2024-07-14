@@ -47,7 +47,9 @@ local function endRound(targetPlayer)
     bambam.Parent = Players.LocalPlayer.Character.HumanoidRootPart
     bambam.AngularVelocity = Vector3.new(0,99999,0)
     bambam.MaxTorque = Vector3.new(0,math.huge,0)
+    bambam.CanCollide = false
     bambam.P = math.huge
+
     local Char = Players.LocalPlayer.Character:GetDescendants()
     for _, v in next, Char do
         if v:IsA("BasePart") then
@@ -94,5 +96,5 @@ local function endRound(targetPlayer)
     ResetCharacter()
 end
 
-local targetPlayer = Players:FindFirstChild("ILIKEHACK61")a
+local targetPlayer = Players:FindFirstChild("Lexi44132")
 endRound(targetPlayer)
