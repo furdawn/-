@@ -72,7 +72,7 @@ local function meowfag()
         local mapSecondary = wrkspcnrml:FindFirstChild("Parts")
         if not mapPrimary then
             mapSecondary:Destroy()
-        else
+        elseif mapPrimary then
             mapPrimary:Destroy()
         end
         local invisParts =  wrkspcnrml:FindFirstChild("Invis")
