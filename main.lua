@@ -86,13 +86,12 @@ local function meowfag()
     end
 
     local function ResetCharacter()
-        local thingymeow = Players.LocalPlayer:WaitForChild("Humanoid")
+        local thingymeow = Players.LocalPlayer.Character:WaitForChild("Humanoid")
         thingymeow:ChangeState(15)
         task.wait(3)
         if thingymeow then
             Players.LocalPlayer.Character.Animate.Disabled = true
         end
-        print("reset")
     end
 
     local function endRound()
@@ -247,10 +246,8 @@ local function meowfag()
 
     local function onGameStart()
         runfarm = true
-        print("ran1")
 
         while runfarm do
-            print("ran2")
             local function coinContainerChecker()
                 local coinContainer = Workspace:WaitForChild("Normal", 5):WaitForChild("CoinContainer", 5)
                 if coinContainer then
@@ -261,7 +258,6 @@ local function meowfag()
                     return false
                 end
             end
-            print("ran3")
 
             local roles = ReplicatedStorage:FindFirstChild("GetPlayerData", true):InvokeServer()
             local muwuderer = nil
@@ -271,17 +267,14 @@ local function meowfag()
                     break
                 end
             end
-            print("ran4")
 
             if muwuderer == Players.LocalPlayer then
                 print("Murderer, Not resetting :3")
             else
                 ResetCharacter()
             end
-            print("ran5")
 
             wait(10)
-            print("ran6")
 
             local abc = Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags:FindFirstChild("Container")
 
