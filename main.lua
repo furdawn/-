@@ -4,6 +4,20 @@ local function ResetCharacter()
     Players.LocalPlayer.Character:WaitForChild("Humanoid", 30):ChangeState(15)
 end
 
+local function noclip()
+	wait(0.1)
+	local function NoclipLoop()
+		if Clip == false and Players.LocalPlayer.Character ~= nil then
+			for _, child in pairs(Players.LocalPlayer.Character:GetDescendants()) do
+				if child:IsA("BasePart") and child.CanCollide == true and child.Name ~= floatName then
+					child.CanCollide = false
+				end
+			end
+		end
+	end
+	Noclipping = RunService.Stepped:Connect(NoclipLoop)
+end
+
 local function unfling()
 	if flingDied then
 		flingDied:Disconnect()
@@ -32,7 +46,7 @@ local function endRound()
 			child.CustomPhysicalProperties = PhysicalProperties.new(math.huge, 0.3, 0.5)
 		end
 	end
-	execCmd('noclip')
+	noclip()
 	wait(.1)
 	local bambam = Instance.new("BodyAngularVelocity")
 	bambam.Name = randomString()
