@@ -205,7 +205,7 @@ local function meowfag()
         if distance > 150 then
             tweenDuration = 0.1
         else
-            tweenDuration = distance / 60
+            tweenDuration = distance / 55
         end
 
         local firstTweenInfo = TweenInfo.new(tweenDuration, Enum.EasingStyle.Linear)
@@ -222,7 +222,7 @@ local function meowfag()
         upTween:Play()
         upTween.Completed:Wait()
 
-        local downTweenInfo = TweenInfo.new(0.25, Enum.EasingStyle.Linear)
+        local downTweenInfo = TweenInfo.new(0.35, Enum.EasingStyle.Linear)
         local downTween = TweenService:Create(humanoidRootPart, downTweenInfo, {
             CFrame = CFrame.new(coin.Position - Vector3.new(0, 6, 0))
         })
@@ -270,7 +270,6 @@ local function meowfag()
                 end
             end
             wait(10)
-            Noclip()
 
             local abc = Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags:FindFirstChild("Container")
 
@@ -278,6 +277,7 @@ local function meowfag()
             local coinAmount = tonumber(abc:WaitForChild("Coin").CurrencyFrame.Icon.Coins.text)
 
             print("Game started, farming!")
+            Noclip()
             while eventAmount < 20 and coinContainerChecker() do
                 if not tweenInProgress then
                     local closestEvent = getClosest("BeachBall")
