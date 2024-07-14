@@ -86,6 +86,10 @@ local function meowfag()
 
     local function ResetCharacter()
         Players.LocalPlayer.Character:WaitForChild("Humanoid", 30):ChangeState(15)
+        task.wait(2)
+        if Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+            Players.LocalPlayer.Character.Animate.Disabled = true
+        end
     end
 
     local function endRound()
@@ -230,7 +234,7 @@ local function meowfag()
         downTween:Play()
         downTween.Completed:Wait()
 
-        task.wait(0.2)
+        wait(0.2)
 
         if coin then
             coin:Destroy()
