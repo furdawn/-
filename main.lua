@@ -57,23 +57,20 @@ local function meowfag()
         workspace.Gravity = 0
         Players.LocalPlayer.Character.Animate.Disabled = true
         local wrkspcnrml = game:GetService("Workspace").Normal
-        local mapToBoop = wrkspcnrml:WaitForChild("Map")
-        if mapToBoop then
-            mapToBoop:Destroy()
+        local mapPrimary = wrkspcnrml:FindFirstChild("Map")
+        local mapSecondary = wrkspcnrml:FindFirstChild("Parts")
+        if not mapPrimary then
+            mapSecondary:Destroy()
         else
-            return
+            mapPrimary:Destroy()
         end
         local invisParts =  wrkspcnrml:FindFirstChild("Invis")
         local glitchToBoop = wrkspcnrml:FindFirstChild("GlitchProof")
         if invisParts then
             invisParts:Destroy()
-        else
-            return
         end
         if glitchToBoop then
             glitchToBoop:Destroy()
-        else
-            return
         end
     end
 
