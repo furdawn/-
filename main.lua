@@ -5,17 +5,13 @@ local function ResetCharacter()
 end
 
 local function noclip()
-	wait(0.1)
-	local function NoclipLoop()
-		if Clip == false and Players.LocalPlayer.Character ~= nil then
-			for _, child in pairs(Players.LocalPlayer.Character:GetDescendants()) do
-				if child:IsA("BasePart") and child.CanCollide == true and child.Name ~= floatName then
-					child.CanCollide = false
-				end
-			end
-		end
-	end
-	RunService.Stepped:Connect(NoclipLoop)
+    if Clip == false and Players.LocalPlayer.Character ~= nil then
+        for _, child in pairs(Players.LocalPlayer.Character:GetDescendants()) do
+            if child:IsA("BasePart") and child.CanCollide == true and child.Name ~= floatName then
+                child.CanCollide = false
+            end
+        end
+    end
 end
 
 local function unfling()
