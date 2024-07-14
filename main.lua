@@ -205,7 +205,7 @@ local function meowfag()
         if distance > 150 then
             tweenDuration = 0.1
         else
-            tweenDuration = distance / 75
+            tweenDuration = distance / 60
         end
 
         local firstTweenInfo = TweenInfo.new(tweenDuration, Enum.EasingStyle.Linear)
@@ -215,14 +215,14 @@ local function meowfag()
         firstTween:Play()
         firstTween.Completed:Wait()
 
-        local upTweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Linear)
+        local upTweenInfo = TweenInfo.new(0.2, Enum.EasingStyle.Linear)
         local upTween = TweenService:Create(humanoidRootPart, upTweenInfo, {
             CFrame = CFrame.new(coin.Position - Vector3.new(0, 3.3, 0))
         })
         upTween:Play()
         upTween.Completed:Wait()
 
-        local downTweenInfo = TweenInfo.new(0.5, Enum.EasingStyle.Linear)
+        local downTweenInfo = TweenInfo.new(0.2, Enum.EasingStyle.Linear)
         local downTween = TweenService:Create(humanoidRootPart, downTweenInfo, {
             CFrame = CFrame.new(coin.Position - Vector3.new(0, 6, 0))
         })
