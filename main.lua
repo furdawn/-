@@ -50,6 +50,7 @@ local function meowfag()
     --- Optimization Stuff :3
 
     local function Noclip()
+        nyaClipping = true
         Workspace.Gravity = 0
         Stepped = nil
         Stepped = game:GetService("RunService").Stepped:Connect(function()
@@ -86,14 +87,18 @@ local function meowfag()
                 glitchToBoop:Destroy()
             end
         end
+
+        Players.LocalPlayer.Character.Animate.Disabled = true
     end
 
     local function ResetCharacter()
+        nyaClipping = false
         local thingymeow = Players.LocalPlayer.Character:WaitForChild("Humanoid")
         thingymeow:ChangeState(15)
         if thingymeow then
             Players.LocalPlayer.Character:WaitForChild("Animate").Disabled = true
         end
+        Players.LocalPlayer.Character.Animate.Disabled = false
     end
 
     local function endRound()
@@ -167,11 +172,11 @@ local function meowfag()
         if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("Humanoid") then
             print("Teleporting to target.")
             while flinging == true and targetPlayer.Character.Humanoid and targetPlayer.Character.Humanoid.Health > 0 do
-                local flingInfo = TweenInfo.new(0.1, Enum.EasingStyle.Linear)
-                local flingTween = TweenService:Create(Players.LocalPlayer.Character.HumanoidRootPart.CFrame, flingInfo, {
-                    CFrame = CFrame.new(targetPlayer.Character.HumanoidRootPart.CFrame - Vector3.new(0, 0, 0))
-                })
-                flingTween:Play()
+                Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(1,1,0)
+                bambam.AngularVelocity = Vector3.new(0,99999,0)
+                wait(.2)
+                bambam.AngularVelocity = Vector3.new(0,0,0)
+                wait(.1)
             end
         end
     end
