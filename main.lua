@@ -205,11 +205,13 @@ local function meowfag()
         for _, coin in pairs(mrrooowww:GetChildren()) do
             if coin:IsA("BasePart") then
                 local touchInterest = coin:FindFirstChild("TouchInterest")
-                if touchInterest and coin:GetAttribute("CoinID") == coinID then
-                    local distance = (humanoidRootPart.Position - coin.Position).Magnitude
-                    if distance < shortestDistance then
-                        shortestDistance = distance
-                        closestCoin = coin
+                if touchInterest then
+                    if coin:GetAttribute("CoinID") == coinID or (coinID == "MEOW" and coin:GetAttribute("CoinID") ~= nil) then
+                        local distance = (humanoidRootPart.Position - coin.Position).Magnitude
+                        if distance < shortestDistance then
+                            shortestDistance = distance
+                            closestCoin = coin
+                        end
                     end
                 end
             end
@@ -306,6 +308,21 @@ local function meowfag()
 
         print("Game started, farming!")
         Noclip()
+
+        while eventAmount < 20 and coinAmount < 40 and coinContainerChecker() do
+            if not tweenInProgress then
+                local closestEither = getClosest("MEOW")
+                if closestEither then
+                    tweenInProgress = true
+                    tweenTo(closestEither)
+                else
+                    task.wait(3)
+                end
+                coinAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
+                eventAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
+            end
+        end
+
         while eventAmount < 20 and coinContainerChecker() do
             if not tweenInProgress then
                 local closestEvent = getClosest("BeachBall")
