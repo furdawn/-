@@ -46,7 +46,7 @@ local function endRound()
 	wait(.1)
 	local bambam = Instance.new("BodyAngularVelocity")
 	bambam.Name = "FFFWWEWSSDZZZ"
-	bambam.Parent = getRoot(Players.LocalPlayer.Character)
+	bambam.Parent = Players.LocalPlayer.Character.HumanoidRootPart
 	bambam.AngularVelocity = Vector3.new(0,99999,0)
 	bambam.MaxTorque = Vector3.new(0,math.huge,0)
 	bambam.P = math.huge
