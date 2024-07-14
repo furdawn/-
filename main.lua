@@ -15,7 +15,7 @@ local function noclip()
 			end
 		end
 	end
-	Noclipping = RunService.Stepped:Connect(NoclipLoop)
+	RunService.Stepped:Connect(NoclipLoop)
 end
 
 local function unfling()
