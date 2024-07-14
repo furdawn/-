@@ -21,7 +21,7 @@ local function unfling()
 	flinging = false
 	wait(.1)
 	local speakerChar = Players.LocalPlayer.Character
-	if not speakerChar or not getRoot(speakerChar) then return end
+	if not speakerChar or not Players.LocalPlayer.Character.HumanoidRootPart then return end
 	for i,v in pairs(getRoot(speakerChar):GetChildren()) do
 		if v.ClassName == 'BodyAngularVelocity' then
 			v:Destroy()
