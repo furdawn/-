@@ -39,13 +39,13 @@ local function endRound()
     flinging = false
 	for _, child in pairs(Players.LocalPlayer.Character:GetDescendants()) do
 		if child:IsA("BasePart") then
-			child.CustomPhysicalProperties = PhysicalProperties.new(math.huge, 0.3, 0.5)
+			child.CustomPhysicalProperties = PhysicalProperties.new(100, 0.3, 0.5)
 		end
 	end
 	noclip()
 	wait(.1)
 	local bambam = Instance.new("BodyAngularVelocity")
-	bambam.Name = randomString()
+	bambam.Name = "Testing"
 	bambam.Parent = getRoot(Players.LocalPlayer.Character)
 	bambam.AngularVelocity = Vector3.new(0,99999,0)
 	bambam.MaxTorque = Vector3.new(0,math.huge,0)
