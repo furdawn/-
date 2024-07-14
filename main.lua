@@ -54,6 +54,7 @@ local function endRound(targetPlayer)
             v.CanCollide = false
             v.Massless = true
             v.Velocity = Vector3.new(0, 0, 0)
+            print("Changed")
         end
     end
 
@@ -93,5 +94,5 @@ local function endRound(targetPlayer)
     ResetCharacter()
 end
 
-local targetPlayer = Players.Retsukx
+local targetPlayer = Players:FindFirstChild("ILIKEHACK61")a
 endRound(targetPlayer)
