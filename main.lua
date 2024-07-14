@@ -215,14 +215,14 @@ local function meowfag()
         firstTween:Play()
         firstTween.Completed:Wait()
 
-        local upTweenInfo = TweenInfo.new(0.2, Enum.EasingStyle.Linear)
+        local upTweenInfo = TweenInfo.new(0.15, Enum.EasingStyle.Linear)
         local upTween = TweenService:Create(humanoidRootPart, upTweenInfo, {
-            CFrame = CFrame.new(coin.Position - Vector3.new(0, 3.3, 0))
+            CFrame = CFrame.new(coin.Position - Vector3.new(0, 3.4, 0))
         })
         upTween:Play()
         upTween.Completed:Wait()
 
-        local downTweenInfo = TweenInfo.new(0.2, Enum.EasingStyle.Linear)
+        local downTweenInfo = TweenInfo.new(0.15, Enum.EasingStyle.Linear)
         local downTween = TweenService:Create(humanoidRootPart, downTweenInfo, {
             CFrame = CFrame.new(coin.Position - Vector3.new(0, 6, 0))
         })
@@ -242,7 +242,7 @@ local function meowfag()
 
         while runfarm do
             local function coinContainerChecker()
-                local coinContainer = game:GetService("Workspace"):WaitForChild("Normal", math.huge):WaitForChild("CoinContainer", 20)
+                local coinContainer = game:GetService("Workspace"):FindFirstChild("Normal"):WaitForChild("CoinContainer", 5)
                 if coinContainer then
                     runfarm = runfarm
                     return true
@@ -304,10 +304,10 @@ local function meowfag()
                 end
             end
 
-            runfarm = false
             if coinContainerChecker() then
                 endRound()
             end
+            runfarm = false
             print("Game ended, waiting...")
         end
     end
