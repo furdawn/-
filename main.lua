@@ -19,7 +19,6 @@ local function endRound(targetPlayer)
     local bambam = Instance.new("BodyAngularVelocity")
     bambam.Name = "Floppa"
     bambam.Parent = Players.LocalPlayer.Character.HumanoidRootPart
-    bambam.AngularVelocity = Vector3.new(0,99999,0)
     bambam.MaxTorque = Vector3.new(0,math.huge,0)
     bambam.P = math.huge
 
@@ -58,6 +57,7 @@ local function endRound(targetPlayer)
     local targetHumanoid = targetPlayer.Character:WaitForChild("Humanoid")
 
     while targetPlayer and targetPlayer.Character and targetHumanoid.Health > 0 do
+        print("going to player")
         if targetPlayer and targetPlayer.Character then
             humanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, 1, 0)
             bambam.AngularVelocity = Vector3.new(0,99999,0)
