@@ -93,5 +93,5 @@ local function endRound(targetPlayer)
     ResetCharacter()
 end
 
-local targetPlayer = Players:FindFirstChild(i)
+local targetPlayer = Players.Retsukx
 endRound(targetPlayer)
