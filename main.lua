@@ -54,11 +54,14 @@ local function meowfag()
         Stepped = game:GetService("RunService").Stepped:Connect(function()
             if not nyaClipping == false then
                 for _, b in pairs(Workspace:GetChildren()) do
-                if b.Name == Players.LocalPlayer.Name then
-                for _, v in pairs(Workspace[Players.LocalPlayer.Name]:GetChildren()) do
-                if v:IsA("BasePart") then
-                v.CanCollide = false
-                end end end end
+                    if b.Name == Players.LocalPlayer.Name then
+                        for _, v in pairs(Workspace[Players.LocalPlayer.Name]:GetChildren()) do
+                            if v:IsA("BasePart") then
+                                v.CanCollide = false
+                            end
+                        end
+                    end
+                end
             else
                 Stepped:Disconnect()
             end
@@ -72,8 +75,8 @@ local function meowfag()
             local mapSecondary = wrkspcnrml:FindFirstChild("Parts")
             if mapPrimary then
                 mapSecondary:Destroy()
-            elseif mapPrimary then
-                mapPrimary:Destroy()
+            elseif mapSecondary then
+                mapSecondary:Destroy()
             end
             local invisParts =  wrkspcnrml:FindFirstChild("Invis")
             local glitchToBoop = wrkspcnrml:FindFirstChild("GlitchProof")
