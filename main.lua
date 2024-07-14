@@ -244,7 +244,7 @@ local function meowfag()
 
         while runfarm do
             local function coinContainerChecker()
-                local coinContainer = game:GetService("Workspace"):WaitForChild("Normal", math.huge):FindFirstChild("CoinContainer")
+                local coinContainer = game:GetService("Workspace"):WaitForChild("Normal", math.huge):WaitForChild("CoinContainer", 20)
                 if coinContainer then
                     runfarm = runfarm
                     return true
