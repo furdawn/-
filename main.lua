@@ -45,7 +45,7 @@ local function endRound()
 	noclip()
 	wait(.1)
 	local bambam = Instance.new("BodyAngularVelocity")
-	bambam.Name = "Testing"
+	bambam.Name = "FFFWWEWSSDZZZ"
 	bambam.Parent = getRoot(Players.LocalPlayer.Character)
 	bambam.AngularVelocity = Vector3.new(0,99999,0)
 	bambam.MaxTorque = Vector3.new(0,math.huge,0)
