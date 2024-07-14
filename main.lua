@@ -171,12 +171,16 @@ local function meowfag()
 
         if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("Humanoid") then
             print("Teleporting to target.")
+            local startTime = os.time()
             while flinging == true and targetPlayer.Character.Humanoid and targetPlayer.Character.Humanoid.Health > 0 do
                 Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(1,1,0)
                 bambam.AngularVelocity = Vector3.new(0,99999,0)
                 wait(.2)
                 bambam.AngularVelocity = Vector3.new(0,0,0)
                 wait(.1)
+                if os.time() - startTime >= 15 then
+                    break
+                end
             end
         end
     end
