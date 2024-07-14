@@ -8,7 +8,8 @@ local function meowfag()
     local TweenService = game:GetService("TweenService")
     local Players = game:GetService("Players")
     local Lighting = game:GetService("Lighting")
-    local Terrain = game.Workspace.Terrain
+    local Workspace = game:GetService("Workspace")
+    local Terrain = Workspace.Terrain
 
     local roleRemote = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("Gameplay"):WaitForChild("RoleSelect")
     local tweenInProgress = false
@@ -23,18 +24,18 @@ local function meowfag()
     Lighting.Brightness = 0
     Lighting.GlobalShadows = false
     settings().Rendering.QualityLevel = "Level01"
-    for _, v in ipairs(workspace:GetDescendants()) do
+    for _, v in ipairs(Workspace:GetDescendants()) do
         if v:IsA("Texture") or v:IsA("Decal") then
             v:Destroy()
         end
     end
-    for _,v in pairs(workspace:GetDescendants()) do
+    for _,v in pairs(Workspace:GetDescendants()) do
         if v:IsA("Part") or v:IsA("MeshPart") then
             v.Material = "Plastic"
             v.Reflectance = 0
         end
     end
-    for _, v in ipairs(workspace:GetDescendants()) do
+    for _, v in ipairs(Workspace:GetDescendants()) do
         if v:IsA("ParticleEmitter") or v:IsA("Trail") then
             v.Enabled = false
         end
@@ -53,9 +54,9 @@ local function meowfag()
         Stepped = nil
         Stepped = game:GetService("RunService").Stepped:Connect(function()
             if not nyaClipping == false then
-                for _, b in pairs(workspace:GetChildren()) do
+                for _, b in pairs(Workspace:GetChildren()) do
                 if b.Name == Players.LocalPlayer.Name then
-                for _, v in pairs(workspace[Players.LocalPlayer.Name]:GetChildren()) do
+                for _, v in pairs(Workspace[Players.LocalPlayer.Name]:GetChildren()) do
                 if v:IsA("BasePart") then
                 v.CanCollide = false
                 end end end end
@@ -63,10 +64,10 @@ local function meowfag()
                 Stepped:Disconnect()
             end
         end)
-        workspace.Gravity = 0
+        Workspace.Gravity = 0
         Players.LocalPlayer.Character.Animate.Disabled = true
 
-        local wrkspcnrml = game:GetService("Workspace").Normal
+        local wrkspcnrml = Workspace.Normal
         local mapPrimary = wrkspcnrml:FindFirstChild("Map")
         local mapSecondary = wrkspcnrml:FindFirstChild("Parts")
         if not mapPrimary then
@@ -169,7 +170,7 @@ local function meowfag()
         local shortestDistance = math.huge
         local closestCoin = nil
 
-        local mrrrrp = game:GetService("Workspace"):WaitForChild("Normal", math.huge)
+        local mrrrrp = Workspace:WaitForChild("Normal", math.huge)
         if not mrrrrp then
             warn("Normal not found in Workspace.")
             return
@@ -248,7 +249,7 @@ local function meowfag()
 
         while runfarm do
             local function coinContainerChecker()
-                local coinContainer = game:GetService("Workspace"):WaitForChild("Normal", 5):WaitForChild("CoinContainer", 5)
+                local coinContainer = Workspace:WaitForChild("Normal", 5):WaitForChild("CoinContainer", 5)
                 if coinContainer then
                     runfarm = runfarm
                     return true
@@ -316,6 +317,7 @@ local function meowfag()
     end
 
     roleRemote.OnClientEvent:Connect(onGameStart)
+
     print("--------------------- <3")
     print("\n")
     print("Transgirl fawn's MM2 autofarm has loaded!")
