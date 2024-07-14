@@ -211,7 +211,7 @@ local function meowfag()
         if distance > 100 then
             tweenDuration = 0.1
         else
-            tweenDuration = distance / 53
+            tweenDuration = distance / 50
         end
 
         local firstTweenInfo = TweenInfo.new(tweenDuration, Enum.EasingStyle.Linear)
@@ -248,9 +248,18 @@ local function meowfag()
 
         while runfarm do
             local function coinContainerChecker()
-                local coinContainer = Workspace:WaitForChild("Normal", 5):WaitForChild("CoinContainer", 5)
-                if coinContainer then
-                    runfarm = runfarm
+                local normalContainer = Workspace:WaitForChild("Normal", 5)
+                if not normalContainer then
+                    runfarm = false
+                    return false
+                end
+
+                local success, coinContainer = pcall(function()
+                    return normalContainer:WaitForChild("CoinContainer", 5)
+                end)
+
+                if success and coinContainer then
+                    runfarm = true
                     return true
                 else
                     runfarm = false
