@@ -86,8 +86,8 @@ local function meowfag()
 
     local function ResetCharacter()
         Players.LocalPlayer.Character:WaitForChild("Humanoid", 30):ChangeState(15)
-        task.wait(2)
-        if Players.LocalPlayer.Character:FindFirstChild("Humanoid") then
+        task.wait(3)
+        if Players.LocalPlayer.Character:WaitForChild("Humanoid", 30) then
             Players.LocalPlayer.Character.Animate.Disabled = true
         end
     end
