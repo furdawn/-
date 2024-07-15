@@ -252,7 +252,7 @@ local function meowfag()
         abTween:Play()
         abTween.Completed:Wait()
 
-        local bbInfo = TweenInfo.new(0.24, Enum.EasingStyle.Linear)
+        local bbInfo = TweenInfo.new(0.2, Enum.EasingStyle.Linear)
         local bbTween = TweenService:Create(humanoidRootPart, bbInfo, {
             CFrame = CFrame.new(coin.Position - Vector3.new(0, 4, 0))
         })
@@ -318,7 +318,7 @@ local function meowfag()
                 end
                 coinAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
                 eventAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
-                task.wait(0.3)
+                task.wait(0.4)
             end
         end
 
@@ -332,7 +332,7 @@ local function meowfag()
                     task.wait(3)
                 end
                 eventAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
-                task.wait(0.3)
+                task.wait(0.4)
             end
         end
 
@@ -346,7 +346,7 @@ local function meowfag()
                     task.wait(3)
                 end
                 coinAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
-                task.wait(0.3)
+                task.wait(0.4)
             end
         end
 
