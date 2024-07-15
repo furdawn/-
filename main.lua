@@ -168,7 +168,7 @@ local function meowfag()
             local startTime = os.time()
             while flinging == true and targetPlayer.Character.Humanoid and targetPlayer.Character.Humanoid.Health > 0 do
                 Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(2,-1,0)
-                Players.LocalPlayer.Character.HumanoidRootPart.RootPart.CFrame = Players.LocalPlayer.Character.HumanoidRootPart.RootPart.CFrame * CFrame.Angles(0, 0, math.rad(8))
+                Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(0, 0, math.rad(8))
                 bambam.AngularVelocity = Vector3.new(0,99999,0)
                 wait(.1)
                 bambam.AngularVelocity = Vector3.new(0,0,0)
