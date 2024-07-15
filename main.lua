@@ -255,7 +255,7 @@ local function meowfag()
         abTween:Play()
         abTween.Completed:Wait()
 
-        local bbInfo = TweenInfo.new(0.35, Enum.EasingStyle.Linear)
+        local bbInfo = TweenInfo.new(0.3, Enum.EasingStyle.Linear)
         local bbTween = TweenService:Create(humanoidRootPart, bbInfo, {
             CFrame = CFrame.new(coin.Position - Vector3.new(0, 4.2, 0))
         })
