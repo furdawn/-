@@ -93,7 +93,7 @@ local function meowfag()
                 glitchToBoop:Destroy()
             end
         end
-        Players.LocalPlayer:FindFirstChild("Character").Animate.Disabled = true
+        Players.LocalPlayer:WaitForChild("Character", 30).Animate.Disabled = true
     end
 
     local function gotoHide()
