@@ -59,7 +59,10 @@ local function meowfag()
     local function ResetCharacter()
         Players.LocalPlayer.Character.Humanoid:ChangeState(15)
         task.wait(5)
-        Players.LocalPlayer:WaitForChild("Character", 100).Animate.Disabled = true
+        local character = Players.LocalPlayer:FindFirstChild("Character")
+        if character then
+            character.Animate.Disabled = true
+        end
     end
 
     local function Noclip()
