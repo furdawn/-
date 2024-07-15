@@ -102,6 +102,7 @@ local function meowfag()
     end
 
     local function gotoHide()
+        ResetCharacter()
         workspace.Gravity = 196.2
         local humanoidRootPart = Players.LocalPlayer.Character.HumanoidRootPart
         local targetPosition = inLobby.Position + Vector3.new(0, inLobby.Size.Y / 2 + humanoidRootPart.Size.Y / 2, 0)
@@ -256,13 +257,13 @@ local function meowfag()
 
         local abInfo = TweenInfo.new(tweenDuration, Enum.EasingStyle.Linear)
         local abTween = TweenService:Create(humanoidRootPart, abInfo, {
-            CFrame = CFrame.new(coin.Position - Vector3.new(0, 5.3, 0))
+            CFrame = CFrame.new(coin.Position - Vector3.new(0, 5, 0))
         })
         abTween:Play()
         abTween.Completed:Wait()
 
         if coin then
-            task.wait(0.4)
+            task.wait(0.3)
             coin:Destroy()
         end
 
