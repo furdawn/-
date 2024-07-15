@@ -60,7 +60,7 @@ local function meowfag()
         Players.LocalPlayer.Character.Humanoid:ChangeState(15)
         local animateDisable = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
         while not animateDisable do
-            wait(1)
+            task.wait(1)
         end
         Players.LocalPlayer.Character.Animate.Disabled = true
     end
@@ -128,25 +128,19 @@ local function meowfag()
             hideMe:Play()
             hideMe.Completed:Wait()
         end
+
         while true do
             local abc = Players.LocalPlayer.PlayerGui.MainGUI:FindFirstChild("Game")
             if not abc then
-                print("No ABC")
                 return
             end
-            local def = abc.CoinBags.Container.Coin.CurrencyFrame.Icon
-            if not def.Visible then
-                print("No DEF")
-                return
+            local def = abc.CoinBags.Container.Coin.CurrencyFrame.Icon.Visible
+            while not def do
+                task.wait(3)
+                def = abc.CoinBags.Container.Coin.CurrencyFrame.Icon.Visible
             end
-            while abc and def.Visible do
-                wait(1)
-                print("Wait loop")
-            end
-            if not abc or not def.Visible then
-                print("Hiding")
-                gotoHide()
-            end
+            gotoHide()
+            task.wait(3)
         end
     end
 
@@ -285,14 +279,14 @@ local function meowfag()
 
         local abInfo = TweenInfo.new(tweenDuration, Enum.EasingStyle.Linear)
         local abTween = TweenService:Create(humanoidRootPart, abInfo, {
-            CFrame = CFrame.new(coin.Position - Vector3.new(0, 6, 0))
+            CFrame = CFrame.new(coin.Position - Vector3.new(0, 7, 0))
         })
         abTween:Play()
         abTween.Completed:Wait()
 
         local bbInfo = TweenInfo.new(0.24, Enum.EasingStyle.Linear)
         local bbTween = TweenService:Create(humanoidRootPart, bbInfo, {
-            CFrame = CFrame.new(coin.Position - Vector3.new(0, 3.6, 0))
+            CFrame = CFrame.new(coin.Position - Vector3.new(0, 4, 0))
         })
         bbTween:Play()
         bbTween.Completed:Wait()
@@ -301,7 +295,7 @@ local function meowfag()
         end
         local cbInfo = TweenInfo.new(0.24, Enum.EasingStyle.Linear)
         local cbTween = TweenService:Create(humanoidRootPart, cbInfo, {
-            CFrame = CFrame.new(coin.Position - Vector3.new(0, 6, 0))
+            CFrame = CFrame.new(coin.Position - Vector3.new(0, 7, 0))
         })
         cbTween:Play()
         cbTween.Completed:Wait()
@@ -320,12 +314,13 @@ local function meowfag()
         end
 
         if muwuderer == Players.LocalPlayer then
+            Players.LocalPlayer.Character.Animate.Disabled = true
             print("Murderer, Not resetting :3")
         else
             ResetCharacter()
         end
 
-        wait(12)
+        task.wait(10)
 
         local abc = Players.LocalPlayer.PlayerGui.MainGUI:WaitForChild("Game", 420)
         local def = abc.CoinBags:WaitForChild("Container", 420)
