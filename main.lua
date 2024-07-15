@@ -135,15 +135,15 @@ local function meowfag()
                 return
             end
             local def = abc.CoinBags.Container.Coin.CurrencyFrame.Icon
-            if not def then
+            if not def.Visible then
                 print("No DEF")
                 return
             end
-            while abc or def.Visible do
+            while abc and def.Visible do
                 wait(1)
                 print("Wait loop")
             end
-            if not abc or def.Visible then
+            if not abc or not def.Visible then
                 print("Hiding")
                 gotoHide()
             end
