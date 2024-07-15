@@ -137,10 +137,9 @@ local function meowfag()
             if not abc then
                 return
             end
-            local def = abc.CoinBags.Container.Coin.Visible
-            while not def do
+            while not abc.CoinBags.Container.Coin.Visible do
                 task.wait(3)
-                def = abc.CoinBags.Container.Coin.Visible
+                print(abc.CoinBags.Container.Coin.Visible)
             end
             gotoHide()
             task.wait(3)
