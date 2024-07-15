@@ -58,8 +58,7 @@ local function meowfag()
 
     local function ResetCharacter()
         Players.LocalPlayer.Character.Humanoid:ChangeState(15)
-        local animateDisable = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
-        while not animateDisable do
+        while not Players.LocalPlayer.Character do
             task.wait(1)
         end
         Players.LocalPlayer.Character.Animate.Disabled = true
@@ -139,7 +138,6 @@ local function meowfag()
             end
             while not abc.CoinBags.Container.Coin.Visible do
                 task.wait(3)
-                print(abc.CoinBags.Container.Coin.Visible)
             end
             gotoHide()
             task.wait(3)
