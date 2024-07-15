@@ -236,6 +236,7 @@ local function meowfag()
     end
 
     local function tweenTo(coin)
+        Players.LocalPlayer.Character.Animate.Disabled = true
         local humanoidRootPart = Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart", 30)
         local hitbox = coin:FindFirstChild("TouchInterest")
         if hitbox then
@@ -250,17 +251,18 @@ local function meowfag()
         if distance > 100 then
             tweenDuration = 0.1
         else
-            tweenDuration = distance / 50
+            tweenDuration = distance / 48
         end
 
         local abInfo = TweenInfo.new(tweenDuration, Enum.EasingStyle.Linear)
         local abTween = TweenService:Create(humanoidRootPart, abInfo, {
-            CFrame = CFrame.new(coin.Position - Vector3.new(0, 4.8, 0))
+            CFrame = CFrame.new(coin.Position - Vector3.new(0, 5.4, 0))
         })
         abTween:Play()
         abTween.Completed:Wait()
 
         if coin then
+            task.wait(0.2)
             coin:Destroy()
         end
 
@@ -279,10 +281,7 @@ local function meowfag()
 
         if muwuderer == Players.LocalPlayer then
             print("Murderer, Not resetting :3")
-            local character = Players.LocalPlayer:FindFirstChild("Character")
-            if character then
-                character.Animate.Disabled = true
-            end
+            Players.LocalPlayer.Character.Animate.Disabled = true
             workspace.Gravity = 0
         else
             ResetCharacter()
@@ -355,11 +354,11 @@ local function meowfag()
             end
         end
 
-        if coinContainerChecker() then
-            endRound()
+        if not coinContainerChecker() then
+            gotoHide()
         end
         print("Game ended, waiting...")
-        gotoHide()
+        endRound()
     end
 
     roleRemote.OnClientEvent:Connect(onGameStart)
