@@ -19,12 +19,6 @@ local function meowfag()
     local Workspace = game:GetService("Workspace")
     local Terrain = Workspace.Terrain
 
-
-
-    print("Version: Testing")
-
-
-
     local roleRemote = ReplicatedStorage.Remotes.Gameplay.RoleSelect
     local tweenInProgress
 
@@ -67,10 +61,12 @@ local function meowfag()
         local animateDisable = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
         if animateDisable then
             Players.LocalPlayer.Character.Animate.Disabled = true
+            Players.LocalPlayer.Character.Humanoid.Velocity = Vector3.new(0, 0, 0)
         end
     end
 
     local function Noclip()
+        workspace.Gravity = 0
         game:GetService("RunService").Stepped:Connect(function()
             for _, b in pairs(Workspace:GetChildren()) do
                 if b.Name == Players.LocalPlayer.Name then
@@ -101,6 +97,7 @@ local function meowfag()
                 glitchToBoop:Destroy()
             end
         end
+        Players.LocalPlayer.Character.Humanoid.Velocity = Vector3.new(0, 0, 0)
     end
 
     local function coinContainerChecker()
@@ -121,6 +118,7 @@ local function meowfag()
     end
 
     local function hideInLobby()
+        workspace.Gravity = 196.2
         local function gotoHide()
             local humanoidRootPart = Players.LocalPlayer.Character.HumanoidRootPart
             local targetPosition = inLobby.Position + Vector3.new(0, humanoidRootPart.Size.Y / 2 + inLobby.Size.Y / 2, 0)
@@ -142,6 +140,7 @@ local function meowfag()
 
     local function endRound()
         print("Flinging murderer >;3")
+        workspace.Gravity = 196.2
 
         local targetPlayer = nil
         local flingDied = nil
