@@ -58,11 +58,6 @@ local function meowfag()
 
     local function ResetCharacter()
         Players.LocalPlayer.Character.Humanoid:ChangeState(15)
-        task.wait(5)
-        local character = Players.LocalPlayer:FindFirstChild("Character")
-        if character then
-            character.Animate.Disabled = true
-        end
     end
 
     local function Noclip()
@@ -96,6 +91,10 @@ local function meowfag()
             if glitchToBoop then
                 glitchToBoop:Destroy()
             end
+        end
+        local character = Players.LocalPlayer:FindFirstChild("Character")
+        if character then
+            character.Animate.Disabled = true
         end
     end
 
@@ -258,7 +257,7 @@ local function meowfag()
         abTween:Play()
         abTween.Completed:Wait()
 
-        local bbInfo = TweenInfo.new(0.33, Enum.EasingStyle.Linear)
+        local bbInfo = TweenInfo.new(0.35, Enum.EasingStyle.Linear)
         local bbTween = TweenService:Create(humanoidRootPart, bbInfo, {
             CFrame = CFrame.new(coin.Position - Vector3.new(0, 4.2, 0))
         })
@@ -283,7 +282,10 @@ local function meowfag()
 
         if muwuderer == Players.LocalPlayer then
             print("Murderer, Not resetting :3")
-            Players.LocalPlayer.Character.Animate.Disabled = true
+            local character = Players.LocalPlayer:FindFirstChild("Character")
+            if character then
+                character.Animate.Disabled = true
+            end
             workspace.Gravity = 0
         else
             ResetCharacter()
@@ -324,7 +326,7 @@ local function meowfag()
                 end
                 coinAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
                 eventAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
-                task.wait(0.4)
+                task.wait(0.3)
             end
         end
 
@@ -338,7 +340,7 @@ local function meowfag()
                     task.wait(3)
                 end
                 eventAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
-                task.wait(0.4)
+                task.wait(0.3)
             end
         end
 
@@ -352,7 +354,7 @@ local function meowfag()
                     task.wait(3)
                 end
                 coinAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
-                task.wait(0.4)
+                task.wait(0.3)
             end
         end
 
