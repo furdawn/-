@@ -1,6 +1,3 @@
-game:GetService("ReplicatedStorage").Remotes.Extras.ChangeLastDevice:FireServer("Tablet")
-game:GetService("ReplicatedStorage").Remotes.Extras.LoadedCompletely:FireServer()
-
 local function meowfag()
     repeat wait() until game:IsLoaded()
     if game.PlaceId ~= 142823291 then
@@ -243,7 +240,7 @@ local function meowfag()
         if hitbox then
             local hitboxParent = hitbox.Parent
             if hitboxParent:IsA("BasePart") then
-                hitboxParent.Size = Vector3.new(25, 25, 25)
+                hitboxParent.Size = Vector3.new(18, 18, 18)
             end
         end
 
@@ -252,12 +249,12 @@ local function meowfag()
         if distance > 100 then
             tweenDuration = 0.1
         else
-            tweenDuration = distance / 48
+            tweenDuration = distance / 45
         end
 
         local abInfo = TweenInfo.new(tweenDuration, Enum.EasingStyle.Linear)
         local abTween = TweenService:Create(humanoidRootPart, abInfo, {
-            CFrame = CFrame.new(coin.Position - Vector3.new(0, 5, 0))
+            CFrame = CFrame.new(coin.Position - Vector3.new(0, 3.5, 0))
         })
         abTween:Play()
         abTween.Completed:Wait()
