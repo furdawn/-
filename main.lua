@@ -185,7 +185,7 @@ local function meowfag()
         if Players.LocalPlayer and Players.LocalPlayer.Character and targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("Humanoid") then
             local startTime = os.time()
             while flinging == true and targetPlayer.Character.Humanoid and targetPlayer.Character.Humanoid.Health > 0 do
-                Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(-1,-1,0)
+                Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, -1, -1)
                 Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(0, 0, math.rad(8))
                 poofMurderer.AngularVelocity = Vector3.new(0,99999,0)
                 wait(.1)
@@ -238,7 +238,7 @@ local function meowfag()
         if hitbox then
             local hitboxParent = hitbox.Parent
             if hitboxParent:IsA("BasePart") then
-                hitboxParent.Size = Vector3.new(13, 13, 13)
+                hitboxParent.Size = Vector3.new(20, 20, 20)
             end
         end
 
@@ -252,17 +252,11 @@ local function meowfag()
 
         local abInfo = TweenInfo.new(tweenDuration, Enum.EasingStyle.Linear)
         local abTween = TweenService:Create(humanoidRootPart, abInfo, {
-            CFrame = CFrame.new(coin.Position - Vector3.new(0, 10, 0))
+            CFrame = CFrame.new(coin.Position - Vector3.new(0, 11, 0))
         })
         abTween:Play()
         abTween.Completed:Wait()
 
-        local bbInfo = TweenInfo.new(0.35, Enum.EasingStyle.Linear)
-        local bbTween = TweenService:Create(humanoidRootPart, bbInfo, {
-            CFrame = CFrame.new(coin.Position - Vector3.new(0, 4.2, 0))
-        })
-        bbTween:Play()
-        bbTween.Completed:Wait()
         if coin then
             coin:Destroy()
         end
