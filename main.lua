@@ -96,6 +96,22 @@ local function meowfag()
         end
     end
 
+    local function gotoHide()
+        ResetCharacter()
+        workspace.Gravity = 196.2
+        local humanoidRootPart = Players.LocalPlayer.Character.HumanoidRootPart
+        local targetPosition = inLobby.Position + Vector3.new(0, inLobby.Size.Y / 2 + humanoidRootPart.Size.Y / 2, 0)
+        if (humanoidRootPart.Position - targetPosition).Magnitude < 5 then
+            return
+        end
+        local hideInfo = TweenInfo.new(0, Enum.EasingStyle.Linear)
+        local hideMe = TweenService:Create(humanoidRootPart, hideInfo, {
+            CFrame = CFrame.new(targetPosition)
+        })
+        hideMe:Play()
+        hideMe.Completed:Wait()
+    end
+
     local function endRound()
         print("Flinging murderer >;3")
         workspace.Gravity = 196.2
@@ -226,7 +242,7 @@ local function meowfag()
         if distance > 100 then
             tweenDuration = 0.1
         else
-            tweenDuration = distance / 47
+            tweenDuration = distance / 45
         end
 
         local abInfo = TweenInfo.new(tweenDuration, Enum.EasingStyle.Linear)
@@ -245,12 +261,6 @@ local function meowfag()
         if coin then
             coin:Destroy()
         end
-        local cbInfo = TweenInfo.new(0.24, Enum.EasingStyle.Linear)
-        local cbTween = TweenService:Create(humanoidRootPart, cbInfo, {
-            CFrame = CFrame.new(coin.Position - Vector3.new(0, 7, 0))
-        })
-        cbTween:Play()
-        cbTween.Completed:Wait()
 
         tweenInProgress = false
     end
@@ -308,7 +318,7 @@ local function meowfag()
                 end
                 coinAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
                 eventAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
-                task.wait(0.25)
+                task.wait(0.3)
             end
         end
 
@@ -322,7 +332,7 @@ local function meowfag()
                     task.wait(3)
                 end
                 eventAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
-                task.wait(0.25)
+                task.wait(0.3)
             end
         end
 
@@ -336,30 +346,15 @@ local function meowfag()
                     task.wait(3)
                 end
                 coinAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
-                task.wait(0.25)
+                task.wait(0.3)
             end
         end
 
         if coinContainerChecker() then
             endRound()
+            gotoHide()
         end
         print("Game ended, waiting...")
-        local function gotoHide()
-            workspace.Gravity = 196.2
-            local humanoidRootPart = Players.LocalPlayer.Character.HumanoidRootPart
-            local targetPosition = inLobby.Position + Vector3.new(0, inLobby.Size.Y / 2 + humanoidRootPart.Size.Y / 2, 0)
-            if (humanoidRootPart.Position - targetPosition).Magnitude < 5 then
-                return
-            end
-            local hideInfo = TweenInfo.new(0.5, Enum.EasingStyle.Linear)
-            local hideMe = TweenService:Create(humanoidRootPart, hideInfo, {
-                CFrame = CFrame.new(targetPosition)
-            })
-            hideMe:Play()
-            hideMe.Completed:Wait()
-        end
-        ResetCharacter()
-        gotoHide()
     end
 
     roleRemote.OnClientEvent:Connect(onGameStart)
