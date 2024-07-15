@@ -58,9 +58,7 @@ local function meowfag()
 
     local function ResetCharacter()
         Players.LocalPlayer.Character.Humanoid:ChangeState(15)
-        while not Players.LocalPlayer.Character do
-            task.wait(1)
-        end
+        task.wait(5)
         Players.LocalPlayer.Character.Animate.Disabled = true
     end
 
@@ -117,7 +115,6 @@ local function meowfag()
 
     local function hideInLobby()
         local function gotoHide()
-            workspace.Gravity = 196.2
             local humanoidRootPart = Players.LocalPlayer.Character.HumanoidRootPart
             local targetPosition = inLobby.Position + Vector3.new(0, inLobby.Size.Y / 2 + humanoidRootPart.Size.Y / 2, 0)
             if (humanoidRootPart.Position - targetPosition).Magnitude < 5 then
@@ -134,23 +131,20 @@ local function meowfag()
         while true do
             local abc = Players.LocalPlayer.PlayerGui.MainGUI:FindFirstChild("Game")
             if not abc then
+                task.wait(3)
                 return
             end
-            local def = abc:WaitForChild("CoinBags")
+            local def = abc:FindFirstChild("CoinBags")
             if not def then
-                print("Visible, hiding!")
+                print("GUI not visible, hiding!")
                 gotoHide()
                 task.wait(3)
             end
             local ghi = def.Container.Coin.Visible
-            while ghi do
-                print("Not visible!")
-                task.wait(3)
-            end
             if not ghi then
-                print("Visible, hiding!")
+                print("GUI not visible, hiding!")
                 gotoHide()
-                task.wait(3) 
+                task.wait(3)
             end
         end
     end
