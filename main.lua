@@ -256,13 +256,13 @@ local function meowfag()
 
         local abInfo = TweenInfo.new(tweenDuration, Enum.EasingStyle.Linear)
         local abTween = TweenService:Create(humanoidRootPart, abInfo, {
-            CFrame = CFrame.new(coin.Position - Vector3.new(0, 5.4, 0))
+            CFrame = CFrame.new(coin.Position - Vector3.new(0, 5.3, 0))
         })
         abTween:Play()
         abTween.Completed:Wait()
 
         if coin then
-            task.wait(0.2)
+            task.wait(0.4)
             coin:Destroy()
         end
 
@@ -322,7 +322,6 @@ local function meowfag()
                 end
                 coinAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
                 eventAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
-                task.wait(0.3)
             end
         end
 
@@ -336,7 +335,6 @@ local function meowfag()
                     task.wait(3)
                 end
                 eventAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
-                task.wait(0.3)
             end
         end
 
@@ -350,12 +348,13 @@ local function meowfag()
                     task.wait(3)
                 end
                 coinAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
-                task.wait(0.3)
             end
         end
 
         if not coinContainerChecker() then
+            print("Game ended, waiting...")
             gotoHide()
+            return
         end
         print("Game ended, waiting...")
         endRound()
