@@ -59,9 +59,10 @@ local function meowfag()
     local function ResetCharacter()
         Players.LocalPlayer.Character.Humanoid:ChangeState(15)
         local animateDisable = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
-        if animateDisable then
-            Players.LocalPlayer.Character.Animate.Disabled = true
+        while not animateDisable do
+            wait(1)
         end
+        Players.LocalPlayer.Character.Animate.Disabled = true
     end
 
     local function Noclip()
@@ -116,8 +117,6 @@ local function meowfag()
     end
 
     local function hideInLobby()
-        local abc = Players.LocalPlayer.PlayerGui.MainGUI:FindFirstChild("Game")
-        local def = abc.CoinBags.Container.Coin.CurrencyFrame.Icon
         local function gotoHide()
             workspace.Gravity = 196.2
             local humanoidRootPart = Players.LocalPlayer.Character.HumanoidRootPart
@@ -129,11 +128,15 @@ local function meowfag()
             hideMe:Play()
             hideMe.Completed:Wait()
         end
-        while abc or def.Visible do
-            wait(1)
-        end
-        if not abc or def.Visible then
-            gotoHide()
+        while true do
+            local abc = Players.LocalPlayer.PlayerGui.MainGUI:FindFirstChild("Game")
+            local def = abc.CoinBags.Container.Coin.CurrencyFrame.Icon
+            while abc or def.Visible do
+                wait(1)
+            end
+            if not abc or def.Visible then
+                gotoHide()
+            end
         end
     end
 
