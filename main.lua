@@ -250,12 +250,12 @@ local function meowfag()
 
         local abInfo = TweenInfo.new(tweenDuration, Enum.EasingStyle.Linear)
         local abTween = TweenService:Create(humanoidRootPart, abInfo, {
-            CFrame = CFrame.new(coin.Position - Vector3.new(0, 7, 0))
+            CFrame = CFrame.new(coin.Position - Vector3.new(0, 10, 0))
         })
         abTween:Play()
         abTween.Completed:Wait()
 
-        local bbInfo = TweenInfo.new(0.3, Enum.EasingStyle.Linear)
+        local bbInfo = TweenInfo.new(0.33, Enum.EasingStyle.Linear)
         local bbTween = TweenService:Create(humanoidRootPart, bbInfo, {
             CFrame = CFrame.new(coin.Position - Vector3.new(0, 4.2, 0))
         })
