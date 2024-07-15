@@ -167,7 +167,7 @@ local function meowfag()
         if Players.LocalPlayer and Players.LocalPlayer.Character and targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("Humanoid") then
             local startTime = os.time()
             while flinging == true and targetPlayer.Character.Humanoid and targetPlayer.Character.Humanoid.Health > 0 do
-                Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(2,-1,0)
+                Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(-1,-1,0)
                 Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(0, 0, math.rad(8))
                 bambam.AngularVelocity = Vector3.new(0,99999,0)
                 wait(.1)
@@ -229,7 +229,7 @@ local function meowfag()
         if distance > 100 then
             tweenDuration = 0.1
         else
-            tweenDuration = distance / 50
+            tweenDuration = distance / 47
         end
 
         local firstTweenInfo = TweenInfo.new(tweenDuration, Enum.EasingStyle.Linear)
@@ -239,14 +239,14 @@ local function meowfag()
         firstTween:Play()
         firstTween.Completed:Wait()
 
-        local upTweenInfo = TweenInfo.new(0.22, Enum.EasingStyle.Linear)
+        local upTweenInfo = TweenInfo.new(0.24, Enum.EasingStyle.Linear)
         local upTween = TweenService:Create(humanoidRootPart, upTweenInfo, {
-            CFrame = CFrame.new(coin.Position - Vector3.new(0, 3.4, 0))
+            CFrame = CFrame.new(coin.Position - Vector3.new(0, 3.6, 0))
         })
         upTween:Play()
         upTween.Completed:Wait()
 
-        local downTweenInfo = TweenInfo.new(0.22, Enum.EasingStyle.Linear)
+        local downTweenInfo = TweenInfo.new(0.24, Enum.EasingStyle.Linear)
         local downTween = TweenService:Create(humanoidRootPart, downTweenInfo, {
             CFrame = CFrame.new(coin.Position - Vector3.new(0, 6, 0))
         })
