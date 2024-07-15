@@ -58,8 +58,8 @@ local function meowfag()
 
     local function ResetCharacter()
         Players.LocalPlayer.Character.Humanoid:ChangeState(15)
-        task.wait(6)
-        Players.LocalPlayer.Character.Animate.Disabled = true
+        task.wait(5)
+        Players.LocalPlayer:WaitForChild("Character", 100).Animate.Disabled = true
     end
 
     local function Noclip()
@@ -97,7 +97,6 @@ local function meowfag()
     end
 
     local function gotoHide()
-        ResetCharacter()
         workspace.Gravity = 196.2
         local humanoidRootPart = Players.LocalPlayer.Character.HumanoidRootPart
         local targetPosition = inLobby.Position + Vector3.new(0, inLobby.Size.Y / 2 + humanoidRootPart.Size.Y / 2, 0)
@@ -128,6 +127,10 @@ local function meowfag()
         end
         if not targetPlayer then
             warn("Murderer not found.")
+            return
+        end
+        if Players.LocalPlayer == targetPlayer then
+            ResetCharacter()
             return
         end
 
@@ -242,7 +245,7 @@ local function meowfag()
         if distance > 100 then
             tweenDuration = 0.1
         else
-            tweenDuration = distance / 48
+            tweenDuration = distance / 50
         end
 
         local abInfo = TweenInfo.new(tweenDuration, Enum.EasingStyle.Linear)
@@ -254,7 +257,7 @@ local function meowfag()
 
         local bbInfo = TweenInfo.new(0.35, Enum.EasingStyle.Linear)
         local bbTween = TweenService:Create(humanoidRootPart, bbInfo, {
-            CFrame = CFrame.new(coin.Position - Vector3.new(0, 4, 0))
+            CFrame = CFrame.new(coin.Position - Vector3.new(0, 4.2, 0))
         })
         bbTween:Play()
         bbTween.Completed:Wait()
@@ -352,9 +355,9 @@ local function meowfag()
 
         if coinContainerChecker() then
             endRound()
-            gotoHide()
         end
         print("Game ended, waiting...")
+        gotoHide()
     end
 
     roleRemote.OnClientEvent:Connect(onGameStart)
