@@ -57,11 +57,16 @@ local function meowfag()
     --- Optimization Stuff :3
 
     local function ResetCharacter()
-        Players.LocalPlayer.Character:WaitForChild("Humanoid"):ChangeState(15)
+        local function waitForRespawn()
+            local humanoid = Players.LocalPlayer.Character:WaitForChild("Humanoid")
+            humanoid.Died:Wait()
+            humanoid.Respawned:Wait()
+        end
+        waitForRespawn()
+        Players.LocalPlayer.Character.Animate.Disabled = true
     end
 
     local function Noclip()
-        local humanoidRootPart = Players.LocalPlayer.Character.HumanoidRootPart
         game:GetService("RunService").Stepped:Connect(function()
             for _, b in pairs(Workspace:GetChildren()) do
                 if b.Name == Players.LocalPlayer.Name then
@@ -241,10 +246,10 @@ local function meowfag()
     local function supportPlatform()    
         local humanoidRootPart = Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart", 420)
         perc30 = Instance.new("Part")
-        inLobby.Size = Vector3.new(3, 0.2, 3)
-        inLobby.Color = Color3.fromRGB(127, 251, 255)
-        inLobby.Transparency = 0.75
-        inLobby.Anchored = true
+        perc30.Size = Vector3.new(3, 0.2, 3)
+        perc30.Color = Color3.fromRGB(127, 251, 255)
+        perc30.Transparency = 0.75
+        perc30.Anchored = true
         perc30.Parent = game.Workspace
 
         perc30.CFrame = humanoidRootPart.CFrame * CFrame.new(0, -3, 0)
