@@ -120,7 +120,11 @@ local function meowfag()
         local function gotoHide()
             workspace.Gravity = 196.2
             local humanoidRootPart = Players.LocalPlayer.Character.HumanoidRootPart
-            local targetPosition = inLobby.Position + Vector3.new(0, humanoidRootPart.Size.Y / 2 + inLobby.Size.Y / 2, 0)
+            local targetPosition = inLobby.Position + Vector3.new(0, inLobby.Size.Y / 2 + humanoidRootPart.Size.Y / 2, 0)
+            if (humanoidRootPart.Position - targetPosition).Magnitude < 5 then
+                return
+            end
+
             local hideInfo = TweenInfo.new(0.25, Enum.EasingStyle.Linear)
             local hideMe = TweenService:Create(humanoidRootPart, hideInfo, {
                 CFrame = CFrame.new(targetPosition)
@@ -128,16 +132,15 @@ local function meowfag()
             hideMe:Play()
             hideMe.Completed:Wait()
         end
-
         while true do
             local abc = Players.LocalPlayer.PlayerGui.MainGUI:FindFirstChild("Game")
             if not abc then
                 return
             end
-            local def = abc.CoinBags.Container.Coin.CurrencyFrame.Icon.Visible
+            local def = abc.CoinBags.Container.Coin.Visible
             while not def do
                 task.wait(3)
-                def = abc.CoinBags.Container.Coin.CurrencyFrame.Icon.Visible
+                def = abc.CoinBags.Container.Coin.Visible
             end
             gotoHide()
             task.wait(3)
@@ -314,8 +317,9 @@ local function meowfag()
         end
 
         if muwuderer == Players.LocalPlayer then
-            Players.LocalPlayer.Character.Animate.Disabled = true
             print("Murderer, Not resetting :3")
+            Players.LocalPlayer.Character.Animate.Disabled = true
+            workspace.Gravity = 0
         else
             ResetCharacter()
         end
