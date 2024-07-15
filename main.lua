@@ -131,13 +131,12 @@ local function meowfag()
             hideMe:Play()
             hideMe.Completed:Wait()
         end
-        local abc = Players.LocalPlayer.PlayerGui.MainGUI:FindFirstChild("Game")
-        if not abc then
-            gotoHide()
-        end
-        local def = abc.CoinBags.Container.BeachBall
-        if not def then
-            gotoHide()
+        while true do
+            local abc = Players.LocalPlayer.PlayerGui.MainGUI:FindFirstChild("Game")
+            if not abc then
+                gotoHide()
+            end
+            wait(0.5)
         end
     end
 
@@ -255,20 +254,6 @@ local function meowfag()
         return closestCoin
     end
 
-    local function supportPlatform()    
-        local humanoidRootPart = Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart", 420)
-        perc30 = Instance.new("Part")
-        perc30.Size = Vector3.new(3, 0.2, 3)
-        perc30.Color = Color3.fromRGB(127, 251, 255)
-        perc30.Transparency = 0.75
-        perc30.Anchored = true
-        perc30.Parent = game.Workspace
-
-        perc30.CFrame = humanoidRootPart.CFrame * CFrame.new(0, -3, 0)
-
-        return perc30
-    end
-
     local function tweenTo(coin)
         local humanoidRootPart = Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart", 420)
         local hitbox = coin:FindFirstChild("TouchInterest")
@@ -287,48 +272,27 @@ local function meowfag()
             tweenDuration = distance / 47
         end
 
-        perc30 = supportPlatform()
-
-        local aaInfo = TweenInfo.new(tweenDuration, Enum.EasingStyle.Linear)
-        local aaTween = TweenService:Create(perc30, aaInfo, {
-            CFrame = CFrame.new(coin.Position - Vector3.new(0, 9, 0))
-        })
         local abInfo = TweenInfo.new(tweenDuration, Enum.EasingStyle.Linear)
         local abTween = TweenService:Create(humanoidRootPart, abInfo, {
             CFrame = CFrame.new(coin.Position - Vector3.new(0, 6, 0))
         })
         abTween:Play()
-        aaTween:Play()
         abTween.Completed:Wait()
-        aaTween.Completed:Wait()
 
-        local baInfo = TweenInfo.new(0.24, Enum.EasingStyle.Linear)
-        local baTween = TweenService:Create(perc30, baInfo, {
-            CFrame = CFrame.new(coin.Position - Vector3.new(0, 6.6, 0))
-        })
         local bbInfo = TweenInfo.new(0.24, Enum.EasingStyle.Linear)
         local bbTween = TweenService:Create(humanoidRootPart, bbInfo, {
             CFrame = CFrame.new(coin.Position - Vector3.new(0, 3.6, 0))
         })
-        baTween:Play()
         bbTween:Play()
-        baTween.Completed:Wait()
         bbTween.Completed:Wait()
         if coin then
             coin:Destroy()
         end
-
-        local caInfo = TweenInfo.new(0.24, Enum.EasingStyle.Linear)
-        local caTween = TweenService:Create(perc30, caInfo, {
-            CFrame = CFrame.new(coin.Position - Vector3.new(0, 9, 0))
-        })
         local cbInfo = TweenInfo.new(0.24, Enum.EasingStyle.Linear)
-        local cbTween = TweenService:Create(perc30, cbInfo, {
-            CFrame = CFrame.new(coin.Position - Vector3.new(0, 9, 0))
+        local cbTween = TweenService:Create(humanoidRootPart, cbInfo, {
+            CFrame = CFrame.new(coin.Position - Vector3.new(0, 6, 0))
         })
-        caTween:Play()
         cbTween:Play()
-        caTween.Completed:Wait()
         cbTween.Completed:Wait()
 
         tweenInProgress = false
