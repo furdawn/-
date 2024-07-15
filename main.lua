@@ -57,7 +57,8 @@ local function meowfag()
     --- Optimization Stuff :3
 
     local function ResetCharacter()
-        Players.LocalPlayer.Character.Humanoid:ChangeState(15)
+        Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid").Health = 0
+        Players.LocalPlayer.CharacterAdded:Wait()
     end
 
     local function Noclip()
@@ -92,16 +93,13 @@ local function meowfag()
                 glitchToBoop:Destroy()
             end
         end
-        local character = Players.LocalPlayer:FindFirstChild("Character")
-        if character then
-            character.Animate.Disabled = true
-        end
+        Players.LocalPlayer:FindFirstChild("Character").Animate.Disabled = true
     end
 
     local function gotoHide()
         ResetCharacter()
         workspace.Gravity = 196.2
-        local humanoidRootPart = Players.LocalPlayer.Character.HumanoidRootPart
+        local humanoidRootPart = Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart", 30)
         local targetPosition = inLobby.Position + Vector3.new(0, inLobby.Size.Y / 2 + humanoidRootPart.Size.Y / 2, 0)
         if (humanoidRootPart.Position - targetPosition).Magnitude < 5 then
             return
@@ -204,13 +202,13 @@ local function meowfag()
         local shortestDistance = math.huge
         local closestCoin = nil
 
-        local mrrrrp = Workspace:WaitForChild("Normal", 30)
+        local mrrrrp = Workspace:WaitForChild("Normal", 15)
         if not mrrrrp then
             warn("Normal not found in Workspace.")
             return
         end
 
-        local mrrooowww = mrrrrp:WaitForChild("CoinContainer", 30)
+        local mrrooowww = mrrrrp:WaitForChild("CoinContainer", 15)
         if not mrrooowww then
             warn("CoinContainer not found in Normal.")
             return
@@ -234,7 +232,7 @@ local function meowfag()
     end
 
     local function tweenTo(coin)
-        Players.LocalPlayer.Character.Animate.Disabled = true
+        Players.LocalPlayer:FindFirstChild("Character").Animate.Disabled = true
         local humanoidRootPart = Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart", 30)
         local hitbox = coin:FindFirstChild("TouchInterest")
         if hitbox then
@@ -279,7 +277,7 @@ local function meowfag()
 
         if muwuderer == Players.LocalPlayer then
             print("Murderer, Not resetting :3")
-            Players.LocalPlayer.Character.Animate.Disabled = true
+            Players.LocalPlayer:FindFirstChild("Character").Animate.Disabled = true
             workspace.Gravity = 0
         else
             ResetCharacter()
@@ -369,7 +367,7 @@ local function meowfag()
     gui.Parent = game.CoreGui
 
     local textLabel = Instance.new("TextLabel")
-    textLabel.Text = "Fawn's MM2 Autofarm ;3"
+    textLabel.Text = "Fawn's MM2 Autofarm >,<"
     textLabel.Size = UDim2.new(0.5, 0, 0.5, 0)
     textLabel.Position = UDim2.new(0.25, 0, 0.25, 0)
     textLabel.BackgroundTransparency = 1
