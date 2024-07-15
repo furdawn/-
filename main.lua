@@ -14,6 +14,14 @@ local function meowfag()
     local roleRemote = ReplicatedStorage.Remotes.Gameplay.RoleSelect
     local tweenInProgress
 
+    local inLobby = Instance.new("Part")
+    inLobby.Size = Vector3.new(3, 0.2, 3)
+    inLobby.Position = Vector3.new(-109, 110, 33)
+    inLobby.Color = Color3.fromRGB(183, 134, 255)
+    inLobby.Transparency = 0.75
+    inLobby.Anchored = true
+    inLobby.Parent = workspace
+
     --- Optimization stuff :3
     Terrain.WaterWaveSize = 0
     Terrain.WaterWaveSpeed = 0
@@ -85,23 +93,6 @@ local function meowfag()
             if glitchToBoop then
                 glitchToBoop:Destroy()
             end
-        end
-    end
-
-    local function coinContainerChecker()
-        local normalContainer = Workspace:WaitForChild("Normal", 420)
-        if not normalContainer then
-            return false
-        end
-
-        local success, coinContainer = pcall(function()
-            return normalContainer:WaitForChild("CoinContainer", 420)
-        end)
-
-        if success and coinContainer then
-            return true
-        else
-            return false
         end
     end
 
@@ -187,17 +178,17 @@ local function meowfag()
     end
 
     local function getClosest(coinID)
-        local humanoidRootPart = Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart", 420)
+        local humanoidRootPart = Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart", 30)
         local shortestDistance = math.huge
         local closestCoin = nil
 
-        local mrrrrp = Workspace:WaitForChild("Normal", 420)
+        local mrrrrp = Workspace:WaitForChild("Normal", 30)
         if not mrrrrp then
             warn("Normal not found in Workspace.")
             return
         end
 
-        local mrrooowww = mrrrrp:WaitForChild("CoinContainer", 420)
+        local mrrooowww = mrrrrp:WaitForChild("CoinContainer", 30)
         if not mrrooowww then
             warn("CoinContainer not found in Normal.")
             return
@@ -221,7 +212,7 @@ local function meowfag()
     end
 
     local function tweenTo(coin)
-        local humanoidRootPart = Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart", 420)
+        local humanoidRootPart = Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart", 30)
         local hitbox = coin:FindFirstChild("TouchInterest")
         if hitbox then
             local hitboxParent = hitbox.Parent
@@ -284,14 +275,27 @@ local function meowfag()
 
         task.wait(10)
 
-        local abc = Players.LocalPlayer.PlayerGui.MainGUI:WaitForChild("Game", 420)
-        local def = abc.CoinBags:WaitForChild("Container", 420)
-
-        local eventAmount = tonumber(def:WaitForChild("BeachBall", 420).CurrencyFrame.Icon.Coins.text)
-        local coinAmount = tonumber(def:WaitForChild("Coin", 420).CurrencyFrame.Icon.Coins.text)
+        local abc = Players.LocalPlayer.PlayerGui.MainGUI:WaitForChild("Game", 30)
+        local eventAmount = tonumber(abc.CoinBags.Container:WaitForChild("BeachBall", 30).CurrencyFrame.Icon.Coins.text)
+        local coinAmount = tonumber(abc.CoinBags.Container:WaitForChild("Coin", 30).CurrencyFrame.Icon.Coins.text)
 
         print("Game started, farming!")
         Noclip()
+
+        local function coinContainerChecker()
+            local x = Workspace:WaitForChild("Normal", 5)
+            if not x then
+                return false
+            end
+
+            local y = x:WaitForChild("CoinContainer", 5)
+
+            if not y then
+                return false
+            elseif y then
+                return true
+            end
+        end
 
         while eventAmount < 20 and coinAmount < 40 and coinContainerChecker() do
             if not tweenInProgress then
@@ -340,7 +344,21 @@ local function meowfag()
             endRound()
         end
         print("Game ended, waiting...")
+        local function gotoHide()
+            local humanoidRootPart = Players.LocalPlayer.Character.HumanoidRootPart
+            local targetPosition = inLobby.Position + Vector3.new(0, inLobby.Size.Y / 2 + humanoidRootPart.Size.Y / 2, 0)
+            if (humanoidRootPart.Position - targetPosition).Magnitude < 5 then
+                return
+            end
+            local hideInfo = TweenInfo.new(0.5, Enum.EasingStyle.Linear)
+            local hideMe = TweenService:Create(humanoidRootPart, hideInfo, {
+                CFrame = CFrame.new(targetPosition)
+            })
+            hideMe:Play()
+            hideMe.Completed:Wait()
+        end
         ResetCharacter()
+        gotoHide()
     end
 
     roleRemote.OnClientEvent:Connect(onGameStart)
