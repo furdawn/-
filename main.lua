@@ -4,14 +4,6 @@ local function meowfag()
         game.Players.LocalPlayer:Kick("This is a Murder Mystery 2 script..,,")
     end
 
-    local inLobby = Instance.new("Part")
-    inLobby.Size = Vector3.new(3, 0.2, 3)
-    inLobby.Position = Vector3.new(-109, 110, 33)
-    inLobby.Color = Color3.fromRGB(183, 134, 255)
-    inLobby.Transparency = 0.75
-    inLobby.Anchored = true
-    inLobby.Parent = workspace
-
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
     local TweenService = game:GetService("TweenService")
     local Players = game:GetService("Players")
@@ -58,7 +50,7 @@ local function meowfag()
 
     local function ResetCharacter()
         Players.LocalPlayer.Character.Humanoid:ChangeState(15)
-        task.wait(5)
+        task.wait(6)
         Players.LocalPlayer.Character.Animate.Disabled = true
     end
 
@@ -110,42 +102,6 @@ local function meowfag()
             return true
         else
             return false
-        end
-    end
-
-    local function hideInLobby()
-        local function gotoHide()
-            local humanoidRootPart = Players.LocalPlayer.Character.HumanoidRootPart
-            local targetPosition = inLobby.Position + Vector3.new(0, inLobby.Size.Y / 2 + humanoidRootPart.Size.Y / 2, 0)
-            if (humanoidRootPart.Position - targetPosition).Magnitude < 5 then
-                return
-            end
-
-            local hideInfo = TweenInfo.new(0.25, Enum.EasingStyle.Linear)
-            local hideMe = TweenService:Create(humanoidRootPart, hideInfo, {
-                CFrame = CFrame.new(targetPosition)
-            })
-            hideMe:Play()
-            hideMe.Completed:Wait()
-        end
-        while true do
-            local abc = Players.LocalPlayer.PlayerGui.MainGUI:FindFirstChild("Game")
-            if not abc then
-                task.wait(3)
-                return
-            end
-            local def = abc:FindFirstChild("CoinBags")
-            if not def then
-                print("GUI not visible, hiding!")
-                gotoHide()
-                task.wait(3)
-            end
-            local ghi = def.Container.Coin.Visible
-            if not ghi then
-                print("GUI not visible, hiding!")
-                gotoHide()
-                task.wait(3)
-            end
         end
     end
 
@@ -408,8 +364,6 @@ local function meowfag()
     textLabel.TextScaled = true
     textLabel.TextXAlignment = Enum.TextXAlignment.Center
     textLabel.Parent = gui
-
-    hideInLobby()
 end
 
 if _G.key then
