@@ -1,3 +1,6 @@
+game:GetService("ReplicatedStorage").Remotes.Extras.ChangeLastDevice:FireServer("Tablet")
+game:GetService("ReplicatedStorage").Remotes.Extras.LoadedCompletely:FireServer()
+
 local function meowfag()
     repeat wait() until game:IsLoaded()
     if game.PlaceId ~= 142823291 then
@@ -252,7 +255,7 @@ local function meowfag()
 
         local abInfo = TweenInfo.new(tweenDuration, Enum.EasingStyle.Linear)
         local abTween = TweenService:Create(humanoidRootPart, abInfo, {
-            CFrame = CFrame.new(coin.Position - Vector3.new(0, 4.5, 0))
+            CFrame = CFrame.new(coin.Position - Vector3.new(0, 2, 0))
         })
         abTween:Play()
         abTween.Completed:Wait()
