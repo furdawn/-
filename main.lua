@@ -19,6 +19,12 @@ local function meowfag()
     local Workspace = game:GetService("Workspace")
     local Terrain = Workspace.Terrain
 
+
+
+    print("Version: Testing")
+
+
+
     local roleRemote = ReplicatedStorage.Remotes.Gameplay.RoleSelect
     local tweenInProgress
 
@@ -57,13 +63,11 @@ local function meowfag()
     --- Optimization Stuff :3
 
     local function ResetCharacter()
-        local function waitForRespawn()
-            local humanoid = Players.LocalPlayer.Character:WaitForChild("Humanoid")
-            humanoid.Died:Wait()
-            humanoid.Respawned:Wait()
+        Players.LocalPlayer.Character.Humanoid:ChangeState(15)
+        local animateDisable = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
+        if animateDisable then
+            Players.LocalPlayer.Character.Animate.Disabled = true
         end
-        waitForRespawn()
-        Players.LocalPlayer.Character.Animate.Disabled = true
     end
 
     local function Noclip()
@@ -117,7 +121,7 @@ local function meowfag()
     end
 
     local function hideInLobby()
-        while not coinContainerChecker() do
+        local function gotoHide()
             local humanoidRootPart = Players.LocalPlayer.Character.HumanoidRootPart
             local targetPosition = inLobby.Position + Vector3.new(0, humanoidRootPart.Size.Y / 2 + inLobby.Size.Y / 2, 0)
             local hideInfo = TweenInfo.new(0.25, Enum.EasingStyle.Linear)
@@ -126,6 +130,14 @@ local function meowfag()
             })
             hideMe:Play()
             hideMe.Completed:Wait()
+        end
+        local abc = Players.LocalPlayer.PlayerGui.MainGUI:FindFirstChild("Game")
+        if not abc then
+            gotoHide()
+        end
+        local def = abc.CoinBags.Container.BeachBall
+        if not def then
+            gotoHide()
         end
     end
 
