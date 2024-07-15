@@ -130,7 +130,13 @@ local function meowfag()
         end
         while true do
             local abc = Players.LocalPlayer.PlayerGui.MainGUI:FindFirstChild("Game")
+            if not abc then
+                return
+            end
             local def = abc.CoinBags.Container.Coin.CurrencyFrame.Icon
+            if not def then
+                return
+            end
             while abc or def.Visible do
                 wait(1)
             end
