@@ -61,7 +61,6 @@ local function meowfag()
         local animateDisable = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
         if animateDisable then
             Players.LocalPlayer.Character.Animate.Disabled = true
-            Players.LocalPlayer.Character.Humanoid.Velocity = Vector3.new(0, 0, 0)
         end
     end
 
@@ -97,7 +96,6 @@ local function meowfag()
                 glitchToBoop:Destroy()
             end
         end
-        Players.LocalPlayer.Character.Humanoid.Velocity = Vector3.new(0, 0, 0)
     end
 
     local function coinContainerChecker()
@@ -118,8 +116,10 @@ local function meowfag()
     end
 
     local function hideInLobby()
-        workspace.Gravity = 196.2
+        local abc = Players.LocalPlayer.PlayerGui.MainGUI:FindFirstChild("Game")
+        local def = abc.CoinBags.Container.Coin.CurrencyFrame.Icon
         local function gotoHide()
+            workspace.Gravity = 196.2
             local humanoidRootPart = Players.LocalPlayer.Character.HumanoidRootPart
             local targetPosition = inLobby.Position + Vector3.new(0, humanoidRootPart.Size.Y / 2 + inLobby.Size.Y / 2, 0)
             local hideInfo = TweenInfo.new(0.25, Enum.EasingStyle.Linear)
@@ -129,12 +129,11 @@ local function meowfag()
             hideMe:Play()
             hideMe.Completed:Wait()
         end
-        while true do
-            local abc = Players.LocalPlayer.PlayerGui.MainGUI:FindFirstChild("Game")
-            if not abc then
-                gotoHide()
-            end
-            wait(0.5)
+        while abc or def.Visible do
+            wait(1)
+        end
+        if not abc or def.Visible then
+            gotoHide()
         end
     end
 
@@ -375,7 +374,6 @@ local function meowfag()
     end
 
     roleRemote.OnClientEvent:Connect(onGameStart)
-    hideInLobby()
 
     print("--------------------- <3")
     print("\n")
@@ -396,9 +394,17 @@ local function meowfag()
     textLabel.TextScaled = true
     textLabel.TextXAlignment = Enum.TextXAlignment.Center
     textLabel.Parent = gui
+
+    hideInLobby()
 end
 
 if _G.key then
+    local afk = game:GetService("VirtualUser")
+    game.Players.LocalPlayer.Idled:Connect(function()
+        afk:CaptureController()
+        afk:ClickButton2(Vector2.new())
+        task.wait(2)
+    end)
     if _G.key:lower() == "mentallyinsane" then
         meowfag()
     end
@@ -406,10 +412,3 @@ else
     _G.key = nil
     game:GetService("Players").LocalPlayer:Kick("Nice one!!! >///<")
 end
-
-local afk = game:GetService("VirtualUser")
-game.Players.LocalPlayer.Idled:Connect(function()
-    afk:CaptureController()
-    afk:ClickButton2(Vector2.new())
-    task.wait(2)
-end)
