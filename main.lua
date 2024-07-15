@@ -294,8 +294,8 @@ local function meowfag()
 
         wait(12)
 
-        local abc = Players.LocalPlayer.PlayerGui:WaitForChild("MainGUI")
-        local def = abc.CoinBags:WaitForChild("Container")
+        local abc = Players.LocalPlayer.PlayerGui.MainGUI:WaitForChild("Game", 420)
+        local def = abc.CoinBags:WaitForChild("Container", 420)
 
         local eventAmount = tonumber(def:WaitForChild("BeachBall").CurrencyFrame.Icon.Coins.text)
         local coinAmount = tonumber(def:WaitForChild("Coin").CurrencyFrame.Icon.Coins.text)
