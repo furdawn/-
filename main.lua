@@ -60,7 +60,6 @@ local function meowfag()
         workspace.Gravity = 196.2
         Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid").Health = 0
         Players.LocalPlayer.CharacterAdded:Wait()
-        workspace.Gravity = 0
     end
 
     local function Noclip()
