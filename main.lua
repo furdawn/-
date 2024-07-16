@@ -102,9 +102,10 @@ local function meowfag()
     end
 
     local function gotoHide()
+        ResetCharacter()
         workspace.Gravity = 196.2
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
-        local humanoidRootPart = Character:WaitForChild("HumanoidRootPart", 60)
+        local humanoidRootPart = Character:WaitForChild("HumanoidRootPart", math.huge)
         local targetPosition = Vector3.new(-109, 112.5, 33)
         local hideMe = TweenService:Create(humanoidRootPart, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = CFrame.new(targetPosition)})
         hideMe:Play()
@@ -192,8 +193,7 @@ local function meowfag()
                 end
             end
         end
-        flingDiedF()
-        gotoHide()
+        ResetCharacter()
     end
 
     local function getClosest(coinID)
@@ -252,9 +252,9 @@ local function meowfag()
             tween.Completed:Wait()
         end
 
-        if distance < 20 then
+        if distance < 15 then
             setTween(coin.Position - Vector3.new(0, 3.9, 0), 0.2)
-        elseif distance > 150 then
+        elseif distance > 200 then
             setTween(coin.Position - Vector3.new(0, 9, 0), 2)
             task.wait(1)
             setTween(coin.Position - Vector3.new(0, 4.1, 0), 0.2)
@@ -360,6 +360,7 @@ local function meowfag()
             return
         end
         endRound()
+        gotoHide()
         print("Game ended, waiting...")
     end
 
