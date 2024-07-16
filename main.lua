@@ -105,7 +105,7 @@ local function meowfag()
     local function gotoHide()
         workspace.Gravity = 196.2
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
-        local humanoidRootPart = Character:FindFirstChild("HumanoidRootPart")
+        local humanoidRootPart = Character:WaitForChild("HumanoidRootPart", 60)
         local targetPosition = Vector3.new(-109, 112.5, 33)
         if (humanoidRootPart.Position - targetPosition).Magnitude < 5 then
             return
@@ -202,7 +202,7 @@ local function meowfag()
 
     local function getClosest(coinID)
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
-        local humanoidRootPart = Character:FindFirstChild("HumanoidRootPart")
+        local humanoidRootPart = Character:WaitForChild("HumanoidRootPart", 60)
         local shortestDistance = math.huge
         local closestCoin = nil
 
@@ -237,7 +237,7 @@ local function meowfag()
 
     local function tweenTo(coin)
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
-        local humanoidRootPart = Character:FindFirstChild("HumanoidRootPart")
+        local humanoidRootPart = Character:WaitForChild("HumanoidRootPart", 60)
         local hitbox = coin:FindFirstChild("TouchInterest")
         if hitbox then
             local hitboxParent = hitbox.Parent
