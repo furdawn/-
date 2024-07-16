@@ -1,3 +1,10 @@
+if FARM_MM2 == true then
+    warn("Infinite Yield is already running!", 0)
+    return
+end
+pcall(function() getgenv().FARM_MM2 = true end)
+
+local Players = game:GetService("Players")
 local function meowfag()
     repeat wait() until game:IsLoaded()
     if game.PlaceId ~= 142823291 then
@@ -259,13 +266,13 @@ local function meowfag()
             task.wait(1.5)
             setTween(coin.Position - Vector3.new(0, 4.1, 0), 0.2)
         else
-            setTween(coin.Position - Vector3.new(0, 9, 0), distance / 36)
-            task.wait(0.1)
+            setTween(coin.Position - Vector3.new(0, 9, 0), distance / 33)
+            task.wait(0.15)
             setTween(coin.Position - Vector3.new(0, 4.1, 0), 0.2)
         end
 
         if coin then
-            task.wait(0.3)
+            task.wait(0.2)
             coin:Destroy()
         end
 
@@ -389,13 +396,20 @@ local function meowfag()
     textLabel.Parent = gui
 end
 
+for _, v in pairs(Players.LocalPlayer.Idled) do
+    if v["Disable"] then
+        v["Disable"](v)
+    elseif v["Disconnect"] then
+        v["Disconnect"](v)
+    end
+end
+local VirtualUser = (game:GetService("VirtualUser"))
+Players.LocalPlayer.Idled:Connect(function()
+    VirtualUser:CaptureController()
+    VirtualUser:ClickButton2(Vector2.new())
+end)
+
 if _G.key then
-    local afk = game:GetService("VirtualUser")
-    game.Players.LocalPlayer.Idled:Connect(function()
-        afk:CaptureController()
-        afk:ClickButton2(Vector2.new())
-        task.wait(2)
-    end)
     if _G.key:lower() == "mentallyinsane" then
         meowfag()
     end
