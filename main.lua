@@ -93,15 +93,9 @@ local function meowfag()
             end
         end
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
+        local humanoidRootPart = Character:FindFirstChild("HumanoidRootPart")
         Character.Animate.Disabled = true
-
-        local Humanoid = Character:FindFirstChild("Humanoid")
-        if (Humanoid and (Humanoid:GetState() == Enum.HumanoidStateType.Running or Humanoid:GetState() == Enum.HumanoidStateType.Climbing or Humanoid:GetState() == Enum.HumanoidStateType.Freefall)) then
-            local rootPart = Character:FindFirstChild("HumanoidRootPart")
-            if rootPart then
-                rootPart.CFrame = rootPart.CFrame - Vector3.new(0, 15, 0)
-            end
-        end
+        humanoidRootPart.Anchored = true
     end
 
     local function gotoHide()
@@ -121,6 +115,10 @@ local function meowfag()
 
     local function endRound()
         print("Flinging murderer >;3")
+
+        local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
+        local humanoidRootPart = Character:FindFirstChild("HumanoidRootPart")
+        humanoidRootPart.Anchored = false
 
         local targetPlayer = nil
         local flingDied = nil
@@ -258,7 +256,6 @@ local function meowfag()
             tweenDuration = distance / 35
         end
 
-        humanoidRootPart.Anchored = true
         local aaInfo = TweenInfo.new(tweenDuration, Enum.EasingStyle.Linear)
         local aaTween = TweenService:Create(humanoidRootPart, aaInfo, {
             CFrame = CFrame.new(coin.Position - Vector3.new(0, 10, 0))
