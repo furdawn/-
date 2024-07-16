@@ -254,13 +254,13 @@ local function meowfag()
         end
 
         if distance < 10 then
-            setTween(coin.Position - Vector3.new(0, 4.1, 0), distance / 38)
+            setTween(coin.Position - Vector3.new(0, 3.9, 0), 0.2)
         elseif distance > 150 then
-            setTween(coin.Position - Vector3.new(0, 10, 0), 0)
+            setTween(coin.Position - Vector3.new(0, 9, 0), 0)
             task.wait(0.1)
             setTween(coin.Position - Vector3.new(0, 4.1, 0), 0.2)
         else
-            setTween(coin.Position - Vector3.new(0, 10, 0), distance / 38)
+            setTween(coin.Position - Vector3.new(0, 9, 0), distance / 45)
             task.wait(0.1)
             setTween(coin.Position - Vector3.new(0, 4.1, 0), 0.2)
         end
