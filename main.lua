@@ -249,7 +249,7 @@ local function meowfag()
         local distance = (humanoidRootPart.Position - coin.Position).Magnitude
 
         if distance > 150 then
-            tweenDuration = 0.1
+            tweenDuration = 0.15
         else
             tweenDuration = distance / 35
         end
