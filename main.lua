@@ -102,7 +102,7 @@ local function meowfag()
     end
 
     local function gotoHide()
-        ResetCharacter()
+        repeat wait() until Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid").Health > 0
         workspace.Gravity = 196.2
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
         local humanoidRootPart = Character:WaitForChild("HumanoidRootPart", math.huge)
@@ -252,7 +252,7 @@ local function meowfag()
             tween.Completed:Wait()
         end
 
-        if distance < 15 then
+        if distance < 20 then
             setTween(coin.Position - Vector3.new(0, 3.9, 0), 0.2)
         elseif distance > 200 then
             setTween(coin.Position - Vector3.new(0, 9, 0), 0)
