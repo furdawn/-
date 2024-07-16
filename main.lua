@@ -6,6 +6,7 @@ local function meowfag()
 
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
     local TweenService = game:GetService("TweenService")
+    local RunService = game:GetService("RunService")
     local Players = game:GetService("Players")
     local Lighting = game:GetService("Lighting")
     local Workspace = game:GetService("Workspace")
@@ -64,13 +65,16 @@ local function meowfag()
 
     local function Noclip()
         Players.LocalPlayer.CharacterAdded:Wait()
-        game:GetService("RunService").Stepped:Connect(function()
-            for _, v in pairs(Players.LocalPlayer.Character:GetChildren()) do
-                if v:IsA("BasePart") then
-                    v.CanCollide = false
+        local function NoclipLoop()
+            if Players.LocalPlayer.Character ~= nil then
+                for _, child in pairs(Players.LocalPlayer.Character:GetDescendants()) do
+                    if child:IsA("BasePart") and child.CanCollide == true then
+                        child.CanCollide = false
+                    end
                 end
             end
-        end)
+        end
+        RunService.Stepped:Connect(NoclipLoop)
 
         local wrkspcnrml = Workspace.Normal
         if wrkspcnrml then
@@ -94,8 +98,7 @@ local function meowfag()
                 interactiveParts:Destroy()
             end
         end
-        local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
-        Character.Animate.Disabled = true
+        Players.LocalPlayer.Character.Animate.Disabled = true
         workspace.Gravity = 0
     end
 
@@ -282,8 +285,7 @@ local function meowfag()
 
         if muwuderer == Players.LocalPlayer then
             print("Murderer, Not resetting :3")
-            local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
-            Character.Animate.Disabled = true
+            Players.LocalPlayer.Character.Animate.Disabled = true
         else
             ResetCharacter()
         end
