@@ -121,14 +121,27 @@ local function meowfag()
     end
 
     local function gotoHide()
-        repeat wait() until Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid").Health > 0
-        workspace.Gravity = 196.2
-        local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
-        local humanoidRootPart = Character:WaitForChild("HumanoidRootPart", math.huge)
-        local targetPosition = Vector3.new(-109, 112.5, 33)
-        local hideMe = TweenService:Create(humanoidRootPart, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = CFrame.new(targetPosition)})
-        hideMe:Play()
-        hideMe.Completed:Wait()
+        local keepTeleporting = true
+        roleRemote.OnClientEvent:Connect(function()
+            keepTeleporting = false
+        end)
+        local function repeatGoto()
+            repeat wait() until Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid").Health > 0
+            workspace.Gravity = 196.2
+            local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
+            local humanoidRootPart = Character:WaitForChild("HumanoidRootPart", math.huge)
+            local targetPosition = Vector3.new(-109, 112.5, 33)
+            local distance = (humanoidRootPart.Position - targetPosition).magnitude    
+            if distance > 15 then
+                local hideMe = TweenService:Create(humanoidRootPart, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = CFrame.new(targetPosition)})
+                hideMe:Play()
+                hideMe.Completed:Wait()
+            end
+        end
+        while keepTeleporting do
+            repeatGoto()
+            wait(0.15)
+        end
     end
 
     local function endRound()
