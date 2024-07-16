@@ -57,7 +57,6 @@ local function meowfag()
     --- Optimization Stuff :3
 
     local function ResetCharacter()
-        workspace.Gravity = 196.2
         Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid").Health = 0
         Players.LocalPlayer.CharacterAdded:Wait()
     end
@@ -95,14 +94,20 @@ local function meowfag()
         end
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
         Character.Animate.Disabled = true
-        workspace.Gravity = 0
+
+        local Humanoid = Character:FindFirstChild("Humanoid")
+        if (Humanoid and (Humanoid:GetState() == Enum.HumanoidStateType.Running or Humanoid:GetState() == Enum.HumanoidStateType.Climbing or Humanoid:GetState() == Enum.HumanoidStateType.Freefall)) then
+            local rootPart = Character:FindFirstChild("HumanoidRootPart")
+            if rootPart then
+                rootPart.CFrame = rootPart.CFrame - Vector3.new(0, 15, 0)
+            end
+        end
     end
 
     local function gotoHide()
-        workspace.Gravity = 196.2
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
         local humanoidRootPart = Character:FindFirstChild("HumanoidRootPart")
-        local targetPosition = inLobby.Position + Vector3.new(0, inLobby.Size.Y / 2 + humanoidRootPart.Size.Y / 2, 0)
+        local targetPosition = inLobby.Position + Vector3.new(0, 2.5, 0)
         if (humanoidRootPart.Position - targetPosition).Magnitude < 5 then
             return
         end
@@ -116,7 +121,6 @@ local function meowfag()
 
     local function endRound()
         print("Flinging murderer >;3")
-        workspace.Gravity = 196.2
 
         local targetPlayer = nil
         local flingDied = nil
@@ -254,18 +258,25 @@ local function meowfag()
             tweenDuration = distance / 35
         end
 
+        humanoidRootPart.Anchored = true
         local aaInfo = TweenInfo.new(tweenDuration, Enum.EasingStyle.Linear)
         local aaTween = TweenService:Create(humanoidRootPart, aaInfo, {
             CFrame = CFrame.new(coin.Position - Vector3.new(0, 10, 0))
         })
         aaTween:Play()
-        aaTween.Completed:Wait()
-        local abInfo = TweenInfo.new(0.2, Enum.EasingStyle.Linear)
-        local abTween = TweenService:Create(humanoidRootPart, abInfo, {
-            CFrame = CFrame.new(coin.Position - Vector3.new(0, 4, 0))
-        })
-        abTween:Play()
-        abTween.Completed:Wait()
+        aaTween.Completed:Connect(function()
+            local abInfo = TweenInfo.new(0.2, Enum.EasingStyle.Linear)
+            local abTween = TweenService:Create(humanoidRootPart, abInfo, {
+                CFrame = CFrame.new(coin.Position - Vector3.new(0, 4, 0))
+            })
+            abTween.Completed:Connect(function()
+                humanoidRootPart.Anchored = false
+            end)
+            abTween:Play()
+        end)
+
+        humanoidRootPart.Anchored = true
+        aaTween:Play()
 
         if coin then
             task.wait(0.4)
@@ -289,7 +300,6 @@ local function meowfag()
             print("Murderer, Not resetting :3")
             local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
             Character.Animate.Disabled = true
-            workspace.Gravity = 0
         else
             ResetCharacter()
         end
