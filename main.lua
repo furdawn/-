@@ -193,6 +193,7 @@ local function meowfag()
             end
             ResetCharacter()
         end
+        flingDiedF()
         gotoHide()
     end
 
