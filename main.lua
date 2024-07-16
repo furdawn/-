@@ -86,11 +86,15 @@ local function meowfag()
             end
             local invisParts =  wrkspcnrml:FindFirstChild("Invis")
             local glitchToBoop = wrkspcnrml:FindFirstChild("GlitchProof")
+            local interactiveParts = wrkspcnrml:FindFirstChild("Interactive")
             if invisParts then
                 invisParts:Destroy()
             end
             if glitchToBoop then
                 glitchToBoop:Destroy()
+            end
+            if interactiveParts then
+                interactiveParts:Destroy()
             end
         end
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
