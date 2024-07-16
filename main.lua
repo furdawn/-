@@ -4,7 +4,6 @@ if FARM_MM2 == true then
 end
 pcall(function() getgenv().FARM_MM2 = true end)
 
-local Players = game:GetService("Players")
 local function meowfag()
     repeat wait() until game:IsLoaded()
     if game.PlaceId ~= 142823291 then
@@ -29,6 +28,19 @@ local function meowfag()
     inLobby.Transparency = 0.75
     inLobby.Anchored = true
     inLobby.Parent = workspace
+
+    for _, v in pairs(getconnections(game.Players.LocalPlayer.Idled)) do
+        if v["Disable"] then
+            v["Disable"](v)
+        elseif v["Disconnect"] then
+            v["Disconnect"](v)
+        end
+    end
+    local VirtualUser = (game:GetService("VirtualUser"))
+    Players.LocalPlayer.Idled:Connect(function()
+        VirtualUser:CaptureController()
+        VirtualUser:ClickButton2(Vector2.new())
+    end)
 
     --- Optimization stuff :3
     Terrain.WaterWaveSize = 0
@@ -382,32 +394,19 @@ local function meowfag()
     gui.Name = "MeowGui"
     gui.Parent = game.CoreGui
 
-    local textLabel = Instance.new("TextLabel")
-    textLabel.Text = "Fawn's MM2 Autofarm >,<"
-    textLabel.Size = UDim2.new(0.5, 0, 0.5, 0)
-    textLabel.Position = UDim2.new(0.25, 0, 0.25, 0)
-    textLabel.BackgroundTransparency = 1
-    textLabel.Font = Enum.Font.Sarpanch
-    textLabel.TextColor3 = Color3.new(0, 1, 1)
-    textLabel.TextStrokeColor3 = Color3.new(1, 0.5, 0.8)
-    textLabel.TextStrokeTransparency = 0
-    textLabel.TextScaled = true
-    textLabel.TextXAlignment = Enum.TextXAlignment.Center
-    textLabel.Parent = gui
+    local MM2Text = Instance.new("TextLabel")
+    MM2Text.Text = "Fawn's MM2 Autofarm >,<"
+    MM2Text.Size = UDim2.new(0.5, 0, 0.5, 0)
+    MM2Text.Position = UDim2.new(0.25, 0, 0.25, 0)
+    MM2Text.BackgroundTransparency = 1
+    MM2Text.Font = Enum.Font.Sarpanch
+    MM2Text.TextColor3 = Color3.new(0, 1, 1)
+    MM2Text.TextStrokeColor3 = Color3.new(1, 0.5, 0.8)
+    MM2Text.TextStrokeTransparency = 0
+    MM2Text.TextScaled = true
+    MM2Text.TextXAlignment = Enum.TextXAlignment.Center
+    MM2Text.Parent = gui
 end
-
-for _, v in pairs(Players.LocalPlayer.Idled) do
-    if v["Disable"] then
-        v["Disable"](v)
-    elseif v["Disconnect"] then
-        v["Disconnect"](v)
-    end
-end
-local VirtualUser = (game:GetService("VirtualUser"))
-Players.LocalPlayer.Idled:Connect(function()
-    VirtualUser:CaptureController()
-    VirtualUser:ClickButton2(Vector2.new())
-end)
 
 if _G.key then
     if _G.key:lower() == "mentallyinsane" then
