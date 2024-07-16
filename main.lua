@@ -107,9 +107,6 @@ local function meowfag()
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
         local humanoidRootPart = Character:WaitForChild("HumanoidRootPart", 60)
         local targetPosition = Vector3.new(-109, 112.5, 33)
-        if (humanoidRootPart.Position - targetPosition).Magnitude < 5 then
-            return
-        end
         local hideMe = TweenService:Create(humanoidRootPart, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = CFrame.new(targetPosition)})
         hideMe:Play()
         hideMe.Completed:Wait()
@@ -117,7 +114,7 @@ local function meowfag()
 
     local function endRound()
         print("Flinging murderer >;3")
-        workspace.Gravity = 196.2
+        workspace.Gravity = 10
         local targetPlayer = nil
         local flingDied = nil
         flinging = false
@@ -149,7 +146,7 @@ local function meowfag()
         local poofMurderer = Instance.new("BodyAngularVelocity")
         poofMurderer.Name = "SmirksWithMaliciousIntent"
         poofMurderer.Parent = Players.LocalPlayer.Character.HumanoidRootPart
-        poofMurderer.AngularVelocity = Vector3.new(0,99999,0)
+        poofMurderer.AngularVelocity = Vector3.new(0,100000,0)
         poofMurderer.MaxTorque = Vector3.new(0,math.huge,0)
         poofMurderer.P = math.huge
         local Char = Players.LocalPlayer.Character:GetChildren()
@@ -188,9 +185,9 @@ local function meowfag()
             while flinging == true and targetPlayer.Character.Humanoid and targetPlayer.Character.Humanoid.Health > 0 do
                 Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, -0.3, 1.5)
                 Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(0, 0, math.rad(8))
-                poofMurderer.AngularVelocity = Vector3.new(0,99999,0)
+                poofMurderer.AngularVelocity = Vector3.new(0,100000,0)
                 wait(.1)
-                poofMurderer.AngularVelocity = Vector3.new(0,0,0)
+                poofMurderer.AngularVelocity = Vector3.new(0,-500,0)
                 if os.time() - startTime >= 8 then
                     break
                 end
@@ -249,27 +246,24 @@ local function meowfag()
         workspace.Gravity = 0
         local distance = (humanoidRootPart.Position - coin.Position).Magnitude
 
-        if distance > 150 then
-            teleportSpeed = 0
-        else
-            teleportSpeed = distance / 38
+        local function setTween(targetPos, duration)
+            local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+            local tween = TweenService:Create(humanoidRootPart, tweenInfo, { CFrame = CFrame.new(targetPos) })
+            tween:Play()
+            tween.Completed:Wait()
         end
 
-        local aaInfo = TweenInfo.new(teleportSpeed, Enum.EasingStyle.Linear)
-        local aaTween = TweenService:Create(humanoidRootPart, aaInfo, {
-        CFrame = CFrame.new(coin.Position - Vector3.new(0, 10, 0))
-        })
-        aaTween:Play()
-        aaTween.Completed:Wait()
-
-        task.wait(0.1)
-
-        local abInfo = TweenInfo.new(0.2, Enum.EasingStyle.Linear)
-        local abTween = TweenService:Create(humanoidRootPart, abInfo, {
-            CFrame = CFrame.new(coin.Position - Vector3.new(0, 4.1, 0))
-        })
-        abTween:Play()
-        abTween.Completed:Wait()
+        if distance < 10 then
+            setTween(coin.Position - Vector3.new(0, 4.1, 0), distance / 38)
+        elseif distance > 150 then
+            setTween(coin.Position - Vector3.new(0, 10, 0), 0)
+            task.wait(0.1)
+            setTween(coin.Position - Vector3.new(0, 4.1, 0), 0.2)
+        else
+            setTween(coin.Position - Vector3.new(0, 10, 0), distance / 38)
+            task.wait(0.1)
+            setTween(coin.Position - Vector3.new(0, 4.1, 0), 0.2)
+        end
 
         if coin then
             task.wait(0.3)
