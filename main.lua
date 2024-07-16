@@ -57,13 +57,12 @@ local function meowfag()
     --- Optimization Stuff :3
 
     local function ResetCharacter()
-        workspace.Gravity = 196.2
         Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid").Health = 0
         Players.LocalPlayer.CharacterAdded:Wait()
+        workspace.Gravity = 196.2
     end
 
     local function Noclip()
-        workspace.Gravity = 196.2
         game:GetService("RunService").Stepped:Connect(function()
             for _, b in pairs(Workspace:GetChildren()) do
                 if b.Name == Players.LocalPlayer.Name then
@@ -100,6 +99,7 @@ local function meowfag()
         end
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
         Character.Animate.Disabled = true
+        workspace.Gravity = 196.2
     end
 
     local function gotoHide()
@@ -120,7 +120,6 @@ local function meowfag()
 
     local function endRound()
         print("Flinging murderer >;3")
-
         workspace.Gravity = 196.2
         local targetPlayer = nil
         local flingDied = nil
@@ -190,7 +189,7 @@ local function meowfag()
         if Players.LocalPlayer and Players.LocalPlayer.Character and targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("Humanoid") then
             local startTime = os.time()
             while flinging == true and targetPlayer.Character.Humanoid and targetPlayer.Character.Humanoid.Health > 0 do
-                Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, -1.1, 1.5)
+                Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, -0.3, 1.5)
                 Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(0, 0, math.rad(8))
                 poofMurderer.AngularVelocity = Vector3.new(0,99999,0)
                 wait(.1)
@@ -261,16 +260,10 @@ local function meowfag()
 
         local aaInfo = TweenInfo.new(tweenDuration, Enum.EasingStyle.Linear)
         local aaTween = TweenService:Create(humanoidRootPart, aaInfo, {
-            CFrame = CFrame.new(coin.Position - Vector3.new(0, 10, 0))
+            CFrame = CFrame.new(coin.Position - Vector3.new(0, 4.2, 0))
         })
         aaTween:Play()
         aaTween.Completed:Wait()
-        local abInfo = TweenInfo.new(0.2, Enum.EasingStyle.Linear)
-        local abTween = TweenService:Create(humanoidRootPart, abInfo, {
-            CFrame = CFrame.new(coin.Position - Vector3.new(0, 4, 0))
-        })
-        abTween:Play()
-        abTween.Completed:Wait()
 
         if coin then
             task.wait(0.4)
@@ -294,6 +287,7 @@ local function meowfag()
             print("Murderer, Not resetting :3")
             local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
             Character.Animate.Disabled = true
+            workspace.Gravity = 196.2
         else
             ResetCharacter()
         end
