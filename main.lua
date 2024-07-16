@@ -239,7 +239,7 @@ local function meowfag()
         if hitbox then
             local hitboxParent = hitbox.Parent
             if hitboxParent:IsA("BasePart") then
-                hitboxParent.Size = Vector3.new(13, 13, 13)
+                hitboxParent.Size = Vector3.new(14, 14, 14)
             end
         end
 
@@ -259,7 +259,7 @@ local function meowfag()
         aaTween.Completed:Wait()
         local abInfo = TweenInfo.new(0.2, Enum.EasingStyle.Linear)
         local abTween = TweenService:Create(humanoidRootPart, abInfo, {
-            CFrame = CFrame.new(coin.Position - Vector3.new(0, 3.6, 0))
+            CFrame = CFrame.new(coin.Position - Vector3.new(0, 4, 0))
         })
         abTween:Play()
         abTween.Completed:Wait()
@@ -361,6 +361,7 @@ local function meowfag()
         end
         print("Game ended, waiting...")
         endRound()
+        gotoHide()
     end
 
     roleRemote.OnClientEvent:Connect(onGameStart)
