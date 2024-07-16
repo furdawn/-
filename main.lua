@@ -249,9 +249,9 @@ local function meowfag()
         local distance = (humanoidRootPart.Position - coin.Position).Magnitude
 
         if distance > 150 then
-            tweenDuration = 0.15
+            tweenDuration = 0.3
         else
-            tweenDuration = distance / 35
+            tweenDuration = distance / 38
         end
 
         local aaInfo = TweenInfo.new(tweenDuration, Enum.EasingStyle.Linear)
@@ -259,14 +259,13 @@ local function meowfag()
             CFrame = CFrame.new(coin.Position - Vector3.new(0, 10, 0))
         })
         aaTween:Play()
-        aaTween.Completed:Connect(function()
-            local abInfo = TweenInfo.new(0.2, Enum.EasingStyle.Linear)
-            local abTween = TweenService:Create(humanoidRootPart, abInfo, {
-                CFrame = CFrame.new(coin.Position - Vector3.new(0, 4, 0))
-            })
-            abTween:Play()
-            abTween.Completed:Wait()
-        end)
+        aaTween.Completed:Wait()
+        local abInfo = TweenInfo.new(0.2, Enum.EasingStyle.Linear)
+        local abTween = TweenService:Create(humanoidRootPart, abInfo, {
+            CFrame = CFrame.new(coin.Position - Vector3.new(0, 4, 0))
+        })
+        abTween:Play()
+        abTween.Completed:Wait()
 
         if coin then
             task.wait(0.4)
