@@ -98,7 +98,6 @@ local function meowfag()
     end
 
     local function gotoHide()
-        ResetCharacter()
         workspace.Gravity = 196.2
         local humanoidRootPart = Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart", 30)
         local targetPosition = inLobby.Position + Vector3.new(0, inLobby.Size.Y / 2 + humanoidRootPart.Size.Y / 2, 0)
@@ -299,7 +298,7 @@ local function meowfag()
                 return false
             end
 
-            local y = x:FindFirstChild("CoinContainer")
+            local y = x:WaitForChild("CoinContainer")
             if not y then
                 return false
             elseif y then
