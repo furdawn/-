@@ -379,8 +379,8 @@ local function meowfag()
     textLabel.Size = UDim2.new(0.5, 0, 0.5, 0)
     textLabel.Position = UDim2.new(0.25, 0, 0.25, 0)
     textLabel.BackgroundTransparency = 1
-    textLabel.Font = Enum.Font.Antique
-    textLabel.TextColor3 = Color3.new(1, 0.478431, 0.705882)
+    textLabel.Font = Enum.Font.Sarpanch
+    textLabel.TextColor3 = Color3.new(0.082352, 1, 1)
     textLabel.TextScaled = true
     textLabel.TextXAlignment = Enum.TextXAlignment.Center
     textLabel.Parent = gui
