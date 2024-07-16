@@ -66,7 +66,7 @@ local function meowfag()
         game:GetService("RunService").Stepped:Connect(function()
             for _, b in pairs(Workspace:GetChildren()) do
                 if b.Name == Players.LocalPlayer.Name then
-                    for _, v in pairs(Workspace[Players.LocalPlayer.Name]:GetChildren()) do
+                    for _, v in pairs(Workspace[Players.LocalPlayer.Name]:GetDescendants()) do
                         if v:IsA("BasePart") then
                             v.CanCollide = false
                         end
