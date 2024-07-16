@@ -93,7 +93,8 @@ local function meowfag()
                 glitchToBoop:Destroy()
             end
         end
-        Players.LocalPlayer:WaitForChild("Character", 30).Animate.Disabled = true
+        local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
+        Character.Animate.Disabled = true
     end
 
     local function gotoHide()
@@ -232,7 +233,6 @@ local function meowfag()
     end
 
     local function tweenTo(coin)
-        Players.LocalPlayer:FindFirstChild("Character").Animate.Disabled = true
         local humanoidRootPart = Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart", 30)
         local hitbox = coin:FindFirstChild("TouchInterest")
         if hitbox then
@@ -277,7 +277,8 @@ local function meowfag()
 
         if muwuderer == Players.LocalPlayer then
             print("Murderer, Not resetting :3")
-            Players.LocalPlayer:FindFirstChild("Character").Animate.Disabled = true
+            local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
+            Character.Animate.Disabled = true
             workspace.Gravity = 0
         else
             ResetCharacter()
