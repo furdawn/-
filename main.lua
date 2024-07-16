@@ -64,7 +64,6 @@ local function meowfag()
     end
 
     local function Noclip()
-        Players.LocalPlayer.CharacterAdded:Wait()
         local function NoclipLoop()
             if Players.LocalPlayer.Character ~= nil then
                 for _, child in pairs(Players.LocalPlayer.Character:GetDescendants()) do
