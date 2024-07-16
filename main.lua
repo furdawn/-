@@ -63,14 +63,11 @@ local function meowfag()
     end
 
     local function Noclip()
+        Players.LocalPlayer.CharacterAdded:Wait()
         game:GetService("RunService").Stepped:Connect(function()
-            for _, b in pairs(Workspace:GetChildren()) do
-                if b.Name == Players.LocalPlayer.Name then
-                    for _, v in pairs(Workspace[Players.LocalPlayer.Name]:GetDescendants()) do
-                        if v:IsA("BasePart") then
-                            v.CanCollide = false
-                        end
-                    end
+            for _, v in pairs(Players.LocalPlayer.Character:GetChildren()) do
+                if v:IsA("BasePart") then
+                    v.CanCollide = false
                 end
             end
         end)
@@ -99,7 +96,7 @@ local function meowfag()
         end
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
         Character.Animate.Disabled = true
-        workspace.Gravity = 196.2
+        workspace.Gravity = 0
     end
 
     local function gotoHide()
@@ -183,11 +180,11 @@ local function meowfag()
         if Players.LocalPlayer and Players.LocalPlayer.Character and targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("Humanoid") then
             local startTime = os.time()
             while flinging == true and targetPlayer.Character.Humanoid and targetPlayer.Character.Humanoid.Health > 0 do
-                Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, -0.3, 1.5)
+                Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, -1, 1.5)
                 Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(0, 0, math.rad(8))
-                poofMurderer.AngularVelocity = Vector3.new(0,100000,0)
+                poofMurderer.AngularVelocity = Vector3.new(0, 100000, 0)
                 wait(.1)
-                poofMurderer.AngularVelocity = Vector3.new(0,-500,0)
+                poofMurderer.AngularVelocity = Vector3.new(0, 0, 0)
                 if os.time() - startTime >= 8 then
                     break
                 end
@@ -287,7 +284,6 @@ local function meowfag()
             print("Murderer, Not resetting :3")
             local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
             Character.Animate.Disabled = true
-            workspace.Gravity = 196.2
         else
             ResetCharacter()
         end
@@ -358,12 +354,12 @@ local function meowfag()
         end
 
         if not coinContainerChecker() then
-            print("Game ended, waiting...")
             gotoHide()
+            print("Game ended, waiting...")
             return
         end
-        print("Game ended, waiting...")
         endRound()
+        print("Game ended, waiting...")
     end
 
     roleRemote.OnClientEvent:Connect(onGameStart)
