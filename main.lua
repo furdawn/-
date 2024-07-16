@@ -57,12 +57,13 @@ local function meowfag()
     --- Optimization Stuff :3
 
     local function ResetCharacter()
+        workspace.Gravity = 196.2
         Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid").Health = 0
         Players.LocalPlayer.CharacterAdded:Wait()
-        workspace.Gravity = 196.2
     end
 
     local function Noclip()
+        workspace.Gravity = 196.2
         game:GetService("RunService").Stepped:Connect(function()
             for _, b in pairs(Workspace:GetChildren()) do
                 if b.Name == Players.LocalPlayer.Name then
@@ -99,13 +100,13 @@ local function meowfag()
         end
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
         Character.Animate.Disabled = true
-        workspace.Gravity = 196.2
     end
 
     local function gotoHide()
+        workspace.Gravity = 196.2
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
         local humanoidRootPart = Character:FindFirstChild("HumanoidRootPart")
-        local targetPosition = inLobby.Position + Vector3.new(0, 2.5, 0)
+        local targetPosition = Vector3.new(-109, 112.5, 33)
         if (humanoidRootPart.Position - targetPosition).Magnitude < 5 then
             return
         end
@@ -253,7 +254,7 @@ local function meowfag()
         local distance = (humanoidRootPart.Position - coin.Position).Magnitude
 
         if distance > 150 then
-            tweenDuration = 0.3
+            tweenDuration = 1
         else
             tweenDuration = distance / 38
         end
