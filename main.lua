@@ -264,7 +264,7 @@ local function meowfag()
         abTween.Completed:Wait()
 
         if coin then
-            task.wait(0.1)
+            task.wait(0.2)
             coin:Destroy()
         end
 
