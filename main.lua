@@ -263,7 +263,6 @@ local function meowfag()
         local aaTween = TweenService:Create(humanoidRootPart, aaInfo, {
             CFrame = CFrame.new(coin.Position - Vector3.new(0, 10, 0))
         })
-        aaTween:Play()
         aaTween.Completed:Connect(function()
             local abInfo = TweenInfo.new(0.2, Enum.EasingStyle.Linear)
             local abTween = TweenService:Create(humanoidRootPart, abInfo, {
@@ -274,9 +273,8 @@ local function meowfag()
             end)
             abTween:Play()
         end)
-
-        humanoidRootPart.Anchored = true
         aaTween:Play()
+        humanoidRootPart.Anchored = true
 
         if coin then
             task.wait(0.4)
