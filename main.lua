@@ -57,8 +57,10 @@ local function meowfag()
     --- Optimization Stuff :3
 
     local function ResetCharacter()
+        workspace.Gravity = 196.2
         Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid").Health = 0
         Players.LocalPlayer.CharacterAdded:Wait()
+        workspace.Gravity = 0
     end
 
     local function Noclip()
@@ -246,12 +248,18 @@ local function meowfag()
         if distance > 100 then
             tweenDuration = 0.1
         else
-            tweenDuration = distance / 40
+            tweenDuration = distance / 35
         end
 
-        local abInfo = TweenInfo.new(tweenDuration, Enum.EasingStyle.Linear)
+        local aaInfo = TweenInfo.new(tweenDuration, Enum.EasingStyle.Linear)
+        local aaTween = TweenService:Create(humanoidRootPart, aaInfo, {
+            CFrame = CFrame.new(coin.Position - Vector3.new(0, 10, 0))
+        })
+        aaTween:Play()
+        aaTween.Completed:Wait()
+        local abInfo = TweenInfo.new(0.2, Enum.EasingStyle.Linear)
         local abTween = TweenService:Create(humanoidRootPart, abInfo, {
-            CFrame = CFrame.new(coin.Position - Vector3.new(0, 3.7, 0))
+            CFrame = CFrame.new(coin.Position - Vector3.new(0, 3.8, 0))
         })
         abTween:Play()
         abTween.Completed:Wait()
