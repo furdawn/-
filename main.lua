@@ -253,10 +253,12 @@ local function meowfag()
         local distance = (humanoidRootPart.Position - coin.Position).Magnitude
 
         if distance > 150 then
-            tweenDuration = 1
+            tweenDuration = 0
         else
             tweenDuration = distance / 38
         end
+
+        task.wait(3)
 
         local aaInfo = TweenInfo.new(tweenDuration, Enum.EasingStyle.Linear)
         local aaTween = TweenService:Create(humanoidRootPart, aaInfo, {
