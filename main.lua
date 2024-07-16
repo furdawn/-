@@ -1,5 +1,5 @@
 if FARM_MM2 == true then
-    warn("Infinite Yield is already running!", 0)
+    warn("Farm is already executed!", 0)
     return
 end
 pcall(function() getgenv().FARM_MM2 = true end)
