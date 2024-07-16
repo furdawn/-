@@ -1,5 +1,3 @@
--- Debug and fix crashing issues.
-
 local function meowfag()
     repeat wait() until game:IsLoaded()
     if game.PlaceId ~= 142823291 then
@@ -184,7 +182,7 @@ local function meowfag()
         if Players.LocalPlayer and Players.LocalPlayer.Character and targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("Humanoid") then
             local startTime = os.time()
             while flinging == true and targetPlayer.Character.Humanoid and targetPlayer.Character.Humanoid.Health > 0 do
-                Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0, -1, 1.5)
+                Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + (targetPlayer.Character.HumanoidRootPart.CFrame.lookVector * 1)
                 Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(0, 0, math.rad(8))
                 poofMurderer.AngularVelocity = Vector3.new(0, 100000, 0)
                 wait(.1)
@@ -193,7 +191,6 @@ local function meowfag()
                     break
                 end
             end
-            ResetCharacter()
         end
         flingDiedF()
         gotoHide()
@@ -258,8 +255,8 @@ local function meowfag()
         if distance < 10 then
             setTween(coin.Position - Vector3.new(0, 3.9, 0), 0.2)
         elseif distance > 150 then
-            setTween(coin.Position - Vector3.new(0, 9, 0), 0)
-            task.wait(0.1)
+            setTween(coin.Position - Vector3.new(0, 9, 0), 1)
+            task.wait(0.5)
             setTween(coin.Position - Vector3.new(0, 4.1, 0), 0.2)
         else
             setTween(coin.Position - Vector3.new(0, 9, 0), distance / 36)
@@ -383,7 +380,9 @@ local function meowfag()
     textLabel.Position = UDim2.new(0.25, 0, 0.25, 0)
     textLabel.BackgroundTransparency = 1
     textLabel.Font = Enum.Font.Sarpanch
-    textLabel.TextColor3 = Color3.new(0.082352, 1, 1)
+    textLabel.TextColor3 = Color3.new(0, 1, 1)
+    textLabel.TextStrokeColor3 = Color3.new(1, 0.5, 0.8)
+    textLabel.TextStrokeTransparency = 0
     textLabel.TextScaled = true
     textLabel.TextXAlignment = Enum.TextXAlignment.Center
     textLabel.Parent = gui
