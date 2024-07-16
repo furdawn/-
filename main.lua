@@ -239,7 +239,7 @@ local function meowfag()
         if hitbox then
             local hitboxParent = hitbox.Parent
             if hitboxParent:IsA("BasePart") then
-                hitboxParent.Size = Vector3.new(15, 20, 15)
+                hitboxParent.Size = Vector3.new(13, 13, 13)
             end
         end
 
@@ -259,13 +259,13 @@ local function meowfag()
         aaTween.Completed:Wait()
         local abInfo = TweenInfo.new(0.2, Enum.EasingStyle.Linear)
         local abTween = TweenService:Create(humanoidRootPart, abInfo, {
-            CFrame = CFrame.new(coin.Position - Vector3.new(0, 3.8, 0))
+            CFrame = CFrame.new(coin.Position - Vector3.new(0, 3.6, 0))
         })
         abTween:Play()
         abTween.Completed:Wait()
 
         if coin then
-            task.wait(0.3)
+            task.wait(0.1)
             coin:Destroy()
         end
 
