@@ -59,6 +59,7 @@ local function meowfag()
     local function ResetCharacter()
         Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid").Health = 0
         Players.LocalPlayer.CharacterAdded:Wait()
+        workspace.Gravity = 196.2
     end
 
     local function Noclip()
@@ -93,9 +94,8 @@ local function meowfag()
             end
         end
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
-        local humanoidRootPart = Character:FindFirstChild("HumanoidRootPart")
         Character.Animate.Disabled = true
-        humanoidRootPart.Anchored = true
+        workspace.Gravity = 196.2
     end
 
     local function gotoHide()
@@ -116,10 +116,7 @@ local function meowfag()
     local function endRound()
         print("Flinging murderer >;3")
 
-        local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
-        local humanoidRootPart = Character:FindFirstChild("HumanoidRootPart")
-        humanoidRootPart.Anchored = false
-
+        workspace.Gravity = 196.2
         local targetPlayer = nil
         local flingDied = nil
         flinging = false
@@ -248,6 +245,7 @@ local function meowfag()
             end
         end
 
+        workspace.Gravity = 0
         local distance = (humanoidRootPart.Position - coin.Position).Magnitude
 
         if distance > 100 then
@@ -260,18 +258,15 @@ local function meowfag()
         local aaTween = TweenService:Create(humanoidRootPart, aaInfo, {
             CFrame = CFrame.new(coin.Position - Vector3.new(0, 10, 0))
         })
+        aaTween:Play()
         aaTween.Completed:Connect(function()
             local abInfo = TweenInfo.new(0.2, Enum.EasingStyle.Linear)
             local abTween = TweenService:Create(humanoidRootPart, abInfo, {
                 CFrame = CFrame.new(coin.Position - Vector3.new(0, 4, 0))
             })
-            abTween.Completed:Connect(function()
-                humanoidRootPart.Anchored = false
-            end)
             abTween:Play()
+            abTween.Completed:Wait()
         end)
-        aaTween:Play()
-        humanoidRootPart.Anchored = true
 
         if coin then
             task.wait(0.4)
