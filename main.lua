@@ -214,18 +214,18 @@ local function meowfag()
 
         if Players.LocalPlayer and Players.LocalPlayer.Character and targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("Humanoid") then
             local startTime = os.time()
-            while flinging == true and targetPlayer.Character.Humanoid and targetPlayer.Character.Humanoid.Health > 0 do
+            while flinging == true and targetPlayer.Character.Humanoid and targetPlayer.Character.HumanoidRootPart and targetPlayer.Character.Humanoid.Health > 0 do
                 Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + (targetPlayer.Character.HumanoidRootPart.CFrame.lookVector * 1)
                 Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(0, 0, math.rad(8))
                 poofMurderer.AngularVelocity = Vector3.new(0, 100000, 0)
                 wait(.1)
                 poofMurderer.AngularVelocity = Vector3.new(0, 0, 0)
-                if os.time() - startTime >= 8 then
+                if os.time() - startTime >= 4 then
                     break
                 end
             end
+            ResetCharacter()
         end
-        ResetCharacter()
     end
 
     local function getClosest(coinID)
@@ -286,18 +286,19 @@ local function meowfag()
 
         if distance < 20 then
             setTween(coin.Position - Vector3.new(0, 3.9, 0), 0.2)
+            task.wait(0.3)
         elseif distance > 200 then
             setTween(coin.Position - Vector3.new(0, 9, 0), 0)
             task.wait(1.5)
             setTween(coin.Position - Vector3.new(0, 4.1, 0), 0.2)
         else
             setTween(coin.Position - Vector3.new(0, 9, 0), distance / 30)
-            task.wait(0.2)
+            task.wait(0.1)
             setTween(coin.Position - Vector3.new(0, 4.1, 0), 0.2)
         end
 
         if coin then
-            task.wait(0.1)
+            task.wait(0.3)
             coin:Destroy()
         end
 
