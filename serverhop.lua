@@ -4,7 +4,7 @@ local TPS = game:GetService("TeleportService")
 local Api = "https://games.roblox.com/v1/games/"
 local _place = game.PlaceId
 
-local altUsers = {"xneonPaws", "xmysticPaws", "xwiredPaws", "xvividPaws", "Koi_ish", "DMADusk", "tr4nsfem"}
+local altUsers = {"xneonPaws", "xmysticPaws", "xwiredPaws", "xvividPaws", "Koi_ish", "DMADusk"}
 
 for i, user in ipairs(altUsers) do
     if user == Player.Name then
