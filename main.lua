@@ -20,6 +20,7 @@ local function meowfag()
 
     local roleRemote = ReplicatedStorage.Remotes.Gameplay.RoleSelect
     local tweenInProgress
+    local useInvis
 
     local inLobby = Instance.new("Part")
     inLobby.Size = Vector3.new(3, 0.2, 3)
@@ -45,8 +46,8 @@ local function meowfag()
     --- Invisible stuff
     IsInvisible = false
 
-    RealCharacter = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
-    InvisCharacter = RealCharacter:Clone()
+    local RealCharacter = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
+    local InvisCharacter = RealCharacter:Clone()
 
     InvisCharacter.Parent = workspace
     InvisCharacter.HumanoidRootPart.CFrame = inLobby.CFrame * CFrame.new(0, 5, 0)
@@ -361,7 +362,9 @@ local function meowfag()
     end
 
     local function tweenTo(coin)
-        Invisible()
+        if useInvis then
+            Invisible()
+        end
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
         local humanoidRootPart = Character:WaitForChild("HumanoidRootPart", 60)
         local hitbox = coin:FindFirstChild("TouchInterest")
@@ -384,17 +387,23 @@ local function meowfag()
 
         if distance < 20 then
             setTween(coin.Position - Vector3.new(0, 3.9, 0), 0.2)
-            unInvisible()
+            if not useInvis then
+                unInvisible()
+            end
             task.wait(0.3)
         elseif distance > 200 then
             setTween(coin.Position - Vector3.new(0, 9, 0), 0)
             task.wait(1.5)
-            unInvisible()
+            if not useInvis then
+                unInvisible()
+            end
             setTween(coin.Position - Vector3.new(0, 4.1, 0), 0.2)
         else
             setTween(coin.Position - Vector3.new(0, 9, 0), distance / 30)
             task.wait(0.1)
-            unInvisible()
+            if not useInvis then
+                unInvisible()
+            end
             setTween(coin.Position - Vector3.new(0, 4.1, 0), 0.2)
         end
 
@@ -418,6 +427,7 @@ local function meowfag()
 
         if muwuderer == Players.LocalPlayer then
             print("Murderer, Not resetting :3")
+            useInvis = false
             Players.LocalPlayer.Character.Animate.Disabled = true
         else
             ResetCharacter()
