@@ -31,7 +31,7 @@ end
 
 local function attemptTeleport()
     local playerCount = #game.Players:GetPlayers()
-    if playerCount < 6 or altChecker() then
+    if playerCount < 5 or altChecker() then
         local Servers = ListServers()
         local Server = Servers.data[math.random(1, #Servers.data)]
         TPS:TeleportToPlaceInstance(_place, Server.id, Player)
