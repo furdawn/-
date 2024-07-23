@@ -83,6 +83,7 @@ local function meowfag()
         workspace.Gravity = 196.2
     end
 
+    local Noclipping = nil
     local function NoclipLoop()
         if Players.LocalPlayer.Character ~= nil then
             for _, child in pairs(Players.LocalPlayer.Character:GetDescendants()) do
@@ -91,11 +92,13 @@ local function meowfag()
                 end
             end
         end
+        Noclipping = RunService.Stepped:Connect(NoclipLoop)
     end
-    local connection = RunService.Stepped:Connect(NoclipLoop)
 
     local function Noclip()
-        connection:Disconnect()
+        if Noclipping then
+            Noclipping:Disconnect()
+        end
         local wrkspcnrml = Workspace.Normal
         if wrkspcnrml then
             local mapPrimary = wrkspcnrml:FindFirstChild("Map")
@@ -119,7 +122,7 @@ local function meowfag()
             end
         end
         Players.LocalPlayer.Character.Animate.Disabled = true
-        connection:Connect()
+        NoclipLoop()
         workspace.Gravity = 0
     end
 
