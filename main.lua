@@ -83,22 +83,7 @@ local function meowfag()
         workspace.Gravity = 196.2
     end
 
-    local Noclipping = nil
-    local function NoclipLoop()
-        if Players.LocalPlayer.Character ~= nil then
-            for _, child in pairs(Players.LocalPlayer.Character:GetDescendants()) do
-                if child:IsA("BasePart") and child.CanCollide == true then
-                    child.CanCollide = false
-                end
-            end
-        end
-        Noclipping = RunService.Stepped:Connect(NoclipLoop)
-    end
-
     local function Noclip()
-        if Noclipping then
-            Noclipping:Disconnect()
-        end
         local wrkspcnrml = Workspace.Normal
         if wrkspcnrml then
             local mapPrimary = wrkspcnrml:FindFirstChild("Map")
@@ -122,7 +107,6 @@ local function meowfag()
             end
         end
         Players.LocalPlayer.Character.Animate.Disabled = true
-        NoclipLoop()
         workspace.Gravity = 0
     end
 
