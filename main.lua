@@ -84,7 +84,7 @@ local function meowfag()
     end
 
     local function Noclip()
-        local wrkspcnrml = Workspace.Normal
+        local wrkspcnrml = Workspace:WaitForChild("Normal", 15)
         if wrkspcnrml then
             local mapPrimary = wrkspcnrml:FindFirstChild("Map")
             local mapSecondary = wrkspcnrml:FindFirstChild("Parts")
@@ -131,7 +131,6 @@ local function meowfag()
     end
 
     local function endRound()
-        print("Flinging murderer >;3")
         workspace.Gravity = 10
         local targetPlayer = nil
         local flingDied = nil
@@ -204,23 +203,17 @@ local function meowfag()
         end
         flingDied = Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid').Died:Connect(flingDiedF)
 
-        if Players.LocalPlayer and Players.LocalPlayer.Character and targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("Humanoid") then
-            local success, error = pcall(function()
-                local startTime = os.time()
-                while flinging == true and targetPlayer.Character.Humanoid and targetPlayer.Character.HumanoidRootPart and targetPlayer.Character.Humanoid.Health > 0 do
-                    Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + (targetPlayer.Character.HumanoidRootPart.CFrame.lookVector * 1)
-                    Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(math.rad(8), 0, math.rad(8))
-                    poofMurderer.AngularVelocity = Vector3.new(0, 95000, 0)
-                    wait(.1)
-                    poofMurderer.AngularVelocity = Vector3.new(0, 0, 0)
-                    if os.time() - startTime >= 4 then
-                        break
-                    end
+        if Players.LocalPlayer.Character:FindFirstChild("Humanoid") and targetPlayer.Character:FindFirstChild("Humanoid") then
+            local startTime = os.time()
+            while flinging == true and targetPlayer.Character.Humanoid.Health > 0 do
+                Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + (targetPlayer.Character.HumanoidRootPart.CFrame.lookVector * 1)
+                Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(math.rad(8), 0, math.rad(8))
+                poofMurderer.AngularVelocity = Vector3.new(0, 95000, 0)
+                wait(.1)
+                poofMurderer.AngularVelocity = Vector3.new(0, 0, 0)
+                if os.time() - startTime >= 4 then
+                    break
                 end
-            end)
-            if not success then
-                warn("Error occurred during flinging:", error)
-                ResetCharacter()
             end
             ResetCharacter()
         end
@@ -318,7 +311,6 @@ local function meowfag()
         end
 
         if muwuderer == Players.LocalPlayer then
-            print("Murderer, Not resetting :3")
             Players.LocalPlayer.Character.Animate.Disabled = true
         else
             ResetCharacter()
@@ -330,7 +322,6 @@ local function meowfag()
         local eventAmount = tonumber(abc.CoinBags.Container:WaitForChild("BeachBall", 30).CurrencyFrame.Icon.Coins.text)
         local coinAmount = tonumber(abc.CoinBags.Container:WaitForChild("Coin", 30).CurrencyFrame.Icon.Coins.text)
 
-        print("Game started, farming!")
         Noclip()
 
         local function coinContainerChecker()
@@ -391,12 +382,10 @@ local function meowfag()
 
         if not coinContainerChecker() then
             gotoHide()
-            print("Game ended, waiting...")
             return
         end
         endRound()
         gotoHide()
-        print("Game ended, waiting...")
     end
 
     roleRemote.OnClientEvent:Connect(onGameStart)
