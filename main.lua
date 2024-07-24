@@ -202,14 +202,20 @@ local function meowfag()
             ResetCharacter()
         end
         flingDied = Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid').Died:Connect(flingDiedF)
-
         if Players.LocalPlayer.Character:FindFirstChild("Humanoid") and targetPlayer.Character:FindFirstChild("Humanoid") then
+            while not Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") do
+                wait(0.1)
+            end
             local startTime = os.time()
             while flinging == true and targetPlayer.Character.Humanoid.Health > 0 do
+                -- Check again inside the loop to handle potential death mid-loop
+                if not Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") or not targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                    break
+                end
                 Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + (targetPlayer.Character.HumanoidRootPart.CFrame.lookVector * 1)
                 Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(math.rad(8), 0, math.rad(8))
                 poofMurderer.AngularVelocity = Vector3.new(0, 95000, 0)
-                wait(.1)
+                wait(0.1)
                 poofMurderer.AngularVelocity = Vector3.new(0, 0, 0)
                 if os.time() - startTime >= 4 then
                     break
