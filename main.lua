@@ -122,7 +122,7 @@ local function meowfag()
             local humanoidRootPart = Character:WaitForChild("HumanoidRootPart", math.huge)
             local targetPosition = Vector3.new(-109, 112.5, 33)
             local distance = (humanoidRootPart.Position - targetPosition).Magnitude
-            if distance > 10 then
+            if distance > 15 then
                 local hideMe = TweenService:Create(humanoidRootPart, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = CFrame.new(targetPosition)})
                 hideMe:Play()
                 hideMe.Completed:Wait()
@@ -158,7 +158,7 @@ local function meowfag()
         end
 
         Noclip()
-        wait(.1)
+        wait(1)
 
         local poofMurderer = Instance.new("BodyAngularVelocity")
         poofMurderer.Name = "SmirksWithMaliciousIntent"
@@ -181,7 +181,7 @@ local function meowfag()
                 flingDied:Disconnect()
             end
             flinging = false
-            wait(0.1)
+            wait(1)
 
             local character = Players.LocalPlayer.Character
             if not character then return end
@@ -204,7 +204,7 @@ local function meowfag()
         flingDied = Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid').Died:Connect(flingDiedF)
         if Players.LocalPlayer.Character:FindFirstChild("Humanoid") and targetPlayer.Character:FindFirstChild("Humanoid") then
             while not Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") do
-                wait(0.1)
+                wait(1)
             end
             local startTime = os.time()
             while flinging == true and targetPlayer.Character.Humanoid.Health > 0 do
@@ -285,9 +285,9 @@ local function meowfag()
         end
 
         if distance < 15 then
-            setTween(coin.Position - Vector3.new(0, 6, 0), 0.1)
-            task.wait(0.3)
-            setTween(coin.Position - Vector3.new(0, 4, 0), 0.1)
+            setTween(coin.Position - Vector3.new(0, 6, 0), 0)
+            task.wait(0.35)
+            setTween(coin.Position - Vector3.new(0, 4, 0), 0.2)
         elseif distance > 200 then
             setTween(coin.Position - Vector3.new(0, 10, 0), 0.2)
             task.wait(0.15)
@@ -325,8 +325,8 @@ local function meowfag()
         task.wait(10)
 
         local abc = Players.LocalPlayer.PlayerGui.MainGUI:WaitForChild("Game", 30)
-        local eventAmount = tonumber(abc.CoinBags.Container:WaitForChild("BeachBall", 30).CurrencyFrame.Icon.Coins.text)
-        local coinAmount = tonumber(abc.CoinBags.Container:WaitForChild("Coin", 30).CurrencyFrame.Icon.Coins.text)
+        local eventAmount = tonumber(abc.CoinBags.Container:WaitForChild("BeachBall", 15).CurrencyFrame.Icon.Coins.text)
+        local coinAmount = tonumber(abc.CoinBags.Container:WaitForChild("Coin", 15).CurrencyFrame.Icon.Coins.text)
 
         Noclip()
 
@@ -417,7 +417,7 @@ local function meowfag()
     MM2Text.TextScaled = true
     MM2Text.TextXAlignment = Enum.TextXAlignment.Center
     MM2Text.Parent = gui
-    game:GetService("StarterGui"):SetCore("SendNotification",{["Title"] = "Correct key!",["Text"] = "Fawn's MM2 autofarm has loaded.",["Duration"] = 10,["Button1"] = "Okay."})
+    game:GetService("StarterGui"):SetCore("SendNotification",{["Title"] = "Correct key!",["Text"] = "Fawn's MM2 autofarm has loaded.",["Duration"] = 10,["Button1"] = "Purrfect!"})
 end
 
 if _G.key then
