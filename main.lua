@@ -183,7 +183,13 @@ local function meowfag()
             end
             flinging = false
             wait(0.1)
-            if not Players.LocalPlayer.Character or not Players.LocalPlayer.Character.HumanoidRootPart then return end
+
+            local character = Players.LocalPlayer.Character
+            if not character then return end
+
+            local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+            if not humanoidRootPart then return end
+
             for _,v in pairs(Players.LocalPlayer.Character.HumanoidRootPart:GetChildren()) do
                 if v.ClassName == 'BodyAngularVelocity' then
                     v:Destroy()
@@ -281,7 +287,7 @@ local function meowfag()
 
         if distance < 15 then
             setTween(coin.Position - Vector3.new(0, 6, 0), 0)
-            task.wait(0.15)
+            task.wait(0.3)
             setTween(coin.Position - Vector3.new(0, 4, 0), 0.2)
         elseif distance > 200 then
             setTween(coin.Position - Vector3.new(0, 10, 0), 0)
