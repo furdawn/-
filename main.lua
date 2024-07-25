@@ -77,8 +77,8 @@ local function meowfag()
     --- Optimization Stuff :3
 
     local function ResetCharacter()
-        repeat wait() until Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("Humanoid").Health > 0
-        Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid").Health = 0
+        repeat wait() until Players.LocalPlayer.Character and Players.LocalPlayer.Character.Humanoid.Health > 0
+        Players.LocalPlayer.Character:FindFirstChild("Humanoid").Health = 0
         Players.LocalPlayer.CharacterAdded:Wait()
         workspace.Gravity = 196.2
     end
@@ -208,7 +208,6 @@ local function meowfag()
             end
             local startTime = os.time()
             while flinging == true and targetPlayer.Character.Humanoid.Health > 0 do
-                -- Check again inside the loop to handle potential death mid-loop
                 if not Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") or not targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
                     break
                 end
@@ -284,22 +283,19 @@ local function meowfag()
             tween.Completed:Wait()
         end
 
-        if distance < 18 then
+        if distance < 15 then
             setTween(coin.Position - Vector3.new(0, 6, 0), 0)
-            task.wait(0.2)
-            setTween(coin.Position - Vector3.new(0, 4, 0), 0.2)
+            setTween(coin.Position - Vector3.new(0, 4, 0), 0.1)
         elseif distance > 200 then
             setTween(coin.Position - Vector3.new(0, 10, 0), 0)
-            task.wait(0.2)
-            setTween(coin.Position - Vector3.new(0, 4, 0), 0.2)
+            setTween(coin.Position - Vector3.new(0, 4, 0), 0.1)
         else
             setTween(coin.Position - Vector3.new(0, 10, 0), distance / 30)
-            task.wait(0.2)
-            setTween(coin.Position - Vector3.new(0, 4, 0), 0.2)
+            setTween(coin.Position - Vector3.new(0, 4, 0), 0.1)
         end
 
         if coin then
-            task.wait(0.35)
+            task.wait(0.5)
             coin:Destroy()
         end
 
