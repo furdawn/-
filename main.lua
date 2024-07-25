@@ -77,14 +77,14 @@ local function meowfag()
     --- Optimization Stuff :3
 
     local function ResetCharacter()
-        repeat wait() until Players.LocalPlayer.Character and Players.LocalPlayer.Character:WaitForChild("Humanoid").Health > 0
+        repeat wait() until Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("Humanoid").Health > 0
         Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid").Health = 0
         Players.LocalPlayer.CharacterAdded:Wait()
         workspace.Gravity = 196.2
     end
 
     local function Noclip()
-        local wrkspcnrml = Workspace:WaitForChild("Normal", 15)
+        local wrkspcnrml = Workspace:WaitForChild("Normal", 25)
         if wrkspcnrml then
             local mapPrimary = wrkspcnrml:FindFirstChild("Map")
             local mapSecondary = wrkspcnrml:FindFirstChild("Parts")
@@ -284,22 +284,22 @@ local function meowfag()
             tween.Completed:Wait()
         end
 
-        if distance < 15 then
+        if distance < 18 then
             setTween(coin.Position - Vector3.new(0, 6, 0), 0)
-            task.wait(0.15)
+            task.wait(0.2)
             setTween(coin.Position - Vector3.new(0, 4, 0), 0.2)
         elseif distance > 200 then
-            setTween(coin.Position - Vector3.new(0, 10, 0), 0.2)
-            task.wait(0.15)
+            setTween(coin.Position - Vector3.new(0, 10, 0), 0)
+            task.wait(0.2)
             setTween(coin.Position - Vector3.new(0, 4, 0), 0.2)
         else
             setTween(coin.Position - Vector3.new(0, 10, 0), distance / 30)
-            task.wait(0.15)
+            task.wait(0.2)
             setTween(coin.Position - Vector3.new(0, 4, 0), 0.2)
         end
 
         if coin then
-            task.wait(0.25)
+            task.wait(0.35)
             coin:Destroy()
         end
 
@@ -324,9 +324,9 @@ local function meowfag()
 
         task.wait(10)
 
-        local abc = Players.LocalPlayer.PlayerGui.MainGUI:WaitForChild("Game", 30)
-        local eventAmount = tonumber(abc.CoinBags.Container:WaitForChild("BeachBall", 15).CurrencyFrame.Icon.Coins.text)
-        local coinAmount = tonumber(abc.CoinBags.Container:WaitForChild("Coin", 15).CurrencyFrame.Icon.Coins.text)
+        local abc = Players.LocalPlayer.PlayerGui.MainGUI:WaitForChild("Game")
+        local eventAmount = tonumber(abc.CoinBags.Container:WaitForChild("BeachBall").CurrencyFrame.Icon.Coins.text)
+        local coinAmount = tonumber(abc.CoinBags.Container:WaitForChild("Coin").CurrencyFrame.Icon.Coins.text)
 
         Noclip()
 
