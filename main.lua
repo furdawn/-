@@ -12,7 +12,6 @@ local function meowfag()
 
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
     local TweenService = game:GetService("TweenService")
-    local RunService = game:GetService("RunService")
     local Players = game:GetService("Players")
     local Lighting = game:GetService("Lighting")
     local Workspace = game:GetService("Workspace")
@@ -394,7 +393,7 @@ local function meowfag()
 
     print("--------------------- <3")
     print("\n")
-    print("Transgirl fawn's MM2 autofarm has loaded!")
+    print("Astra's MM2 autofarm has loaded!")
     print("\n")
     print("--------------------- <3")
     local gui = Instance.new("ScreenGui")
@@ -402,7 +401,7 @@ local function meowfag()
     gui.Parent = game.CoreGui
 
     local MM2Text = Instance.new("TextLabel")
-    MM2Text.Text = "Fawn's MM2 Autofarm >,<"
+    MM2Text.Text = "Astra's MM2 Autofarm >,<"
     MM2Text.Size = UDim2.new(0.5, 0, 0.5, 0)
     MM2Text.Position = UDim2.new(0.25, 0, 0.25, 0)
     MM2Text.BackgroundTransparency = 1
@@ -413,7 +412,7 @@ local function meowfag()
     MM2Text.TextScaled = true
     MM2Text.TextXAlignment = Enum.TextXAlignment.Center
     MM2Text.Parent = gui
-    game:GetService("StarterGui"):SetCore("SendNotification",{["Title"] = "Correct key!",["Text"] = "Fawn's MM2 autofarm has loaded.",["Duration"] = 10,["Button1"] = "Purrfect!"})
+    game:GetService("StarterGui"):SetCore("SendNotification",{["Title"] = "Correct key!",["Text"] = "Astra's MM2 autofarm has loaded.",["Duration"] = 10,["Button1"] = "Purrfect!"})
 end
 
 if _G.key then
@@ -422,5 +421,5 @@ if _G.key then
     end
 else
     _G.key = nil
-    game:GetService("Players").LocalPlayer:Kick("Nice one!!! >///<")
+    game:GetService("Players").LocalPlayer:Kick("Nice one!!!")
 end
