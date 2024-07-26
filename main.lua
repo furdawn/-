@@ -76,14 +76,21 @@ local function meowfag()
     --- Optimization Stuff :3
 
     local function ResetCharacter()
-        repeat wait() until Players.LocalPlayer.Character and Players.LocalPlayer.Character.Humanoid.Health > 0
+        repeat
+            wait()
+        until Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("Humanoid") and Players.LocalPlayer.Character.Humanoid.Health > 0
         Players.LocalPlayer.Character:FindFirstChild("Humanoid").Health = 0
         Players.LocalPlayer.CharacterAdded:Wait()
         workspace.Gravity = 196.2
     end
 
     local function Noclip()
-        local wrkspcnrml = Workspace:WaitForChild("Normal", 25)
+        for _, v in pairs(Players.LocalPlayer.Character:GetDescendants()) do
+            if v:IsA("BasePart") and v.CanCollide == true then
+                v.CanCollide = false
+            end
+        end
+        local wrkspcnrml = Workspace:WaitForChild("Normal")
         if wrkspcnrml then
             local mapPrimary = wrkspcnrml:FindFirstChild("Map")
             local mapSecondary = wrkspcnrml:FindFirstChild("Parts")
@@ -156,7 +163,6 @@ local function meowfag()
             end
         end
 
-        Noclip()
         wait(1)
 
         local poofMurderer = Instance.new("BodyAngularVelocity")
@@ -229,13 +235,13 @@ local function meowfag()
         local shortestDistance = math.huge
         local closestCoin = nil
 
-        local mrrrrp = Workspace:WaitForChild("Normal", 15)
+        local mrrrrp = Workspace:WaitForChild("Normal")
         if not mrrrrp then
             warn("Normal not found in Workspace.")
             return
         end
 
-        local mrrooowww = mrrrrp:WaitForChild("CoinContainer", 15)
+        local mrrooowww = mrrrrp:WaitForChild("CoinContainer")
         if not mrrooowww then
             warn("CoinContainer not found in Normal.")
             return
@@ -330,9 +336,8 @@ local function meowfag()
             if not x then
                 return false
             end
-
             if x then
-                local y = x:WaitForChild("CoinContainer")
+                local y = x:FindFirstChild("CoinContainer")
                 if not y then
                     return false
                 elseif y then
