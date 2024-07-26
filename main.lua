@@ -1,3 +1,6 @@
+if game.PlaceId ~= 142823291 then
+    game.Players.LocalPlayer:Kick("Wrong game! (Murder Mystery 2)")
+end
 if FARM_MM2 == true then
     warn("Farm is already executed!", 0)
     return
@@ -6,9 +9,6 @@ pcall(function() getgenv().FARM_MM2 = true end)
 
 local function meowfag()
     repeat wait() until game:IsLoaded()
-    if game.PlaceId ~= 142823291 then
-        game.Players.LocalPlayer:Kick("This is a Murder Mystery 2 script..,,")
-    end
 
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
     local TweenService = game:GetService("TweenService")
@@ -76,15 +76,16 @@ local function meowfag()
     --- Optimization Stuff :3
 
     local function ResetCharacter()
+        workspace.Gravity = 196.2
         repeat
             wait()
         until Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("Humanoid") and Players.LocalPlayer.Character.Humanoid.Health > 0
         Players.LocalPlayer.Character:FindFirstChild("Humanoid").Health = 0
         Players.LocalPlayer.CharacterAdded:Wait()
-        workspace.Gravity = 196.2
     end
 
     local function Noclip()
+        workspace.Gravity = 0
         for _, v in pairs(Players.LocalPlayer.Character:GetDescendants()) do
             if v:IsA("BasePart") and v.CanCollide == true then
                 v.CanCollide = false
@@ -113,17 +114,16 @@ local function meowfag()
             end
         end
         Players.LocalPlayer.Character.Animate.Disabled = true
-        workspace.Gravity = 0
     end
 
     local function gotoHide()
+        workspace.Gravity = 196.2
         local keepTeleporting = true
         roleRemote.OnClientEvent:Connect(function()
             keepTeleporting = false
         end)
         while keepTeleporting do
             repeat wait() until Players.LocalPlayer.Character and Players.LocalPlayer.Character:WaitForChild("Humanoid").Health > 0
-            workspace.Gravity = 196.2
             local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
             local humanoidRootPart = Character:WaitForChild("HumanoidRootPart", math.huge)
             local targetPosition = Vector3.new(-109, 112.5, 33)
@@ -266,19 +266,18 @@ local function meowfag()
 
     local function tweenTo(coin)
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
-        local humanoidRootPart = Character:WaitForChild("HumanoidRootPart", 60)
+        local humanoidRootPart = Character:WaitForChild("HumanoidRootPart")
         local hitbox = coin:FindFirstChild("TouchInterest")
         if hitbox then
             local hitboxParent = hitbox.Parent
             if hitboxParent:IsA("BasePart") then
-                hitboxParent.Size = Vector3.new(13, 13, 13)
+                hitboxParent.Size = Vector3.new(12, 12, 12)
             end
         else
             tweenInProgress = false
             return
         end
 
-        workspace.Gravity = 0
         local distance = (humanoidRootPart.Position - coin.Position).Magnitude
 
         local function setTween(targetPos, duration)
@@ -290,17 +289,20 @@ local function meowfag()
 
         if distance < 15 then
             setTween(coin.Position - Vector3.new(0, 6, 0), 0)
+            task.wait(0.1)
             setTween(coin.Position - Vector3.new(0, 4, 0), 0.1)
         elseif distance > 200 then
             setTween(coin.Position - Vector3.new(0, 10, 0), 0)
+            task.wait(0.1)
             setTween(coin.Position - Vector3.new(0, 4, 0), 0.1)
         else
             setTween(coin.Position - Vector3.new(0, 10, 0), distance / 30)
+            task.wait(0.1)
             setTween(coin.Position - Vector3.new(0, 4, 0), 0.1)
         end
 
         if coin then
-            task.wait(0.5)
+            task.wait(0.4)
             coin:Destroy()
         end
 
@@ -323,7 +325,7 @@ local function meowfag()
             ResetCharacter()
         end
 
-        task.wait(10)
+        task.wait(11)
 
         local abc = Players.LocalPlayer.PlayerGui.MainGUI:WaitForChild("Game")
         local eventAmount = tonumber(abc.CoinBags.Container:WaitForChild("BeachBall").CurrencyFrame.Icon.Coins.text)
