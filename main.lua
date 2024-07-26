@@ -206,13 +206,13 @@ local function meowfag()
             end
             ResetCharacter()
         end
-        flingDied = Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid').Died:Connect(flingDiedF)
+        flingDied = Players.LocalPlayer.Character:FindFirstChild('Humanoid').Died:Connect(flingDiedF)
         if Players.LocalPlayer.Character:FindFirstChild("Humanoid") and targetPlayer.Character:FindFirstChild("Humanoid") then
-            while not Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") do
+            while not Players.LocalPlayer.Character:FindFirstChild("Humanoid") do
                 wait(1)
             end
             local startTime = os.time()
-            while flinging == true and targetPlayer.Character.Humanoid.Health > 0 do
+            while flinging == true and Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and targetPlayer.Character:FindFirstChild("HumanoidRootPart") and targetPlayer.Character.Humanoid.Health > 0 do
                 if not Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") or not targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
                     break
                 end
@@ -271,7 +271,7 @@ local function meowfag()
         if hitbox then
             local hitboxParent = hitbox.Parent
             if hitboxParent:IsA("BasePart") then
-                hitboxParent.Size = Vector3.new(12, 12, 12)
+                hitboxParent.Size = Vector3.new(13, 13, 13)
             end
         else
             tweenInProgress = false
@@ -289,23 +289,19 @@ local function meowfag()
 
         if distance < 15 then
             setTween(coin.Position - Vector3.new(0, 6, 0), 0)
-            task.wait(0.1)
             setTween(coin.Position - Vector3.new(0, 4, 0), 0.1)
         elseif distance > 200 then
             setTween(coin.Position - Vector3.new(0, 10, 0), 0)
-            task.wait(0.1)
             setTween(coin.Position - Vector3.new(0, 4, 0), 0.1)
         else
-            setTween(coin.Position - Vector3.new(0, 10, 0), distance / 30)
-            task.wait(0.1)
+            setTween(coin.Position - Vector3.new(0, 10, 0), distance / 25)
             setTween(coin.Position - Vector3.new(0, 4, 0), 0.1)
         end
 
         if coin then
-            task.wait(0.4)
+            task.wait(0.5)
             coin:Destroy()
         end
-
         tweenInProgress = false
     end
 
@@ -334,7 +330,7 @@ local function meowfag()
         Noclip()
 
         local function coinContainerChecker()
-            local x = Workspace:FindFirstChild("Normal")
+            local x = Workspace.Normal
             if not x then
                 return false
             end
