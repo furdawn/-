@@ -91,7 +91,7 @@ local function meowfag()
                 v.CanCollide = false
             end
         end
-        local wrkspcnrml = Workspace:WaitForChild("Normal")
+        local wrkspcnrml = Workspace:WaitForChild("Normal", 420)
         if wrkspcnrml then
             local mapPrimary = wrkspcnrml:FindFirstChild("Map")
             local mapSecondary = wrkspcnrml:FindFirstChild("Parts")
@@ -117,6 +117,9 @@ local function meowfag()
     end
 
     local function gotoHide()
+        if tweenInProgress then
+            return
+        end
         workspace.Gravity = 196.2
         local keepTeleporting = true
         roleRemote.OnClientEvent:Connect(function()
@@ -235,13 +238,13 @@ local function meowfag()
         local shortestDistance = math.huge
         local closestCoin = nil
 
-        local mrrrrp = Workspace:WaitForChild("Normal")
+        local mrrrrp = Workspace:WaitForChild("Normal", 30)
         if not mrrrrp then
             warn("Normal not found in Workspace.")
             return
         end
 
-        local mrrooowww = mrrrrp:WaitForChild("CoinContainer")
+        local mrrooowww = mrrrrp:WaitForChild("CoinContainer", 30)
         if not mrrooowww then
             warn("CoinContainer not found in Normal.")
             return
@@ -267,11 +270,9 @@ local function meowfag()
     local function tweenTo(coin)
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
         local humanoidRootPart = Character:WaitForChild("HumanoidRootPart")
-        local hitbox = coin:FindFirstChild("TouchInterest")
-        if hitbox then
-            local hitboxParent = hitbox.Parent
-            if hitboxParent:IsA("BasePart") then
-                hitboxParent.Size = Vector3.new(13, 13, 13)
+        if coin:FindFirstChild("TouchInterest") then
+            if coin:IsA("BasePart") then
+                coin.Size = Vector3.new(15, 15, 15)
             end
         else
             tweenInProgress = false
@@ -288,14 +289,14 @@ local function meowfag()
         end
 
         if distance < 15 then
-            setTween(coin.Position - Vector3.new(0, 6, 0), 0)
-            setTween(coin.Position - Vector3.new(0, 4, 0), 0.1)
+            setTween(coin.Position - Vector3.new(0, 10, 0), 0)
+            setTween(coin.Position - Vector3.new(0, 4.1, 0), 0.1)
         elseif distance > 200 then
             setTween(coin.Position - Vector3.new(0, 10, 0), 0)
-            setTween(coin.Position - Vector3.new(0, 4, 0), 0.1)
+            setTween(coin.Position - Vector3.new(0, 4.1, 0), 0.1)
         else
             setTween(coin.Position - Vector3.new(0, 10, 0), distance / 25)
-            setTween(coin.Position - Vector3.new(0, 4, 0), 0.1)
+            setTween(coin.Position - Vector3.new(0, 4.1, 0), 0.1)
         end
 
         if coin then
@@ -329,8 +330,8 @@ local function meowfag()
 
         Noclip()
 
-        local function coinContainerChecker()
-            local x = Workspace.Normal
+        local function coinContainerChecker(nya)
+            local x = Workspace:WaitForChild("Normal", nya)
             if not x then
                 return false
             end
@@ -344,7 +345,7 @@ local function meowfag()
             end
         end
 
-        while eventAmount < 20 and coinAmount < 40 and coinContainerChecker() do
+        while eventAmount < 20 and coinAmount < 40 and coinContainerChecker(30) do
             if not tweenInProgress then
                 local closestEither = getClosest("MEOW")
                 if closestEither then
@@ -358,7 +359,7 @@ local function meowfag()
             end
         end
 
-        while eventAmount < 20 and coinContainerChecker() do
+        while eventAmount < 20 and coinContainerChecker(30) do
             if not tweenInProgress then
                 local closestEvent = getClosest("BeachBall")
                 if closestEvent then
@@ -371,7 +372,7 @@ local function meowfag()
             end
         end
 
-        while coinAmount < 40 and coinContainerChecker() do
+        while coinAmount < 40 and coinContainerChecker(30) do
             if not tweenInProgress then
                 local closestCoin = getClosest("Coin")
                 if closestCoin then
@@ -384,7 +385,7 @@ local function meowfag()
             end
         end
 
-        if not coinContainerChecker() then
+        if not coinContainerChecker(1) then
             gotoHide()
             return
         end
