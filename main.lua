@@ -204,7 +204,7 @@ local function meowfag()
             resetCharacter()
         end
         flingDied = Players.LocalPlayer.Character:FindFirstChild('Humanoid').Died:Connect(flingDiedF)
-        while not Players.LocalPlayer or Players.LocalPlayer.Character:FindFirstChild("Humanoid") do
+        while not Players.LocalPlayer or not Players.LocalPlayer.Character do
             task.wait()
         end
         if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("Humanoid") then
@@ -232,7 +232,12 @@ local function meowfag()
         local shortestDistance = math.huge
         local closestCoin = nil
 
-        for _, coin in pairs(workspace.Normal.CoinContainer:GetChildren()) do
+        local x = Workspace.Normal
+        if not x then
+            return
+        end
+
+        for _, coin in pairs(Workspace.Normal.CoinContainer:GetChildren()) do
             if coin:IsA("BasePart") then
                 local touchInterest = coin:FindFirstChild("TouchInterest")
                 if touchInterest then
