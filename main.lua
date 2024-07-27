@@ -204,12 +204,12 @@ local function meowfag()
             resetCharacter()
         end
         flingDied = Players.LocalPlayer.Character:FindFirstChild('Humanoid').Died:Connect(flingDiedF)
-        if Players.LocalPlayer.Character:FindFirstChild("Humanoid") and targetPlayer.Character:FindFirstChild("Humanoid") then
-            while not Players.LocalPlayer.Character:FindFirstChild("Humanoid") do
-                task.wait()
-            end
+        while not Players.LocalPlayer or Players.LocalPlayer.Character:FindFirstChild("Humanoid") do
+            task.wait()
+        end
+        if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("Humanoid") then
             local startTime = os.time()
-            while flinging == true and Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and targetPlayer.Character:FindFirstChild("HumanoidRootPart") and targetPlayer.Character.Humanoid.Health > 0 do
+            while flinging == true and Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and targetPlayer.Character:FindFirstChild("HumanoidRootPart") do
                 if not Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") or not targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
                     break
                 end
