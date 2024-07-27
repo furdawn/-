@@ -336,7 +336,6 @@ local function meowfag()
         while eventAmount < 20 and coinAmount < 40 and containerCheck(30) do
             if not tweenInProgress then
                 local closestEither = getClosest("Either")
-                print("Got closest")
                 if closestEither then
                     tweenInProgress = true
                     tweenTo(closestEither)
