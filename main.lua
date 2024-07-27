@@ -229,20 +229,10 @@ local function meowfag()
     local function getClosest(coinID)
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
         local humanoidRootPart = Character:WaitForChild("HumanoidRootPart", 15)
-        local shortestDistance = nil
+        local shortestDistance = math.huge
         local closestCoin = nil
 
-        local mrrrrp = Workspace:WaitForChild("Normal", 15)
-        if not mrrrrp then
-            return
-        end
-
-        local mrrooowww = mrrrrp:WaitForChild("CoinContainer", 15)
-        if not mrrooowww then
-            return
-        end
-
-        for _, coin in pairs(mrrooowww:GetChildren()) do
+        for _, coin in pairs(workspace.Normal.CoinContainer:GetChildren()) do
             if coin:IsA("BasePart") then
                 local touchInterest = coin:FindFirstChild("TouchInterest")
                 if touchInterest then
