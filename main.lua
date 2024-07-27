@@ -213,8 +213,7 @@ local function meowfag()
                 if not Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") or not targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
                     break
                 end
-                Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + (targetPlayer.Character.HumanoidRootPart.CFrame.lookVector * 1)
-                Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(math.rad(8), 0, math.rad(8))
+                Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + (targetPlayer.Character.HumanoidRootPart.CFrame.lookVector * 1) * CFrame.Angles(math.rad(8), 0, math.rad(8))
                 poofMurderer.AngularVelocity = Vector3.new(0, 95000, 0)
                 task.wait(0.1)
                 poofMurderer.AngularVelocity = Vector3.new(0, 0, 0)
@@ -234,7 +233,7 @@ local function meowfag()
 
         local x = Workspace.Normal
         if not x then
-            return
+            return nil
         end
 
         for _, coin in pairs(Workspace.Normal.CoinContainer:GetChildren()) do
@@ -311,8 +310,6 @@ local function meowfag()
 
         task.wait(11)
 
-        print("Game started")
-
         local abc = Players.LocalPlayer.PlayerGui.MainGUI:WaitForChild("Game", 15)
         local eventAmount = tonumber(abc.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
         local coinAmount = tonumber(abc.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
@@ -332,11 +329,7 @@ local function meowfag()
             end
         end
 
-        print("1")
-
         noclip()
-
-        print("2")
 
         while eventAmount < 20 and coinAmount < 40 and containerCheck(30) do
             if not tweenInProgress then
@@ -345,7 +338,6 @@ local function meowfag()
                 if closestEither then
                     tweenInProgress = true
                     tweenTo(closestEither)
-                    print("Tweened to closest")
                 else
                     task.wait(3)
                 end
