@@ -213,7 +213,7 @@ local function meowfag()
                 if not Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") or not targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
                     break
                 end
-                Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + CFrame.Angles(math.rad(8), 0, math.rad(8))
+                Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(math.rad(8), 0, math.rad(8))
                 poofMurderer.AngularVelocity = Vector3.new(0, 95000, 0)
                 task.wait(0.1)
                 poofMurderer.AngularVelocity = Vector3.new(0, 0, 0)
