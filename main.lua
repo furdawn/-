@@ -8,7 +8,7 @@ end
 pcall(function() getgenv().FARM_MM2 = true end)
 
 local function meowfag()
-    repeat wait() until game:IsLoaded()
+    repeat task.wait() until game:IsLoaded()
 
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
     local TweenService = game:GetService("TweenService")
@@ -75,22 +75,17 @@ local function meowfag()
     end
     --- Optimization Stuff :3
 
-    local function ResetCharacter()
+    local function resetCharacter()
         workspace.Gravity = 196.2
         repeat
-            wait()
+            task.wait()
         until Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("Humanoid") and Players.LocalPlayer.Character.Humanoid.Health > 0
         Players.LocalPlayer.Character:FindFirstChild("Humanoid").Health = 0
         Players.LocalPlayer.CharacterAdded:Wait()
     end
 
-    local function Noclip()
+    local function noclip()
         workspace.Gravity = 0
-        for _, v in pairs(Players.LocalPlayer.Character:GetDescendants()) do
-            if v:IsA("BasePart") and v.CanCollide == true then
-                v.CanCollide = false
-            end
-        end
         local wrkspcnrml = Workspace:WaitForChild("Normal", 420)
         if wrkspcnrml then
             local mapPrimary = wrkspcnrml:FindFirstChild("Map")
@@ -126,7 +121,7 @@ local function meowfag()
             keepTeleporting = false
         end)
         while keepTeleporting do
-            repeat wait() until Players.LocalPlayer.Character and Players.LocalPlayer.Character:WaitForChild("Humanoid").Health > 0
+            repeat task.wait() until Players.LocalPlayer.Character and Players.LocalPlayer.Character:WaitForChild("Humanoid").Health > 0
             local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
             local humanoidRootPart = Character:WaitForChild("HumanoidRootPart", math.huge)
             local targetPosition = Vector3.new(-109, 112.5, 33)
@@ -140,7 +135,6 @@ local function meowfag()
     end
 
     local function endRound()
-        workspace.Gravity = 10
         local targetPlayer = nil
         local flingDied = nil
         flinging = false
@@ -156,7 +150,7 @@ local function meowfag()
             return
         end
         if Players.LocalPlayer == targetPlayer then
-            ResetCharacter()
+            resetCharacter()
             return
         end
 
@@ -166,7 +160,7 @@ local function meowfag()
             end
         end
 
-        wait(1)
+        task.wait(1)
 
         local poofMurderer = Instance.new("BodyAngularVelocity")
         poofMurderer.Name = "SmirksWithMaliciousIntent"
@@ -189,7 +183,7 @@ local function meowfag()
                 flingDied:Disconnect()
             end
             flinging = false
-            wait(1)
+            task.wait(1)
 
             local character = Players.LocalPlayer.Character
             if not character then return end
@@ -207,12 +201,12 @@ local function meowfag()
                     child.CustomPhysicalProperties = PhysicalProperties.new(0.7, 0.3, 0.5)
                 end
             end
-            ResetCharacter()
+            resetCharacter()
         end
         flingDied = Players.LocalPlayer.Character:FindFirstChild('Humanoid').Died:Connect(flingDiedF)
         if Players.LocalPlayer.Character:FindFirstChild("Humanoid") and targetPlayer.Character:FindFirstChild("Humanoid") then
             while not Players.LocalPlayer.Character:FindFirstChild("Humanoid") do
-                wait(1)
+                task.wait()
             end
             local startTime = os.time()
             while flinging == true and Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and targetPlayer.Character:FindFirstChild("HumanoidRootPart") and targetPlayer.Character.Humanoid.Health > 0 do
@@ -222,13 +216,13 @@ local function meowfag()
                 Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame + (targetPlayer.Character.HumanoidRootPart.CFrame.lookVector * 1)
                 Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Players.LocalPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(math.rad(8), 0, math.rad(8))
                 poofMurderer.AngularVelocity = Vector3.new(0, 95000, 0)
-                wait(0.1)
+                task.wait(0.1)
                 poofMurderer.AngularVelocity = Vector3.new(0, 0, 0)
                 if os.time() - startTime >= 4 then
                     break
                 end
             end
-            ResetCharacter()
+            resetCharacter()
         end
     end
 
@@ -307,7 +301,7 @@ local function meowfag()
     end
 
     local function onGameStart()
-        local roles = ReplicatedStorage:FindFirstChild("GetPlayerData", true):InvokeServer()
+        local roles = ReplicatedStorage:FindFirstChild("GetPlayerData"):InvokeServer()
         local muwuderer = nil
         for i, v in pairs(roles) do
             if v.Role == "Murderer" then
@@ -319,18 +313,16 @@ local function meowfag()
         if muwuderer == Players.LocalPlayer then
             Players.LocalPlayer.Character.Animate.Disabled = true
         else
-            ResetCharacter()
+            resetCharacter()
         end
 
         task.wait(11)
 
-        local abc = Players.LocalPlayer.PlayerGui.MainGUI:WaitForChild("Game")
-        local eventAmount = tonumber(abc.CoinBags.Container:WaitForChild("BeachBall").CurrencyFrame.Icon.Coins.text)
-        local coinAmount = tonumber(abc.CoinBags.Container:WaitForChild("Coin").CurrencyFrame.Icon.Coins.text)
+        local abc = Players.LocalPlayer.PlayerGui.MainGUI:WaitForChild("Game", 15)
+        local eventAmount = tonumber(abc.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
+        local coinAmount = tonumber(abc.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
 
-        Noclip()
-
-        local function coinContainerChecker(nya)
+        local function containerCheck(nya)
             local x = Workspace:WaitForChild("Normal", nya)
             if not x then
                 return false
@@ -345,7 +337,9 @@ local function meowfag()
             end
         end
 
-        while eventAmount < 20 and coinAmount < 40 and coinContainerChecker(30) do
+        noclip()
+
+        while eventAmount < 20 and coinAmount < 40 and containerCheck(30) do
             if not tweenInProgress then
                 local closestEither = getClosest("MEOW")
                 if closestEither then
@@ -359,7 +353,7 @@ local function meowfag()
             end
         end
 
-        while eventAmount < 20 and coinContainerChecker(30) do
+        while eventAmount < 20 and containerCheck(30) do
             if not tweenInProgress then
                 local closestEvent = getClosest("BeachBall")
                 if closestEvent then
@@ -372,7 +366,7 @@ local function meowfag()
             end
         end
 
-        while coinAmount < 40 and coinContainerChecker(30) do
+        while coinAmount < 40 and containerCheck(30) do
             if not tweenInProgress then
                 local closestCoin = getClosest("Coin")
                 if closestCoin then
@@ -385,7 +379,7 @@ local function meowfag()
             end
         end
 
-        if not coinContainerChecker(1) then
+        if not containerCheck(1) then
             gotoHide()
             return
         end
