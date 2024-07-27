@@ -303,8 +303,8 @@ local function meowfag()
 
         task.wait(11)
 
-        local gui = Players.LocalPlayer.PlayerGui:WaitForChild("MainGUI", 30)
-        local abc = gui.MainGUI:WaitForChild("Game", 15)
+        local gui = Players.LocalPlayer:WaitForChild("PlayerGui", 30)
+        local abc = gui.MainGUI:WaitForChild("Game", 30)
         local eventAmount = tonumber(abc.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
         local coinAmount = tonumber(abc.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
 
