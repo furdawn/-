@@ -301,7 +301,7 @@ local function meowfag()
     end
 
     local function onGameStart()
-        local roles = ReplicatedStorage:FindFirstChild("GetPlayerData"):InvokeServer()
+        local roles = ReplicatedStorage:FindFirstChild("GetPlayerData", true):InvokeServer()
         local muwuderer = nil
         for i, v in pairs(roles) do
             if v.Role == "Murderer" then
