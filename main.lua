@@ -153,7 +153,6 @@ local function meowfag()
             resetCharacter()
             return
         end
-
         for _, child in pairs(Players.LocalPlayer.Character:GetDescendants()) do
             if child:IsA("BasePart") then
                 child.CustomPhysicalProperties = PhysicalProperties.new(100, 0.3, 0.5)
@@ -185,12 +184,6 @@ local function meowfag()
             flinging = false
             task.wait(1)
 
-            local character = Players.LocalPlayer.Character
-            if not character then return end
-
-            local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
-            if not humanoidRootPart then return end
-
             for _,v in pairs(Players.LocalPlayer.Character.HumanoidRootPart:GetChildren()) do
                 if v.ClassName == 'BodyAngularVelocity' then
                     v:Destroy()
@@ -213,8 +206,8 @@ local function meowfag()
                 if not Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") or not targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
                     break
                 end
-                Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(math.rad(8), 0, math.rad(8))
                 poofMurderer.AngularVelocity = Vector3.new(0, 95000, 0)
+                Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(math.rad(8), 0, math.rad(8))
                 task.wait(0.1)
                 poofMurderer.AngularVelocity = Vector3.new(0, 0, 0)
                 if os.time() - startTime >= 4 then
@@ -331,7 +324,7 @@ local function meowfag()
 
         noclip()
 
-        while eventAmount < 20 and coinAmount < 40 and containerCheck(30) do
+        while eventAmount < 20 and coinAmount < 40 and containerCheck(60) do
             if not tweenInProgress then
                 local closestEither = getClosest("Either")
                 if closestEither then
@@ -345,7 +338,7 @@ local function meowfag()
             end
         end
 
-        while eventAmount < 20 and containerCheck(30) do
+        while eventAmount < 20 and containerCheck(60) do
             if not tweenInProgress then
                 local closestEvent = getClosest("BeachBall")
                 if closestEvent then
@@ -358,7 +351,7 @@ local function meowfag()
             end
         end
 
-        while coinAmount < 40 and containerCheck(30) do
+        while coinAmount < 40 and containerCheck(60) do
             if not tweenInProgress then
                 local closestCoin = getClosest("Coin")
                 if closestCoin then
