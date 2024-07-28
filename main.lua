@@ -67,7 +67,6 @@ local function meowfag()
     --- Optimization Stuff :3
 
     local function resetCharacter()
-        repeat task.wait() until Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("Humanoid")
         Players.LocalPlayer.Character.Humanoid.Health = 0
         Players.LocalPlayer.CharacterAdded:Wait()
     end
@@ -131,10 +130,6 @@ local function meowfag()
                 targetPlayer = Players:FindFirstChild(i)
                 break
             end
-        end
-        if not targetPlayer then
-            warn("Murderer not found.")
-            return
         end
         if Players.LocalPlayer == targetPlayer then
             resetCharacter()
@@ -260,7 +255,7 @@ local function meowfag()
             end
         end
 
-        print("Got murderer")
+        print("Got murderer2")
 
         if muwuderer == Players.LocalPlayer then
             Players.LocalPlayer.Character.Animate.Disabled = true
