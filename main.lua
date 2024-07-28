@@ -67,7 +67,7 @@ local function meowfag()
     --- Optimization Stuff :3
 
     local function resetCharacter()
-        workspace.Gravity = 196.2
+        game.Workspace.Gravity = 196.2
         repeat
             task.wait()
         until Players.LocalPlayer.Character and Players.LocalPlayer.Character.Humanoid and Players.LocalPlayer.Character.Humanoid.Health > 0
@@ -76,6 +76,7 @@ local function meowfag()
     end
 
     local function noclip()
+        game.Workspace.Gravity = 0
         Players.LocalPlayer.Character.Animate.Disabled = true
         local wrkspcnrml = game.Workspace:WaitForChild("Normal", 30)
         if wrkspcnrml then
@@ -104,7 +105,7 @@ local function meowfag()
     local function gotoHide()
         keepTeleporting = true
         tweenInProgress = false
-        workspace.Gravity = 196.2
+        game.Workspace.Gravity = 196.2
         repeat task.wait() until Players.LocalPlayer.Character and Players.LocalPlayer.Character.Humanoid and Players.LocalPlayer.Character.Humanoid.Health > 0
         gameRemote.OnClientEvent:Connect(function()
             keepTeleporting = false
@@ -250,7 +251,6 @@ local function meowfag()
     end
 
     local function onGameStart()
-        workspace.Gravity = 0
         local roles = ReplicatedStorage:FindFirstChild("GetPlayerData", true):InvokeServer()
         local muwuderer = nil
         for i, v in pairs(roles) do
@@ -266,16 +266,12 @@ local function meowfag()
             resetCharacter()
         end
 
-        task.wait(15)
-        print("waiting 15 seconds")
-
-        local abc = Players.LocalPlayer.PlayerGui.MainGUI:FindFirstChild("Game")
+        repeat task.wait() until Players.LocalPlayer.PlayerGui:FindFirstChild("MainGUI") and Players.LocalPlayer.PlayerGui.MainGUI:FindFirstChild("Game")
+        local abc = Players.LocalPlayer.PlayerGui.MainGUI.Game
         local eventAmount = tonumber(abc.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
         local coinAmount = tonumber(abc.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
-        print("got text stuff")
 
         noclip()
-        print("noclipped")
 
         local function containerCheck(nya)
             local x = game.Workspace:WaitForChild("Normal", nya)
