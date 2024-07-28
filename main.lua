@@ -63,7 +63,9 @@ local function meowfag()
 
     local function Noclip()
         workspace.Gravity = 0
-        repeat wait() until Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("Animate")
+        while not Players.LocalPlayer or not Players.LocalPlayer.Character do
+            task.wait()
+        end
         Players.LocalPlayer.Character.Animate.Disabled = true
         local wrkspcnrml = game.Workspace:WaitForChild("Normal", 30)
         if wrkspcnrml then
@@ -135,27 +137,6 @@ local function meowfag()
                 v.Velocity = Vector3.new(0, 0, 0)
             end
         end
-
-        local function flingDiedF()
-            if flingDiedF then
-                flingDiedF:Disconnect()
-            end
-            flinging = false
-            if not Players.LocalPlayer.Character or not Players.LocalPlayer.Character.HumanoidRootPart then
-                return
-            end
-            for _, v in pairs(Players.LocalPlayer.Character.HumanoidRootPart:GetChildren()) do
-                if v.ClassName == 'BodyAngularVelocity' then
-                    v:Destroy()
-                end
-            end
-            for _, child in pairs(Players.LocalPlayer.Character:GetDescendants()) do
-                if child.ClassName == "Part" or child.ClassName == "MeshPart" then
-                    child.CustomPhysicalProperties = PhysicalProperties.new(0.7, 0.3, 0.5)
-                end
-            end
-        end
-        Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid').Died:Connect(flingDiedF)
         while not Players.LocalPlayer or not Players.LocalPlayer.Character do
             task.wait()
         end
@@ -174,6 +155,19 @@ local function meowfag()
                 end
             end
             flinging = false
+            if not Players.LocalPlayer.Character or not Players.LocalPlayer.Character.HumanoidRootPart then
+                return
+            end
+            for _, v in pairs(Players.LocalPlayer.Character.HumanoidRootPart:GetChildren()) do
+                if v.ClassName == 'BodyAngularVelocity' then
+                    v:Destroy()
+                end
+            end
+            for _, child in pairs(Players.LocalPlayer.Character:GetDescendants()) do
+                if child.ClassName == "Part" or child.ClassName == "MeshPart" then
+                    child.CustomPhysicalProperties = PhysicalProperties.new(0.7, 0.3, 0.5)
+                end
+            end
             resetCharacter()
         end
     end
