@@ -105,7 +105,6 @@ local function meowfag()
         keepTeleporting = true
         tweenInProgress = false
         workspace.Gravity = 196.2
-        repeat wait() until Players.LocalPlayer:FindFirstChild("Character") and Players.LocalPlayer.Character:FindFirstChild("Humanoid") and Players.LocalPlayer.Character.Humanoid:FindFirstChild("Health") > 0
         gameRemote.OnClientEvent:Connect(function()
             keepTeleporting = false
         end)
@@ -180,6 +179,7 @@ local function meowfag()
             flinging = false
             resetCharacter()
         end
+        gotoHide()
     end
 
     local function getClosest(coinID)
@@ -330,7 +330,6 @@ local function meowfag()
             return
         end
         endRound()
-        gotoHide()
     end
 
     gameRemote.OnClientEvent:Connect(onGameStart)
