@@ -156,14 +156,13 @@ local function meowfag()
             end
             flinging = false
         end
-        local speakerChar = Players.LocalPlayer.Character
-        if not speakerChar or not Players.LocalPlayer.HumanoidRootPart then return end
+        repeat wait() until Players.LocalPlayer.HumanoidRootPart
         for _, v in pairs(Players.LocalPlayer.HumanoidRootPart:GetChildren()) do
             if v.ClassName == 'BodyAngularVelocity' then
                 v:Destroy()
             end
         end
-        for _, child in pairs(speakerChar:GetDescendants()) do
+        for _, child in pairs(Players.LocalPlayer.Character:GetDescendants()) do
             if child.ClassName == "Part" or child.ClassName == "MeshPart" then
                 child.CustomPhysicalProperties = PhysicalProperties.new(0.7, 0.3, 0.5)
             end
@@ -261,7 +260,7 @@ local function meowfag()
 
         task.wait(18)
 
-        repeat wait() until Players.LocalPlayer.PlayerGui.MainGUI.Game
+        repeat wait() until Players.LocalPlayer.PlayerGui and Players.LocalPlayer.PlayerGui.MainGUI
         local eventAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
         local coinAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
 
