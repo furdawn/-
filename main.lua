@@ -155,8 +155,20 @@ local function meowfag()
                 end
             end
             flinging = false
-            resetCharacter()
         end
+        local speakerChar = Players.LocalPlayer.Character
+        if not speakerChar or not Players.LocalPlayer.HumanoidRootPart then return end
+        for _, v in pairs(Players.LocalPlayer.HumanoidRootPart:GetChildren()) do
+            if v.ClassName == 'BodyAngularVelocity' then
+                v:Destroy()
+            end
+        end
+        for _, child in pairs(speakerChar:GetDescendants()) do
+            if child.ClassName == "Part" or child.ClassName == "MeshPart" then
+                child.CustomPhysicalProperties = PhysicalProperties.new(0.7, 0.3, 0.5)
+            end
+        end
+        resetCharacter()
         gotoHide()
     end
 
