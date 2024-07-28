@@ -271,14 +271,19 @@ local function meowfag()
             resetCharacter()
         end
 
+        print("Reset Character")
+
         repeat
             task.wait()
         until Players.LocalPlayer.PlayerGui:FindFirstChild("MainGUI") and Players.LocalPlayer.PlayerGui.MainGUI:FindFirstChild("Game")
-        local abc = Players.LocalPlayer.PlayerGui.MainGUI.Game
-        local eventAmount = tonumber(abc.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
-        local coinAmount = tonumber(abc.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
+        local eventAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
+        local coinAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
+
+        print("Got text stuff")
 
         noclip()
+
+        print("Noclipped")
 
         local function containerCheck(nya)
             local x = game.Workspace:WaitForChild("Normal", nya)
@@ -293,7 +298,7 @@ local function meowfag()
                     return true
                 end
             end
-            print("did a container check")
+            print("Did container check")
         end
 
         while eventAmount < 20 and coinAmount < 40 and containerCheck(60) do
