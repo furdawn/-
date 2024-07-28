@@ -255,6 +255,7 @@ local function meowfag()
     end
 
     local function onGameStart()
+        print("Getting roles")
         local roles = ReplicatedStorage:FindFirstChild("GetPlayerData", true):InvokeServer()
         local muwuderer = nil
         for i, v in pairs(roles) do
@@ -263,8 +264,10 @@ local function meowfag()
                 break
             end
         end
+        print("Got Roles")
 
         if muwuderer == Players.LocalPlayer then
+            print("Setting animation disabled")
             Players.LocalPlayer.Character.Animate.Disabled = true
         else
             resetCharacter()
