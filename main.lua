@@ -57,6 +57,11 @@ local function meowfag()
     end
     --- Optimization Stuff :3
 
+    local function getRoot(char)
+        local rootPart = char:FindFirstChild('HumanoidRootPart') or char:FindFirstChild('Torso') or char:FindFirstChild('UpperTorso')
+        return rootPart
+    end
+
     local function resetCharacter()
         Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Dead)
     end
@@ -93,10 +98,8 @@ local function meowfag()
 
     local function gotoHide()
         workspace.Gravity = 196.2
-        local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
-        local humanoidRootPart = Character:WaitForChild("HumanoidRootPart", math.huge)
         local targetPosition = Vector3.new(-109, 112.5, 33)
-        local hideMe = TweenService:Create(humanoidRootPart, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = CFrame.new(targetPosition)})
+        local hideMe = TweenService:Create(getRoot(Players.LocalPlayer), TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = CFrame.new(targetPosition)})
         hideMe:Play()
         hideMe.Completed:Wait()
     end
@@ -123,9 +126,12 @@ local function meowfag()
 
         task.wait(1)
 
+        local localHumanoid = getRoot(Players.LocalPlayer)
+        local targetHumanoid = getRoot(targetPlayer)
+
         local poofMurderer = Instance.new("BodyAngularVelocity")
         poofMurderer.Name = "SmirksWithMaliciousIntent"
-        poofMurderer.Parent = Players.LocalPlayer.Character.HumanoidRootPart
+        poofMurderer.Parent = localHumanoid
         poofMurderer.AngularVelocity = Vector3.new(0, 95000, 0)
         poofMurderer.MaxTorque = Vector3.new(0, math.huge, 0)
         poofMurderer.P = math.huge
@@ -143,11 +149,11 @@ local function meowfag()
         if targetPlayer and targetPlayer.Character and targetPlayer.Character.Humanoid then
             local startTime = os.time()
             while flinging == true and Players.LocalPlayer.Character and targetPlayer.Character do
-                if not Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") or not targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                if not localHumanoid or not targetHumanoid then
                     break
                 end
                 poofMurderer.AngularVelocity = Vector3.new(0, 95000, 0)
-                Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame * CFrame.Angles(math.rad(8), 0, math.rad(8))
+                localHumanoid.CFrame = targetHumanoid.CFrame * CFrame.Angles(math.rad(8), 0, math.rad(8))
                 task.wait(0.1)
                 poofMurderer.AngularVelocity = Vector3.new(0, 0, 0)
                 if os.time() - startTime >= 4 then
@@ -155,10 +161,10 @@ local function meowfag()
                 end
             end
             flinging = false
-            if not Players.LocalPlayer.Character or not Players.LocalPlayer.Character.HumanoidRootPart then
+            if not Players.LocalPlayer.Character or not localHumanoid then
                 return
             end
-            for _, v in pairs(Players.LocalPlayer.Character.HumanoidRootPart:GetChildren()) do
+            for _, v in pairs(localHumanoid:GetChildren()) do
                 if v.ClassName == 'BodyAngularVelocity' then
                     v:Destroy()
                 end
@@ -173,8 +179,6 @@ local function meowfag()
     end
 
     local function getClosest(coinID)
-        local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
-        local humanoidRootPart = Character:WaitForChild("HumanoidRootPart", math.huge)
         local shortestDistance = 420420
         local closestCoin = nil
 
@@ -187,7 +191,7 @@ local function meowfag()
             if coin:IsA("BasePart") then
                 if coin:FindFirstChild("TouchInterest") then
                     if coin:GetAttribute("CoinID") == coinID or (coinID == "Meow" and coin:GetAttribute("CoinID") ~= nil) then
-                        local distance = (humanoidRootPart.Position - coin.Position).Magnitude
+                        local distance = (getRoot(Players.LocalPlayer).Position - coin.Position).Magnitude
                         if distance < shortestDistance then
                             shortestDistance = distance
                             closestCoin = coin
@@ -204,8 +208,6 @@ local function meowfag()
     end
 
     local function tweenTo(coin)
-        local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
-        local humanoidRootPart = Character:WaitForChild("HumanoidRootPart")
         if coin:FindFirstChild("TouchInterest") then
             if coin:IsA("BasePart") then
                 coin.Size = Vector3.new(13, 13, 13)
@@ -214,15 +216,17 @@ local function meowfag()
             tweenInProgress = false
             return
         end
+        
+        local localHumanoid = getRoot(Players.LocalPlayer)
 
         local function setTween(targetPos, duration)
             local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
-            local tween = TweenService:Create(humanoidRootPart, tweenInfo, { CFrame = CFrame.new(targetPos) })
+            local tween = TweenService:Create(localHumanoid, tweenInfo, { CFrame = CFrame.new(targetPos) })
             tween:Play()
             tween.Completed:Wait()
         end
 
-        local distance = (humanoidRootPart.Position - coin.Position).Magnitude
+        local distance = (localHumanoid.Position - coin.Position).Magnitude
         if distance > 100 then
             setTween(coin.Position - Vector3.new(0, 8.5, 0), 0)
             setTween(coin.Position - Vector3.new(0, 4, 0), 0.35)
