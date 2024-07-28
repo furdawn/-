@@ -262,12 +262,17 @@ local function meowfag()
             resetCharacter()
         end
 
-        repeat wait() until Players.LocalPlayer.PlayerGui:FindFirstChild("MainGUI") and Players.LocalPlayer.PlayerGui.MainGUI:FindFirstChild("Game")
-        local eventAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
-        local coinAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
+        task.wait(15)
+
+        local thing
+        repeat
+            thing = Players.LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("MainGUI"):FindFirstChild("Game")
+            task.wait(0.1)
+        until thing ~= nil
+        local eventAmount = tonumber(thing.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
+        local coinAmount = tonumber(thing.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
 
         Noclip()
-        task.wait(10)
 
         local function containerCheck(nya)
             local x = game.Workspace:WaitForChild("Normal", nya)
