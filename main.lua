@@ -267,10 +267,15 @@ local function meowfag()
         end
 
         task.wait(15)
+        print("waiting 15 seconds")
 
-        local abc = Players.LocalPlayer.PlayerGui.MainGUI:WaitForChild("Game", 30)
+        local abc = Players.LocalPlayer.PlayerGui.MainGUI:FindFirstChild("Game")
         local eventAmount = tonumber(abc.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
         local coinAmount = tonumber(abc.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
+        print("got text stuff")
+
+        noclip()
+        print("noclipped")
 
         local function containerCheck(nya)
             local x = game.Workspace:WaitForChild("Normal", nya)
@@ -285,9 +290,8 @@ local function meowfag()
                     return true
                 end
             end
+            print("did a container check")
         end
-
-        noclip()
 
         while eventAmount < 20 and coinAmount < 40 and containerCheck(60) do
             if not tweenInProgress then
