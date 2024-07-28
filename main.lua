@@ -183,6 +183,7 @@ local function meowfag()
     end
 
     local function getClosest(coinID)
+        print("get close")
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
         local shortestDistance = 420420
         local closestCoin = nil
@@ -213,6 +214,7 @@ local function meowfag()
     end
 
     local function tweenTo(coin)
+        print("tween to thing")
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
         local humanoidRootPart = Character:WaitForChild("HumanoidRootPart")
         if coin:FindFirstChild("TouchInterest") then
@@ -232,7 +234,9 @@ local function meowfag()
         end
 
         setTween(coin.Position - Vector3.new(0, 10, 0), 0)
+        print("tween 1")
         setTween(coin.Position - Vector3.new(0, 4, 0), 0.2)
+        print("tween 2")
 
         if coin then
             task.wait(1)
@@ -241,6 +245,7 @@ local function meowfag()
             task.wait(1)
         end
         tweenInProgress = false
+        print("finished")
     end
 
     local function onGameStart()
@@ -278,14 +283,19 @@ local function meowfag()
         end
 
         while eventAmount < 20 and coinAmount < 40 and containerCheck() do
+            print("doing first section of eventamount and coinamount and check")
             if not tweenInProgress then
+                print("if not part")
                 local closestEither = getClosest("fem")
                 if closestEither then
+                    print("is closest thing")
                     tweenInProgress = true
                     tweenTo(closestEither)
                 end
+                print("updating")
                 eventAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
                 coinAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
+                print("updated")
             end
         end
 
