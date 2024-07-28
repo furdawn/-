@@ -59,11 +59,7 @@ local function meowfag()
     --- Optimization Stuff :3
 
     local function resetCharacter()
-        local x = Players.LocalPlayer.Character and Players.LocalPlayer.Character.Humanoid
-        if x then
-            Players.LocalPlayer.Character.Humanoid.Health = 0
-            Players.LocalPlayer.CharacterAdded:Wait()
-        end
+        Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Dead)
     end
 
     local function Noclip()
