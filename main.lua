@@ -280,15 +280,17 @@ local function meowfag()
 
         local function containerCheck()
             print("checking container")
-            local x = game.Workspace:WaitForChild("Normal", 3)
+            local x = game.Workspace:FindFirstChild("Normal")
             if not x then
                 return false
             end
-            local y = x:FindFirstChild("CoinContainer")
-            if not y then
-                return false
-            elseif y then
-                return true
+            if x then
+                local y = x:FindFirstChild("CoinContainer")
+                if not y then
+                    return false
+                elseif y then
+                    return true
+                end
             end
             print("container check")
         end
