@@ -69,7 +69,7 @@ local function meowfag()
     local function resetCharacter()
         repeat
             task.wait()
-        until Players.LocalPlayer.Character.Humanoid:FindFirstChild("Health") > 0
+        until Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("Humanoid") and Players.LocalPlayer.Character.Humanoid:FindFirstChild("Health") > 0
         Players.LocalPlayer.Character.Humanoid.Health = 0
         Players.LocalPlayer.CharacterAdded:Wait()
     end
