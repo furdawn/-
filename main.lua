@@ -1,10 +1,9 @@
+repeat wait() until game:IsLoaded()
 if game.PlaceId ~= 142823291 then
     game.Players.LocalPlayer:Kick("Wrong game! (Murder Mystery 2)")
 end
 
 local function meowfag()
-    repeat wait() until game:IsLoaded()
-
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
     local TweenService = game:GetService("TweenService")
     local Players = game:GetService("Players")
