@@ -55,8 +55,8 @@ local function meowfag()
             v.Enabled = false
         end
     end
-    local coinVisualizer = Players.LocalPlayer.PlayerScripts.CoinVisualizer
-    local weaponVisuals = Players.LocalPlayer.PlayerScripts.WeaponVisuals
+    local coinVisualizer = Players.LocalPlayer.PlayerScripts:WaitForChild("CoinVisualizer")
+    local weaponVisuals = Players.LocalPlayer.PlayerScripts:WaitForChild("WeaponVisuals")
     if coinVisualizer then
         coinVisualizer:Destroy()
     end
