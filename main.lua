@@ -209,14 +209,6 @@ local function meowfag()
     local function tweenTo(coin)
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
         local humanoidRootPart = Character:WaitForChild("HumanoidRootPart")
-        if coin:FindFirstChild("TouchInterest") then
-            if coin:IsA("BasePart") then
-                coin.Size = Vector3.new(13, 13, 13)
-            end
-        else
-            tweenInProgress = false
-            return
-        end
 
         local function setTween(targetPos, duration)
             local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
@@ -270,7 +262,20 @@ local function meowfag()
 
         Noclip()
 
-        while eventAmount < 20 and coinAmount < 40 do
+        local function containerCheck()
+            local x = game.Workspace:WaitForChild("Normal", 3)
+            if not x then
+                return false
+            end
+            local y = x:FindFirstChild("CoinContainer")
+            if not y then
+                return false
+            elseif y then
+                return true
+            end
+        end
+
+        while containerCheck() and eventAmount < 20 and coinAmount < 40 do
             if not tweenInProgress then
                 local closestEither = getClosest("Meow")
                 if closestEither then
@@ -282,7 +287,7 @@ local function meowfag()
             end
         end
 
-        while eventAmount < 20 do
+        while containerCheck() and eventAmount < 20 do
             if not tweenInProgress then
                 local closestEvent = getClosest("BeachBall")
                 if closestEvent then
@@ -293,7 +298,7 @@ local function meowfag()
             end
         end
 
-        while coinAmount < 40 do
+        while containerCheck() and coinAmount < 40 do
             if not tweenInProgress then
                 local closestCoin = getClosest("Coin")
                 if closestCoin then
@@ -306,6 +311,9 @@ local function meowfag()
 
         tweenInProgress = false
 
+        if not containerCheck() then
+            gotoHide()
+        end
         endRound()
     end
 
