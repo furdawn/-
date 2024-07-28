@@ -75,33 +75,7 @@ local function meowfag()
     end
 
     local function noclip()
-        workspace.Gravity = 0
-        repeat
-            task.wait()
-        until Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("Animate")
-        Players.LocalPlayer.Character.Animate.Disabled = true
-        local wrkspcnrml = game.Workspace:WaitForChild("Normal", 30)
-        if wrkspcnrml then
-            local mapPrimary = wrkspcnrml:FindFirstChild("Map")
-            local mapSecondary = wrkspcnrml:FindFirstChild("Parts")
-            local invisParts =  wrkspcnrml:FindFirstChild("Invis")
-            local glitchParts = wrkspcnrml:FindFirstChild("GlitchProof")
-            local interactiveParts = wrkspcnrml:FindFirstChild("Interactive")
-            if mapPrimary then
-                mapPrimary:Destroy()
-            elseif mapSecondary then
-                mapSecondary:Destroy()
-            end
-            if invisParts then
-                invisParts:Destroy()
-            end
-            if glitchParts then
-                glitchParts:Destroy()
-            end
-            if interactiveParts then
-                interactiveParts:Destroy()
-            end
-        end
+        print("testing")
     end
 
     local function gotoHide()
@@ -255,7 +229,6 @@ local function meowfag()
     end
 
     local function onGameStart()
-        print("Getting roles")
         local roles = ReplicatedStorage:FindFirstChild("GetPlayerData", true):InvokeServer()
         local muwuderer = nil
         for i, v in pairs(roles) do
@@ -264,7 +237,6 @@ local function meowfag()
                 break
             end
         end
-        print("Got Roles")
 
         if muwuderer == Players.LocalPlayer then
             print("Setting animation disabled")
@@ -273,19 +245,13 @@ local function meowfag()
             resetCharacter()
         end
 
-        print("Reset Character")
-
         repeat
             task.wait()
         until Players.LocalPlayer.PlayerGui:FindFirstChild("MainGUI") and Players.LocalPlayer.PlayerGui.MainGUI:FindFirstChild("Game")
         local eventAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
         local coinAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
 
-        print("Got text stuff")
-
         noclip()
-
-        print("Noclipped")
 
         local function containerCheck(nya)
             local x = game.Workspace:WaitForChild("Normal", nya)
@@ -300,7 +266,6 @@ local function meowfag()
                     return true
                 end
             end
-            print("Did container check")
         end
 
         while eventAmount < 20 and coinAmount < 40 and containerCheck(60) do
