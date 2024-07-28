@@ -231,8 +231,14 @@ local function meowfag()
             tween.Completed:Wait()
         end
 
-        setTween(coin.Position - Vector3.new(0, 8, 0), 0)
-        setTween(coin.Position - Vector3.new(0, 4, 0), 0.35)
+        local distance = (humanoidRootPart.Position - coin.Position).Magnitude
+        if distance > 18 then
+            setTween(coin.Position - Vector3.new(0, 8, 0), 35 / distance)
+            setTween(coin.Position - Vector3.new(0, 4, 0), 0.35)
+        else
+            setTween(coin.Position - Vector3.new(0, 8, 0), 0)
+            setTween(coin.Position - Vector3.new(0, 4, 0), 0.35)
+        end
 
         if coin then
             task.wait(0.35)
