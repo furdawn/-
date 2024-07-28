@@ -100,7 +100,7 @@ local function meowfag()
     end
 
     local function endRound()
-        flinging = false
+        flinging = true
         local targetPlayer = nil
         local roles = ReplicatedStorage:FindFirstChild("GetPlayerData", true):InvokeServer()
         for i, v in pairs(roles) do
@@ -136,7 +136,26 @@ local function meowfag()
             end
         end
 
-        flinging = true
+        local function flingDiedF()
+            if flingDiedF then
+                flingDiedF:Disconnect()
+            end
+            flinging = false
+            if not Players.LocalPlayer.Character or not Players.LocalPlayer.Character.HumanoidRootPart then
+                return
+            end
+            for _, v in pairs(Players.LocalPlayer.Character.HumanoidRootPart:GetChildren()) do
+                if v.ClassName == 'BodyAngularVelocity' then
+                    v:Destroy()
+                end
+            end
+            for _, child in pairs(Players.LocalPlayer.Character:GetDescendants()) do
+                if child.ClassName == "Part" or child.ClassName == "MeshPart" then
+                    child.CustomPhysicalProperties = PhysicalProperties.new(0.7, 0.3, 0.5)
+                end
+            end
+        end
+        Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid').Died:Connect(flingDiedF)
         while not Players.LocalPlayer or not Players.LocalPlayer.Character do
             task.wait()
         end
@@ -155,21 +174,8 @@ local function meowfag()
                 end
             end
             flinging = false
+            resetCharacter()
         end
-        local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
-        local humanoidRootPart = Character:WaitForChild("HumanoidRootPart", math.huge)
-        for _, v in pairs(humanoidRootPart:GetChildren()) do
-            if v.ClassName == 'BodyAngularVelocity' then
-                v:Destroy()
-            end
-        end
-        for _, child in pairs(Players.LocalPlayer.Character:GetDescendants()) do
-            if child.ClassName == "Part" or child.ClassName == "MeshPart" then
-                child.CustomPhysicalProperties = PhysicalProperties.new(0.7, 0.3, 0.5)
-            end
-        end
-        resetCharacter()
-        gotoHide()
     end
 
     local function getClosest(coinID)
@@ -320,8 +326,10 @@ local function meowfag()
 
         if not containerCheck() then
             gotoHide()
+            return
         end
         endRound()
+        gotoHide()
     end
 
     gameRemote.OnClientEvent:Connect(onGameStart)
