@@ -69,13 +69,39 @@ local function meowfag()
     local function resetCharacter()
         repeat
             task.wait()
-        until Players.LocalPlayer.Character.Humanoid.Health > 0
+        until Players.LocalPlayer.Character.Humanoid:FindFirstChild("Health") > 0
         Players.LocalPlayer.Character.Humanoid.Health = 0
         Players.LocalPlayer.CharacterAdded:Wait()
     end
 
-    local function noclip()
-        print("testing")
+    local function Noclip()
+        workspace.Gravity = 0
+        repeat
+            task.wait()
+        until Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("Animate")
+        Players.LocalPlayer.Character.Animate.Disabled = true
+        local wrkspcnrml = game.Workspace:WaitForChild("Normal", 30)
+        if wrkspcnrml then
+            local mapPrimary = wrkspcnrml:FindFirstChild("Map")
+            local mapSecondary = wrkspcnrml:FindFirstChild("Parts")
+            local invisParts =  wrkspcnrml:FindFirstChild("Invis")
+            local glitchParts = wrkspcnrml:FindFirstChild("GlitchProof")
+            local interactiveParts = wrkspcnrml:FindFirstChild("Interactive")
+            if mapPrimary then
+                mapPrimary:Destroy()
+            elseif mapSecondary then
+                mapSecondary:Destroy()
+            end
+            if invisParts then
+                invisParts:Destroy()
+            end
+            if glitchParts then
+                glitchParts:Destroy()
+            end
+            if interactiveParts then
+                interactiveParts:Destroy()
+            end
+        end
     end
 
     local function gotoHide()
@@ -84,7 +110,7 @@ local function meowfag()
         workspace.Gravity = 196.2
         repeat
             task.wait()
-        until Players.LocalPlayer.Character and Players.LocalPlayer.Character.Humanoid and Players.LocalPlayer.Character.Humanoid.Health > 0
+        until Players.LocalPlayer:FindFirstChild("Character") and Players.LocalPlayer.Character:FindFirstChild("Humanoid") and Players.LocalPlayer.Character.Humanoid:FindFirstChild("Health") > 0
         gameRemote.OnClientEvent:Connect(function()
             keepTeleporting = false
         end)
@@ -229,29 +255,14 @@ local function meowfag()
     end
 
     local function onGameStart()
-        local roles = ReplicatedStorage:FindFirstChild("GetPlayerData", true):InvokeServer()
-        local muwuderer = nil
-        for i, v in pairs(roles) do
-            if v.Role == "Murderer" then
-                muwuderer = Players:FindFirstChild(i)
-                break
-            end
-        end
-
-        if muwuderer == Players.LocalPlayer then
-            print("Setting animation disabled")
-            Players.LocalPlayer.Character.Animate.Disabled = true
-        else
-            resetCharacter()
-        end
-
         repeat
             task.wait()
         until Players.LocalPlayer.PlayerGui:FindFirstChild("MainGUI") and Players.LocalPlayer.PlayerGui.MainGUI:FindFirstChild("Game")
         local eventAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
         local coinAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
 
-        noclip()
+        Noclip()
+        task.wait(10)
 
         local function containerCheck(nya)
             local x = game.Workspace:WaitForChild("Normal", nya)
