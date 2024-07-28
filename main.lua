@@ -183,7 +183,6 @@ local function meowfag()
     end
 
     local function getClosest(coinID)
-        print("getClosest ---")
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
         local shortestDistance = math.huge
         local closestCoin = nil
@@ -208,7 +207,6 @@ local function meowfag()
     end
 
     local function tweenTo(coin)
-        print("tweenTo ---")
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
         local humanoidRootPart = Character:WaitForChild("HumanoidRootPart")
         if coin:FindFirstChild("TouchInterest") then
@@ -224,16 +222,11 @@ local function meowfag()
             local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
             local tween = TweenService:Create(humanoidRootPart, tweenInfo, { CFrame = CFrame.new(targetPos) })
             tween:Play()
-            print("Tween started for duration:", duration)
             tween.Completed:Wait()
-            print("Tween completed for duration:", duration)
         end
 
-        local distance = (humanoidRootPart.Position - coin.Position).Magnitude
         setTween(coin.Position - Vector3.new(0, 8, 0), 0)
-        print("Doing 2nd tween")
-        setTween(coin.Position - Vector3.new(0, 4, 0), distance / 28)
-        print("Finished 2nd tween")
+        setTween(coin.Position - Vector3.new(0, 4, 0), 0.1)
 
         if coin then
             task.wait(0.65)
