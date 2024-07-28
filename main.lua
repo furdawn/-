@@ -176,6 +176,7 @@ local function meowfag()
     end
 
     local function getClosest(coinID)
+        print("getting closest")
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
         local humanoidRootPart = Character:WaitForChild("HumanoidRootPart", math.huge)
         local shortestDistance = 420420
@@ -202,13 +203,23 @@ local function meowfag()
         if closestCoin == nil then
             return
         else
+            print("got closest")
             return closestCoin
         end
     end
 
     local function tweenTo(coin)
+        print("tweening")
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
         local humanoidRootPart = Character:WaitForChild("HumanoidRootPart")
+        if coin:FindFirstChild("TouchInterest") then
+            if coin:IsA("BasePart") then
+                coin.Size = Vector3.new(13, 13, 13)
+            end
+        else
+            tweenInProgress = false
+            return
+        end
 
         local function setTween(targetPos, duration)
             local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
@@ -235,6 +246,7 @@ local function meowfag()
         else
             task.wait(0.35)
         end
+        print("tweened")
         tweenInProgress = false
     end
 
@@ -254,6 +266,8 @@ local function meowfag()
             resetCharacter()
         end
 
+        print("reset char")
+
         task.wait(18)
 
         repeat wait() until Players.LocalPlayer.PlayerGui.MainGUI.Game
@@ -262,7 +276,10 @@ local function meowfag()
 
         Noclip()
 
+        print("noclipped")
+
         local function containerCheck()
+            print("checking container")
             local x = game.Workspace:WaitForChild("Normal", 3)
             if not x then
                 return false
@@ -273,6 +290,7 @@ local function meowfag()
             elseif y then
                 return true
             end
+            print("container check")
         end
 
         while containerCheck() and eventAmount < 20 and coinAmount < 40 do
