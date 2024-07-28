@@ -156,8 +156,9 @@ local function meowfag()
             end
             flinging = false
         end
-        repeat wait() until Players.LocalPlayer.HumanoidRootPart
-        for _, v in pairs(Players.LocalPlayer.HumanoidRootPart:GetChildren()) do
+        local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
+        local humanoidRootPart = Character:WaitForChild("HumanoidRootPart", math.huge)
+        for _, v in pairs(humanoidRootPart:GetChildren()) do
             if v.ClassName == 'BodyAngularVelocity' then
                 v:Destroy()
             end
