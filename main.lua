@@ -14,8 +14,7 @@ local function meowfag()
     local TweenService = game:GetService("TweenService")
     local Players = game:GetService("Players")
     local Lighting = game:GetService("Lighting")
-    local Workspace = game:GetService("Workspace")
-    local Terrain = Workspace.Terrain
+    local Terrain = game.Workspace.Terrain
 
     local roleRemote = ReplicatedStorage.Remotes.Gameplay.RoleSelect
     local tweenInProgress
@@ -49,18 +48,18 @@ local function meowfag()
     Lighting.Brightness = 0
     Lighting.GlobalShadows = false
     settings().Rendering.QualityLevel = "Level01"
-    for _, v in ipairs(Workspace:GetDescendants()) do
+    for _, v in ipairs(game.Workspace:GetDescendants()) do
         if v:IsA("Texture") or v:IsA("Decal") then
             v:Destroy()
         end
     end
-    for _,v in pairs(Workspace:GetDescendants()) do
+    for _,v in pairs(game.Workspace:GetDescendants()) do
         if v:IsA("Part") or v:IsA("MeshPart") then
             v.Material = "Plastic"
             v.Reflectance = 0
         end
     end
-    for _, v in ipairs(Workspace:GetDescendants()) do
+    for _, v in ipairs(game.Workspace:GetDescendants()) do
         if v:IsA("ParticleEmitter") or v:IsA("Trail") then
             v.Enabled = false
         end
@@ -86,7 +85,8 @@ local function meowfag()
 
     local function noclip()
         workspace.Gravity = 0
-        local wrkspcnrml = Workspace:WaitForChild("Normal", 420)
+        Players.LocalPlayer.Character.Animate.Disabled = true
+        local wrkspcnrml = game.Workspace:WaitForChild("Normal", math.huge)
         if wrkspcnrml then
             local mapPrimary = wrkspcnrml:FindFirstChild("Map")
             local mapSecondary = wrkspcnrml:FindFirstChild("Parts")
@@ -108,7 +108,6 @@ local function meowfag()
                 interactiveParts:Destroy()
             end
         end
-        Players.LocalPlayer.Character.Animate.Disabled = true
     end
 
     local function gotoHide()
@@ -177,26 +176,6 @@ local function meowfag()
         end
 
         flinging = true
-        local function flingDiedF()
-            if flingDied then
-                flingDied:Disconnect()
-            end
-            flinging = false
-            task.wait(1)
-
-            for _,v in pairs(Players.LocalPlayer.Character.HumanoidRootPart:GetChildren()) do
-                if v.ClassName == 'BodyAngularVelocity' then
-                    v:Destroy()
-                end
-            end
-            for _, child in pairs(Players.LocalPlayer.Character:GetDescendants()) do
-                if child.ClassName == "Part" or child.ClassName == "MeshPart" then
-                    child.CustomPhysicalProperties = PhysicalProperties.new(0.7, 0.3, 0.5)
-                end
-            end
-            resetCharacter()
-        end
-        flingDied = Players.LocalPlayer.Character:FindFirstChild('Humanoid').Died:Connect(flingDiedF)
         while not Players.LocalPlayer or not Players.LocalPlayer.Character do
             task.wait()
         end
@@ -214,27 +193,27 @@ local function meowfag()
                     break
                 end
             end
+            flinging = false
             resetCharacter()
         end
     end
 
     local function getClosest(coinID)
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
-        local humanoidRootPart = Character:WaitForChild("HumanoidRootPart", 15)
         local shortestDistance = math.huge
         local closestCoin = nil
 
-        local x = Workspace.Normal
+        local x = game.Workspace.Normal
         if not x then
-            return nil
+            return
         end
 
-        for _, coin in pairs(Workspace.Normal.CoinContainer:GetChildren()) do
+        for _, coin in pairs(game.Workspace.Normal.CoinContainer:GetChildren()) do
             if coin:IsA("BasePart") then
                 local touchInterest = coin:FindFirstChild("TouchInterest")
                 if touchInterest then
-                    if coin:GetAttribute("CoinID") == coinID or (coinID == "Either" and coin:GetAttribute("CoinID") ~= nil) then
-                        local distance = (humanoidRootPart.Position - coin.Position).Magnitude
+                    if coin:GetAttribute("CoinID") == coinID or (coinID == "XYZ" and coin:GetAttribute("CoinID") ~= nil) then
+                        local distance = (Character.HumanoidRootPart.Position - coin.Position).Magnitude
                         if distance < shortestDistance then
                             shortestDistance = distance
                             closestCoin = coin
@@ -274,7 +253,7 @@ local function meowfag()
             setTween(coin.Position - Vector3.new(0, 10, 0), 0)
             setTween(coin.Position - Vector3.new(0, 4.1, 0), 0.1)
         else
-            setTween(coin.Position - Vector3.new(0, 10, 0), distance / 30)
+            setTween(coin.Position - Vector3.new(0, 10, 0), distance / 25)
             setTween(coin.Position - Vector3.new(0, 4.1, 0), 0.1)
         end
 
@@ -301,7 +280,7 @@ local function meowfag()
             resetCharacter()
         end
 
-        task.wait(11)
+        task.wait(10)
 
         local gui = Players.LocalPlayer:WaitForChild("PlayerGui", 30)
         local abc = gui.MainGUI:WaitForChild("Game", 30)
@@ -309,7 +288,7 @@ local function meowfag()
         local coinAmount = tonumber(abc.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
 
         local function containerCheck(nya)
-            local x = Workspace:WaitForChild("Normal", nya)
+            local x = game.Workspace:WaitForChild("Normal", nya)
             if not x then
                 return false
             end
@@ -327,12 +306,10 @@ local function meowfag()
 
         while eventAmount < 20 and coinAmount < 40 and containerCheck(60) do
             if not tweenInProgress then
-                local closestEither = getClosest("Either")
+                local closestEither = getClosest("XYZ")
                 if closestEither then
                     tweenInProgress = true
                     tweenTo(closestEither)
-                else
-                    task.wait(3)
                 end
                 eventAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
                 coinAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
@@ -345,8 +322,6 @@ local function meowfag()
                 if closestEvent then
                     tweenInProgress = true
                     tweenTo(closestEvent)
-                else
-                    task.wait(3)
                 end
                 eventAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
             end
@@ -358,8 +333,6 @@ local function meowfag()
                 if closestCoin then
                     tweenInProgress = true
                     tweenTo(closestCoin)
-                else
-                    task.wait(3)
                 end
                 coinAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
             end
