@@ -211,7 +211,7 @@ local function meowfag()
         local humanoidRootPart = Character:WaitForChild("HumanoidRootPart")
         if coin:FindFirstChild("TouchInterest") then
             if coin:IsA("BasePart") then
-                coin.Size = Vector3.new(15, 15, 15)
+                coin.Size = Vector3.new(12, 12, 12)
             end
         else
             tweenInProgress = false
@@ -227,7 +227,7 @@ local function meowfag()
 
         local distance = (humanoidRootPart.Position - coin.Position).Magnitude
         setTween(coin.Position - Vector3.new(0, 8, 0), 0)
-        setTween(coin.Position - Vector3.new(0, 4.1, 0), distance / 28)
+        setTween(coin.Position - Vector3.new(0, 4, 0), distance / 28)
 
         if coin then
             task.wait(0.5)
