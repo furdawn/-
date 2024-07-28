@@ -215,7 +215,7 @@ local function meowfag()
     local function tweenTo(coin)
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
         local humanoidRootPart = Character:WaitForChild("HumanoidRootPart")
-        if coin.TouchInterest then
+        if coin:FindFirstChild("TouchInterest") then
             if coin:IsA("BasePart") then
                 coin.Size = Vector3.new(15, 15, 15)
             end
