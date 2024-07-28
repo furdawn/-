@@ -196,7 +196,7 @@ local function meowfag()
             if coin:IsA("BasePart") then
                 if coin:FindFirstChild("TouchInterest") then
                     if coin:GetAttribute("CoinID") == coinID or (coinID == "fem" and coin:GetAttribute("CoinID") ~= nil) then
-                        local distance = (Character.HumanoidRootPart.Position - coin.Position).Magnitude
+                        local distance = (Character:FindFirstChild("HumanoidRootPart").Position - coin.Position).Magnitude
                         if distance < shortestDistance then
                             shortestDistance = distance
                             closestCoin = coin
@@ -231,14 +231,14 @@ local function meowfag()
             tween.Completed:Wait()
         end
 
-        setTween(coin.Position - Vector3.new(0, 10, 0), 0.2)
+        setTween(coin.Position - Vector3.new(0, 8, 0), 0.35)
         setTween(coin.Position - Vector3.new(0, 4, 0), 0.1)
 
         if coin then
-            task.wait(0.5)
+            task.wait(0.35)
             coin:Destroy()
         else
-            task.wait(0.5)
+            task.wait(0.35)
         end
         tweenInProgress = false
     end
@@ -269,8 +269,11 @@ local function meowfag()
 
         local function containerCheck()
             local x = game.Workspace:WaitForChild("Normal", 5)
+            if not x then
+                return false
+            end
             local y = x:FindFirstChild("CoinContainer")
-            if not x and not y then
+            if not y then
                 return false
             elseif y then
                 return true
