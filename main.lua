@@ -94,26 +94,6 @@ local function meowfag()
         end
     end
 
-    local function gotoHide()
-        keepTeleporting = true
-        tweenInProgress = false
-        workspace.Gravity = 196.2
-        gameRemote.OnClientEvent:Connect(function()
-            keepTeleporting = false
-        end)
-        while keepTeleporting do
-            local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
-            local humanoidRootPart = Character:WaitForChild("HumanoidRootPart", math.huge)
-            local targetPosition = Vector3.new(-109, 112.5, 33)
-            local distance = (humanoidRootPart.Position - targetPosition).Magnitude
-            if distance > 15 then
-                local hideMe = TweenService:Create(humanoidRootPart, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = CFrame.new(targetPosition)})
-                hideMe:Play()
-                hideMe.Completed:Wait()
-            end
-        end
-    end
-
     local function endRound()
         flinging = false
         local targetPlayer = nil
@@ -172,7 +152,6 @@ local function meowfag()
             flinging = false
             resetCharacter()
         end
-        gotoHide()
     end
 
     local function getClosest(coinID)
@@ -282,18 +261,20 @@ local function meowfag()
             print("checking container")
             local x = game.Workspace:FindFirstChild("Normal")
             if not x then
+                print("container check")
                 return false
             end
             if x then
                 local y = x:FindFirstChild("CoinContainer")
                 if not y then
+                    print("container check")
                     return false
                 elseif y then
+                    print("container check")
                     return true
                 end
             end
-            print("container check")
-        end
+       end
 
         while containerCheck() and eventAmount < 20 and coinAmount < 40 do
             if not tweenInProgress then
@@ -331,9 +312,6 @@ local function meowfag()
 
         tweenInProgress = false
 
-        if not containerCheck() then
-            gotoHide()
-        end
         endRound()
     end
 
