@@ -231,8 +231,8 @@ local function meowfag()
             tween.Completed:Wait()
         end
 
-        setTween(coin.Position - Vector3.new(0, 8, 0), 0.35)
-        setTween(coin.Position - Vector3.new(0, 4, 0), 0.1)
+        setTween(coin.Position - Vector3.new(0, 8, 0), 0)
+        setTween(coin.Position - Vector3.new(0, 4, 0), 0.35)
 
         if coin then
             task.wait(0.35)
