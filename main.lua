@@ -3,7 +3,7 @@ if game.PlaceId ~= 142823291 then
 end
 
 local function meowfag()
-    repeat task.wait() until game:IsLoaded()
+    repeat wait() until game:IsLoaded()
 
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
     local TweenService = game:GetService("TweenService")
@@ -67,14 +67,16 @@ local function meowfag()
     --- Optimization Stuff :3
 
     local function resetCharacter()
-        Players.LocalPlayer.Character.Humanoid.Health = 0
-        Players.LocalPlayer.CharacterAdded:Wait()
+        local test = Players.LocalPlayer.Character and Players.LocalPlayer.Character.Humanoid
+        if test then
+            Players.LocalPlayer.Character.Humanoid.Health = 0
+            Players.LocalPlayer.CharacterAdded:Wait()
+        end
     end
 
     local function Noclip()
-        print("Noclipping")
         workspace.Gravity = 0
-        repeat task.wait() until Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("Animate")
+        repeat wait() until Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("Animate")
         Players.LocalPlayer.Character.Animate.Disabled = true
         local wrkspcnrml = game.Workspace:WaitForChild("Normal", 30)
         if wrkspcnrml then
@@ -104,7 +106,7 @@ local function meowfag()
         keepTeleporting = true
         tweenInProgress = false
         workspace.Gravity = 196.2
-        repeat task.wait() until Players.LocalPlayer:FindFirstChild("Character") and Players.LocalPlayer.Character:FindFirstChild("Humanoid") and Players.LocalPlayer.Character.Humanoid:FindFirstChild("Health") > 0
+        repeat wait() until Players.LocalPlayer:FindFirstChild("Character") and Players.LocalPlayer.Character:FindFirstChild("Humanoid") and Players.LocalPlayer.Character.Humanoid:FindFirstChild("Health") > 0
         gameRemote.OnClientEvent:Connect(function()
             keepTeleporting = false
         end)
@@ -245,7 +247,6 @@ local function meowfag()
     end
 
     local function onGameStart()
-        print("Game started")
         local roles = ReplicatedStorage:FindFirstChild("GetPlayerData", true):InvokeServer()
         local muwuderer = nil
         for i, v in pairs(roles) do
@@ -255,39 +256,26 @@ local function meowfag()
             end
         end
 
-        print("Got murderer2")
-
         if muwuderer == Players.LocalPlayer then
             Players.LocalPlayer.Character.Animate.Disabled = true
         else
             resetCharacter()
         end
 
-        print("Reset")
-
-        repeat task.wait() until Players.LocalPlayer.PlayerGui:FindFirstChild("MainGUI") and Players.LocalPlayer.PlayerGui.MainGUI:FindFirstChild("Game")
+        repeat wait() until Players.LocalPlayer.PlayerGui:FindFirstChild("MainGUI") and Players.LocalPlayer.PlayerGui.MainGUI:FindFirstChild("Game")
         local eventAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
         local coinAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
-
-        print("Got text thing")
 
         Noclip()
         task.wait(10)
 
-        print("Noclipped + 10 sec")
-
         local function containerCheck(nya)
             local x = game.Workspace:WaitForChild("Normal", nya)
-            if not x then
+            local y = x:FindFirstChild("CoinContainer")
+            if not x and not y then
                 return false
-            end
-            if x then
-                local y = x:FindFirstChild("CoinContainer")
-                if not y then
-                    return false
-                elseif y then
-                    return true
-                end
+            elseif y then
+                return true
             end
         end
 
