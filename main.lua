@@ -12,8 +12,8 @@ local function meowfag()
     local Terrain = game.Workspace.Terrain
 
     local gameRemote = ReplicatedStorage.Remotes.Gameplay.RoleSelect
-    local tweenInProgress
-    local keepTeleporting
+    local tweenInProgress = false
+    local keepTeleporting = false
 
     local inLobby = Instance.new("Part")
     inLobby.Size = Vector3.new(3, 0.2, 3)
@@ -67,8 +67,8 @@ local function meowfag()
     --- Optimization Stuff :3
 
     local function resetCharacter()
-        local test = Players.LocalPlayer.Character and Players.LocalPlayer.Character.Humanoid
-        if test then
+        local x = Players.LocalPlayer.Character and Players.LocalPlayer.Character.Humanoid
+        if x then
             Players.LocalPlayer.Character.Humanoid.Health = 0
             Players.LocalPlayer.CharacterAdded:Wait()
         end
@@ -195,7 +195,7 @@ local function meowfag()
 
         for _, coin in pairs(x.CoinContainer:GetChildren()) do
             if coin:IsA("BasePart") then
-                if coin:GetAttribute("CoinID") == coinID or (coinID == "XYZ" and coin:GetAttribute("CoinID") ~= nil) then
+                if coin:GetAttribute("CoinID") == coinID or (coinID == "fem" and coin:GetAttribute("CoinID") ~= nil) then
                     local distance = (Character.HumanoidRootPart.Position - coin.Position).Magnitude
                     if distance < shortestDistance then
                         shortestDistance = distance
@@ -281,7 +281,7 @@ local function meowfag()
 
         while eventAmount < 20 and coinAmount < 40 and containerCheck(60) do
             if not tweenInProgress then
-                local closestEither = getClosest("XYZ")
+                local closestEither = getClosest("fem")
                 if closestEither then
                     tweenInProgress = true
                     tweenTo(closestEither)
