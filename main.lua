@@ -67,16 +67,15 @@ local function meowfag()
     --- Optimization Stuff :3
 
     local function resetCharacter()
-        game.Workspace.Gravity = 196.2
         repeat
             task.wait()
-        until Players.LocalPlayer.Character and Players.LocalPlayer.Character.Humanoid and Players.LocalPlayer.Character.Humanoid.Health > 0
+        until Players.LocalPlayer.Character.Humanoid.Health > 0
         Players.LocalPlayer.Character.Humanoid.Health = 0
         Players.LocalPlayer.CharacterAdded:Wait()
     end
 
     local function noclip()
-        game.Workspace.Gravity = 0
+        workspace.Gravity = 0
         repeat
             task.wait()
         until Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("Animate")
@@ -108,7 +107,7 @@ local function meowfag()
     local function gotoHide()
         keepTeleporting = true
         tweenInProgress = false
-        game.Workspace.Gravity = 196.2
+        workspace.Gravity = 196.2
         repeat
             task.wait()
         until Players.LocalPlayer.Character and Players.LocalPlayer.Character.Humanoid and Players.LocalPlayer.Character.Humanoid.Health > 0
