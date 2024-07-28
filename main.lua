@@ -47,14 +47,10 @@ local function meowfag()
         if v:IsA("Texture") or v:IsA("Decal") then
             v:Destroy()
         end
-    end
-    for _,v in pairs(game.Workspace:GetDescendants()) do
         if v:IsA("Part") or v:IsA("MeshPart") then
             v.Material = "Plastic"
             v.Reflectance = 0
         end
-    end
-    for _, v in ipairs(game.Workspace:GetDescendants()) do
         if v:IsA("ParticleEmitter") or v:IsA("Trail") then
             v.Enabled = false
         end
@@ -83,16 +79,16 @@ local function meowfag()
         Players.LocalPlayer.Character.Animate.Disabled = true
         local wrkspcnrml = game.Workspace:WaitForChild("Normal", 30)
         if wrkspcnrml then
-            local mapPrimary = wrkspcnrml.Map
-            local mapSecondary = wrkspcnrml.Parts
+            local mapPrimary = wrkspcnrml:FindFirstChild("Map")
+            local mapSecondary = wrkspcnrml:FindFirstChild("Parts")
             if mapPrimary then
                 mapPrimary:Destroy()
             elseif mapSecondary then
                 mapSecondary:Destroy()
             end
-            local invisParts =  wrkspcnrml.Invis
-            local glitchToBoop = wrkspcnrml.GlitchProof
-            local interactiveParts = wrkspcnrml.Interactive
+            local invisParts =  wrkspcnrml:FindFirstChild("Invis")
+            local glitchToBoop = wrkspcnrml:FindFirstChild("GlitchProof")
+            local interactiveParts = wrkspcnrml:FindFirstChild("Interactive")
             if invisParts then
                 invisParts:Destroy()
             end
@@ -129,9 +125,8 @@ local function meowfag()
     end
 
     local function endRound()
-        local targetPlayer = nil
-        local flingDied = nil
         flinging = false
+        local targetPlayer = nil
         local roles = ReplicatedStorage:FindFirstChild("GetPlayerData", true):InvokeServer()
         for i, v in pairs(roles) do
             if v.Role == "Murderer" then
@@ -198,12 +193,12 @@ local function meowfag()
         local shortestDistance = math.huge
         local closestCoin = nil
 
-        local x = game.Workspace.Normal
+        local x = game.Workspace:FindFirstChild("Normal")
         if not x then
             return
         end
 
-        for _, coin in pairs(game.Workspace.Normal.CoinContainer:GetChildren()) do
+        for _, coin in pairs(x.CoinContainer:GetChildren()) do
             if coin:IsA("BasePart") then
                 if coin:GetAttribute("CoinID") == coinID or (coinID == "XYZ" and coin:GetAttribute("CoinID") ~= nil) then
                     local distance = (Character.HumanoidRootPart.Position - coin.Position).Magnitude
