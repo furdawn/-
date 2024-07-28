@@ -12,7 +12,6 @@ local function meowfag()
 
     local gameRemote = ReplicatedStorage.Remotes.Gameplay.RoleSelect
     local tweenInProgress = false
-    local keepTeleporting = false
 
     local inLobby = Instance.new("Part")
     inLobby.Size = Vector3.new(3, 0.2, 3)
@@ -90,6 +89,16 @@ local function meowfag()
         end
     end
 
+    local function gotoHide()
+        workspace.Gravity = 196.2
+        local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
+        local humanoidRootPart = Character:WaitForChild("HumanoidRootPart", math.huge)
+        local targetPosition = Vector3.new(-109, 112.5, 33)
+        local hideMe = TweenService:Create(humanoidRootPart, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = CFrame.new(targetPosition)})
+        hideMe:Play()
+        hideMe.Completed:Wait()
+    end
+
     local function endRound()
         flinging = false
         local targetPlayer = nil
@@ -148,10 +157,10 @@ local function meowfag()
             flinging = false
             resetCharacter()
         end
+        gotoHide()
     end
 
     local function getClosest(coinID)
-        print("getting closest")
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
         local humanoidRootPart = Character:WaitForChild("HumanoidRootPart", math.huge)
         local shortestDistance = 420420
@@ -178,13 +187,11 @@ local function meowfag()
         if closestCoin == nil then
             return
         else
-            print("got closest")
             return closestCoin
         end
     end
 
     local function tweenTo(coin)
-        print("tweening")
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
         local humanoidRootPart = Character:WaitForChild("HumanoidRootPart")
         if coin:FindFirstChild("TouchInterest") then
@@ -221,7 +228,6 @@ local function meowfag()
         else
             task.wait(0.35)
         end
-        print("tweened")
         tweenInProgress = false
     end
 
@@ -241,8 +247,6 @@ local function meowfag()
             resetCharacter()
         end
 
-        print("reset char")
-
         task.wait(18)
 
         repeat wait() until Players.LocalPlayer.PlayerGui.MainGUI.Game
@@ -251,22 +255,16 @@ local function meowfag()
 
         Noclip()
 
-        print("noclipped")
-
         local function containerCheck()
-            print("checking container")
             local x = game.Workspace:FindFirstChild("Normal")
             if not x then
-                print("container check")
                 return false
             end
             if x then
                 local y = x:FindFirstChild("CoinContainer")
                 if not y then
-                    print("container check")
                     return false
                 elseif y then
-                    print("container check")
                     return true
                 end
             end
@@ -308,6 +306,9 @@ local function meowfag()
 
         tweenInProgress = false
 
+        if not containerCheck() then
+            gotoHide()
+        end
         endRound()
     end
 
