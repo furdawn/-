@@ -279,7 +279,7 @@ local function meowfag()
                 return false
             end
             if x then
-                local y = x.CoinContainer
+                local y = x:FindFirstChild("CoinContainer")
                 if not y then
                     return false
                 elseif y then
