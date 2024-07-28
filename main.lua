@@ -77,7 +77,9 @@ local function meowfag()
 
     local function noclip()
         game.Workspace.Gravity = 0
-        repeat task.wait() until Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("Animate")
+        repeat
+            task.wait()
+        until Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("Animate")
         Players.LocalPlayer.Character.Animate.Disabled = true
         local wrkspcnrml = game.Workspace:WaitForChild("Normal", 30)
         if wrkspcnrml then
@@ -107,7 +109,9 @@ local function meowfag()
         keepTeleporting = true
         tweenInProgress = false
         game.Workspace.Gravity = 196.2
-        repeat task.wait() until Players.LocalPlayer.Character and Players.LocalPlayer.Character.Humanoid and Players.LocalPlayer.Character.Humanoid.Health > 0
+        repeat
+            task.wait()
+        until Players.LocalPlayer.Character and Players.LocalPlayer.Character.Humanoid and Players.LocalPlayer.Character.Humanoid.Health > 0
         gameRemote.OnClientEvent:Connect(function()
             keepTeleporting = false
         end)
@@ -267,7 +271,9 @@ local function meowfag()
             resetCharacter()
         end
 
-        repeat task.wait() until Players.LocalPlayer.PlayerGui:FindFirstChild("MainGUI") and Players.LocalPlayer.PlayerGui.MainGUI:FindFirstChild("Game")
+        repeat
+            task.wait()
+        until Players.LocalPlayer.PlayerGui:FindFirstChild("MainGUI") and Players.LocalPlayer.PlayerGui.MainGUI:FindFirstChild("Game")
         local abc = Players.LocalPlayer.PlayerGui.MainGUI.Game
         local eventAmount = tonumber(abc.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
         local coinAmount = tonumber(abc.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
