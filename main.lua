@@ -77,6 +77,7 @@ local function meowfag()
 
     local function noclip()
         game.Workspace.Gravity = 0
+        repeat task.wait() until Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("Animate")
         Players.LocalPlayer.Character.Animate.Disabled = true
         local wrkspcnrml = game.Workspace:WaitForChild("Normal", 30)
         if wrkspcnrml then
