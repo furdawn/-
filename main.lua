@@ -67,9 +67,7 @@ local function meowfag()
     --- Optimization Stuff :3
 
     local function resetCharacter()
-        repeat
-            task.wait()
-        until Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("Humanoid") and Players.LocalPlayer.Character.Humanoid:FindFirstChild("Health") and Players.LocalPlayer.Character.Humanoid.Health > 0
+        repeat task.wait() until Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("Humanoid")
         Players.LocalPlayer.Character.Humanoid.Health = 0
         Players.LocalPlayer.CharacterAdded:Wait()
     end
@@ -77,9 +75,7 @@ local function meowfag()
     local function Noclip()
         print("Noclipping")
         workspace.Gravity = 0
-        repeat
-            task.wait()
-        until Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("Animate")
+        repeat task.wait() until Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("Animate")
         Players.LocalPlayer.Character.Animate.Disabled = true
         local wrkspcnrml = game.Workspace:WaitForChild("Normal", 30)
         if wrkspcnrml then
@@ -109,9 +105,7 @@ local function meowfag()
         keepTeleporting = true
         tweenInProgress = false
         workspace.Gravity = 196.2
-        repeat
-            task.wait()
-        until Players.LocalPlayer:FindFirstChild("Character") and Players.LocalPlayer.Character:FindFirstChild("Humanoid") and Players.LocalPlayer.Character.Humanoid:FindFirstChild("Health") > 0
+        repeat task.wait() until Players.LocalPlayer:FindFirstChild("Character") and Players.LocalPlayer.Character:FindFirstChild("Humanoid") and Players.LocalPlayer.Character.Humanoid:FindFirstChild("Health") > 0
         gameRemote.OnClientEvent:Connect(function()
             keepTeleporting = false
         end)
@@ -276,9 +270,7 @@ local function meowfag()
 
         print("Reset")
 
-        repeat
-            task.wait()
-        until Players.LocalPlayer.PlayerGui:FindFirstChild("MainGUI") and Players.LocalPlayer.PlayerGui.MainGUI:FindFirstChild("Game")
+        repeat task.wait() until Players.LocalPlayer.PlayerGui:FindFirstChild("MainGUI") and Players.LocalPlayer.PlayerGui.MainGUI:FindFirstChild("Game")
         local eventAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
         local coinAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
 
