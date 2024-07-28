@@ -75,6 +75,7 @@ local function meowfag()
     end
 
     local function Noclip()
+        print("Noclipping")
         workspace.Gravity = 0
         repeat
             task.wait()
@@ -255,6 +256,7 @@ local function meowfag()
     end
 
     local function onGameStart()
+        print("Game started")
         local roles = ReplicatedStorage:FindFirstChild("GetPlayerData", true):InvokeServer()
         local muwuderer = nil
         for i, v in pairs(roles) do
@@ -264,12 +266,15 @@ local function meowfag()
             end
         end
 
+        print("Got murderer")
+
         if muwuderer == Players.LocalPlayer then
-            print("Setting animation disabled")
             Players.LocalPlayer.Character.Animate.Disabled = true
         else
             resetCharacter()
         end
+
+        print("Reset")
 
         repeat
             task.wait()
@@ -277,8 +282,12 @@ local function meowfag()
         local eventAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
         local coinAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
 
+        print("Got text thing")
+
         Noclip()
         task.wait(10)
+
+        print("Noclipped + 10 sec")
 
         local function containerCheck(nya)
             local x = game.Workspace:WaitForChild("Normal", nya)
