@@ -226,11 +226,13 @@ local function meowfag()
         end
 
         setTween(coin.Position - Vector3.new(0, 8, 0), 0)
-        setTween(coin.Position - Vector3.new(0, 4, 0), 0.1)
+        setTween(coin.Position - Vector3.new(0, 4, 0), 0.3)
 
         if coin then
-            task.wait(0.65)
+            task.wait(1)
             coin:Destroy()
+        else
+            task.wait(1)
         end
         tweenInProgress = false
     end
@@ -253,6 +255,7 @@ local function meowfag()
 
         task.wait(18)
 
+        repeat wait() until Players.LocalPlayer.PlayerGui.MainGUI.Game
         local eventAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
         local coinAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
 
