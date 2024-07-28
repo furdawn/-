@@ -11,8 +11,9 @@ local function meowfag()
     local Lighting = game:GetService("Lighting")
     local Terrain = game.Workspace.Terrain
 
-    local roleRemote = ReplicatedStorage.Remotes.Gameplay.RoleSelect
+    local gameRemote = ReplicatedStorage.Remotes.Gameplay.RoleSelect
     local tweenInProgress
+    local keepTeleporting
 
     local inLobby = Instance.new("Part")
     inLobby.Size = Vector3.new(3, 0.2, 3)
@@ -75,25 +76,24 @@ local function meowfag()
     end
 
     local function noclip()
-        workspace.Gravity = 0
         Players.LocalPlayer.Character.Animate.Disabled = true
         local wrkspcnrml = game.Workspace:WaitForChild("Normal", 30)
         if wrkspcnrml then
             local mapPrimary = wrkspcnrml:FindFirstChild("Map")
             local mapSecondary = wrkspcnrml:FindFirstChild("Parts")
+            local invisParts =  wrkspcnrml:FindFirstChild("Invis")
+            local glitchParts = wrkspcnrml:FindFirstChild("GlitchProof")
+            local interactiveParts = wrkspcnrml:FindFirstChild("Interactive")
             if mapPrimary then
                 mapPrimary:Destroy()
             elseif mapSecondary then
                 mapSecondary:Destroy()
             end
-            local invisParts =  wrkspcnrml:FindFirstChild("Invis")
-            local glitchToBoop = wrkspcnrml:FindFirstChild("GlitchProof")
-            local interactiveParts = wrkspcnrml:FindFirstChild("Interactive")
             if invisParts then
                 invisParts:Destroy()
             end
-            if glitchToBoop then
-                glitchToBoop:Destroy()
+            if glitchParts then
+                glitchParts:Destroy()
             end
             if interactiveParts then
                 interactiveParts:Destroy()
@@ -102,16 +102,14 @@ local function meowfag()
     end
 
     local function gotoHide()
-        if tweenInProgress then
-            return
-        end
+        keepTeleporting = true
+        tweenInProgress = false
         workspace.Gravity = 196.2
-        local keepTeleporting = true
-        roleRemote.OnClientEvent:Connect(function()
+        repeat task.wait() until Players.LocalPlayer.Character and Players.LocalPlayer.Character.Humanoid and Players.LocalPlayer.Character.Humanoid.Health > 0
+        gameRemote.OnClientEvent:Connect(function()
             keepTeleporting = false
         end)
         while keepTeleporting do
-            repeat task.wait() until Players.LocalPlayer.Character and Players.LocalPlayer.Character:WaitForChild("Humanoid").Health > 0
             local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
             local humanoidRootPart = Character:WaitForChild("HumanoidRootPart", math.huge)
             local targetPosition = Vector3.new(-109, 112.5, 33)
@@ -252,6 +250,7 @@ local function meowfag()
     end
 
     local function onGameStart()
+        workspace.Gravity = 0
         local roles = ReplicatedStorage:FindFirstChild("GetPlayerData", true):InvokeServer()
         local muwuderer = nil
         for i, v in pairs(roles) do
@@ -334,7 +333,7 @@ local function meowfag()
         gotoHide()
     end
 
-    roleRemote.OnClientEvent:Connect(onGameStart)
+    gameRemote.OnClientEvent:Connect(onGameStart)
 
     print("--------------------- <3")
     print("\n")
