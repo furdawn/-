@@ -232,11 +232,14 @@ local function meowfag()
         end
 
         local distance = (humanoidRootPart.Position - coin.Position).Magnitude
-        if distance > 18 then
-            setTween(coin.Position - Vector3.new(0, 8, 0), distance / 35)
+        if distance > 100 then
+            setTween(coin.Position - Vector3.new(0, 8.5, 0), 0)
+            setTween(coin.Position - Vector3.new(0, 4, 0), 0.35)
+        elseif distance < 18 then
+            setTween(coin.Position - Vector3.new(0, 8.5, 0), 0)
             setTween(coin.Position - Vector3.new(0, 4, 0), 0.35)
         else
-            setTween(coin.Position - Vector3.new(0, 8, 0), 0)
+            setTween(coin.Position - Vector3.new(0, 8.5, 0), distance / 35)
             setTween(coin.Position - Vector3.new(0, 4, 0), 0.35)
         end
 
