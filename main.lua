@@ -280,10 +280,9 @@ local function meowfag()
             resetCharacter()
         end
 
-        task.wait(10)
+        task.wait(15)
 
-        local gui = Players.LocalPlayer:WaitForChild("PlayerGui", 30)
-        local abc = gui.MainGUI:WaitForChild("Game", 30)
+        local abc = Players.LocalPlayer.PlayerGui.MainGUI:WaitForChild("Game", 30)
         local eventAmount = tonumber(abc.CoinBags.Container.BeachBall.CurrencyFrame.Icon.Coins.text)
         local coinAmount = tonumber(abc.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
 
@@ -337,6 +336,8 @@ local function meowfag()
                 coinAmount = tonumber(Players.LocalPlayer.PlayerGui.MainGUI.Game.CoinBags.Container.Coin.CurrencyFrame.Icon.Coins.text)
             end
         end
+
+        tweenInProgress = false
 
         if not containerCheck(1) then
             gotoHide()
