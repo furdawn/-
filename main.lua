@@ -57,8 +57,8 @@ local function meowfag()
     end
     --- Optimization Stuff :3
 
-    local function getRoot(char)
-        local rootPart = char:FindFirstChild('HumanoidRootPart') or char:FindFirstChild('Torso') or char:FindFirstChild('UpperTorso')
+    local function getRoot(User)
+        local rootPart = User.Character:FindFirstChild('HumanoidRootPart') or User.Character:FindFirstChild('Torso') or User.Character:FindFirstChild('UpperTorso')
         return rootPart
     end
 
