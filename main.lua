@@ -1,11 +1,6 @@
 if game.PlaceId ~= 142823291 then
     game.Players.LocalPlayer:Kick("Wrong game! (Murder Mystery 2)")
 end
-if FARM_MM2 == true then
-    warn("Farm is already executed!", 0)
-    return
-end
-pcall(function() getgenv().FARM_MM2 = true end)
 
 local function meowfag()
     repeat task.wait() until game:IsLoaded()
@@ -64,8 +59,8 @@ local function meowfag()
             v.Enabled = false
         end
     end
-    local coinVisualizer = Players.LocalPlayer.PlayerScripts:FindFirstChild("CoinVisualizer")
-    local weaponVisuals = Players.LocalPlayer.PlayerScripts:FindFirstChild("WeaponVisuals")
+    local coinVisualizer = Players.LocalPlayer.PlayerScripts.CoinVisualizer
+    local weaponVisuals = Players.LocalPlayer.PlayerScripts.WeaponVisuals
     if coinVisualizer then
         coinVisualizer:Destroy()
     end
@@ -78,26 +73,26 @@ local function meowfag()
         workspace.Gravity = 196.2
         repeat
             task.wait()
-        until Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("Humanoid") and Players.LocalPlayer.Character.Humanoid.Health > 0
-        Players.LocalPlayer.Character:FindFirstChild("Humanoid").Health = 0
+        until Players.LocalPlayer.Character and Players.LocalPlayer.Character.Humanoid and Players.LocalPlayer.Character.Humanoid.Health > 0
+        Players.LocalPlayer.Character.Humanoid.Health = 0
         Players.LocalPlayer.CharacterAdded:Wait()
     end
 
     local function noclip()
         workspace.Gravity = 0
         Players.LocalPlayer.Character.Animate.Disabled = true
-        local wrkspcnrml = game.Workspace:WaitForChild("Normal", math.huge)
+        local wrkspcnrml = game.Workspace:WaitForChild("Normal", 30)
         if wrkspcnrml then
-            local mapPrimary = wrkspcnrml:FindFirstChild("Map")
-            local mapSecondary = wrkspcnrml:FindFirstChild("Parts")
+            local mapPrimary = wrkspcnrml.Map
+            local mapSecondary = wrkspcnrml.Parts
             if mapPrimary then
                 mapPrimary:Destroy()
             elseif mapSecondary then
                 mapSecondary:Destroy()
             end
-            local invisParts =  wrkspcnrml:FindFirstChild("Invis")
-            local glitchToBoop = wrkspcnrml:FindFirstChild("GlitchProof")
-            local interactiveParts = wrkspcnrml:FindFirstChild("Interactive")
+            local invisParts =  wrkspcnrml.Invis
+            local glitchToBoop = wrkspcnrml.GlitchProof
+            local interactiveParts = wrkspcnrml.Interactive
             if invisParts then
                 invisParts:Destroy()
             end
@@ -179,10 +174,10 @@ local function meowfag()
         while not Players.LocalPlayer or not Players.LocalPlayer.Character do
             task.wait()
         end
-        if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("Humanoid") then
+        if targetPlayer and targetPlayer.Character and targetPlayer.Character.Humanoid then
             local startTime = os.time()
-            while flinging == true and Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and targetPlayer.Character:FindFirstChild("HumanoidRootPart") do
-                if not Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") or not targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            while flinging == true and Players.LocalPlayer.Character and targetPlayer.Character do
+                if not Players.LocalPlayer.Character.HumanoidRootPart or not targetPlayer.Character.HumanoidRootPart then
                     break
                 end
                 poofMurderer.AngularVelocity = Vector3.new(0, 95000, 0)
@@ -210,14 +205,11 @@ local function meowfag()
 
         for _, coin in pairs(game.Workspace.Normal.CoinContainer:GetChildren()) do
             if coin:IsA("BasePart") then
-                local touchInterest = coin:FindFirstChild("TouchInterest")
-                if touchInterest then
-                    if coin:GetAttribute("CoinID") == coinID or (coinID == "XYZ" and coin:GetAttribute("CoinID") ~= nil) then
-                        local distance = (Character.HumanoidRootPart.Position - coin.Position).Magnitude
-                        if distance < shortestDistance then
-                            shortestDistance = distance
-                            closestCoin = coin
-                        end
+                if coin:GetAttribute("CoinID") == coinID or (coinID == "XYZ" and coin:GetAttribute("CoinID") ~= nil) then
+                    local distance = (Character.HumanoidRootPart.Position - coin.Position).Magnitude
+                    if distance < shortestDistance then
+                        shortestDistance = distance
+                        closestCoin = coin
                     end
                 end
             end
@@ -228,7 +220,7 @@ local function meowfag()
     local function tweenTo(coin)
         local Character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
         local humanoidRootPart = Character:WaitForChild("HumanoidRootPart")
-        if coin:FindFirstChild("TouchInterest") then
+        if coin.TouchInterest then
             if coin:IsA("BasePart") then
                 coin.Size = Vector3.new(15, 15, 15)
             end
@@ -292,7 +284,7 @@ local function meowfag()
                 return false
             end
             if x then
-                local y = x:FindFirstChild("CoinContainer")
+                local y = x.CoinContainer
                 if not y then
                     return false
                 elseif y then
