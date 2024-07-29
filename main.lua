@@ -58,11 +58,14 @@ local function meowfag()
     --- Optimization Stuff :3
 
     local function getRoot(User)
-        local rootPart = User.Character:FindFirstChild('HumanoidRootPart') or User.Character:FindFirstChild('Torso') or User.Character:FindFirstChild('UpperTorso')
+        local rootPart = User.Character:FindFirstChild('HumanoidRootPart') or User.Character:FindFirstChild('UpperTorso')
         return rootPart
     end
 
     local function resetCharacter()
+        while not Players.LocalPlayer.Character do
+            task.wait()
+        end
         Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Dead)
     end
 
@@ -214,7 +217,7 @@ local function meowfag()
             tweenInProgress = false
             return
         end
-        
+
         local localHumanoid = getRoot(Players.LocalPlayer)
 
         local function setTween(targetPos, duration)
