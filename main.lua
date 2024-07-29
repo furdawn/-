@@ -68,7 +68,7 @@ local function meowfag()
 
     local function Noclip()
         workspace.Gravity = 0
-        while not Players.LocalPlayer or not Players.LocalPlayer.Character do
+        while not Players.LocalPlayer.Character do
             task.wait()
         end
         Players.LocalPlayer.Character.Animate.Disabled = true
@@ -99,9 +99,7 @@ local function meowfag()
     local function gotoHide()
         workspace.Gravity = 196.2
         local targetPosition = Vector3.new(-109, 112.5, 33)
-        local hideMe = TweenService:Create(getRoot(Players.LocalPlayer), TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = CFrame.new(targetPosition)})
-        hideMe:Play()
-        hideMe.Completed:Wait()
+        Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPosition
     end
 
     local function endRound()
@@ -143,7 +141,7 @@ local function meowfag()
                 v.Velocity = Vector3.new(0, 0, 0)
             end
         end
-        while not Players.LocalPlayer or not Players.LocalPlayer.Character do
+        while not Players.LocalPlayer.Character do
             task.wait()
         end
         if targetPlayer and targetPlayer.Character and targetPlayer.Character.Humanoid then
