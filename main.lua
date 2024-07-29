@@ -102,7 +102,10 @@ local function meowfag()
     local function gotoHide()
         workspace.Gravity = 196.2
         local targetPosition = Vector3.new(-109, 112.5, 33)
-        Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPosition
+        local targetCFrame = CFrame.new(targetPosition)
+        if Players.LocalPlayer and Players.LocalPlayer.Character and Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetCFrame
+        end
     end
 
     local function endRound()
