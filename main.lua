@@ -57,10 +57,10 @@ local function meowfag()
     end
     --- Optimization Stuff :3
 
-    local function getRoot(User)
-        local rootPart = User.Character:FindFirstChild('HumanoidRootPart') or User.Character:FindFirstChild('UpperTorso')
+    local function getRoot(pounces)
+        local rootPart = pounces:FindFirstChild('HumanoidRootPart') or pounces:FindFirstChild('Torso') or pounces:FindFirstChild('UpperTorso')
         return rootPart
-    end
+    end    
 
     local function resetCharacter()
         while not Players.LocalPlayer.Character do
@@ -130,8 +130,8 @@ local function meowfag()
 
         task.wait(1)
 
-        local localHumanoid = getRoot(Players.LocalPlayer)
-        local targetHumanoid = getRoot(targetPlayer)
+        local localHumanoid = getRoot(Players.LocalPlayer.Character)
+        local targetHumanoid = getRoot(targetPlayer.Character)
 
         local poofMurderer = Instance.new("BodyAngularVelocity")
         poofMurderer.Name = "SmirksWithMaliciousIntent"
@@ -195,7 +195,7 @@ local function meowfag()
             if coin:IsA("BasePart") then
                 if coin:FindFirstChild("TouchInterest") then
                     if coin:GetAttribute("CoinID") == coinID or (coinID == "Meow" and coin:GetAttribute("CoinID") ~= nil) then
-                        local distance = (getRoot(Players.LocalPlayer).Position - coin.Position).Magnitude
+                        local distance = (getRoot(Players.LocalPlayer.Character).Position - coin.Position).Magnitude
                         if distance < shortestDistance then
                             shortestDistance = distance
                             closestCoin = coin
@@ -221,7 +221,7 @@ local function meowfag()
             return
         end
 
-        local localHumanoid = getRoot(Players.LocalPlayer)
+        local localHumanoid = getRoot(Players.LocalPlayer.Character)
 
         local function setTween(targetPos, duration)
             local tweenInfo = TweenInfo.new(duration, Enum.EasingStyle.Linear)
