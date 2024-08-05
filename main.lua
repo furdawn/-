@@ -60,7 +60,7 @@ local function meowfag()
     local function getRoot(char)
         local rootPart = char:FindFirstChild('HumanoidRootPart') or char:FindFirstChild('Torso') or char:FindFirstChild('UpperTorso')
         return rootPart
-    end    
+    end
 
     local function resetCharacter()
         while not Players.LocalPlayer.Character do
