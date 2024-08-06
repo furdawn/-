@@ -63,7 +63,7 @@ local function meowfag()
     end
 
     local function resetCharacter()
-        while not Players.LocalPlayer.Character do
+        while not Players.LocalPlayer.Character and not Players.LocalPlayer.Character.Humanoid do
             task.wait()
         end
         Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Dead)
