@@ -1,4 +1,4 @@
-print("23242")
+print("24242")
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
@@ -31,8 +31,7 @@ local function GotoTarget(targetPlayer)
     tween:Play()
 end
 
-local function GameStart()
-    print("Game started.")
+local function Assassinate()
     game.Workspace.Gravity = 0
     DestroyMap()
 
@@ -40,13 +39,12 @@ local function GameStart()
 
     local targetGui = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
     local targetText = targetGui.TargetText.Text
-    local gameEnded = false
 
     print(targetText)
 
     local targetPlayer = Players:FindFirstChild(targetText)
     if targetPlayer then
-        print("Passed IF")
+        print("Passed")
         GotoTarget(targetPlayer)
         print("Went")
         local targetPosition = targetPlayer.Character.HumanoidRootPart.Position
@@ -59,6 +57,6 @@ local function GameStart()
     end
 end
 
-Players.LocalPlayer.Backpack.ChildAdded:Connect(function(v)
-    GameStart()
+Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target").TargetText.Text:GetPropertyChangedSignal("Text"):Connect(function()
+    Assassinate()
 end)
