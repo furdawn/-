@@ -11,7 +11,7 @@ local Terrain = game.Workspace.Terrain
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
-print("Optimization")
+print("Test")
 
 --- Optimization stuff :3
 game.Workspace.Gravity = 0
@@ -23,12 +23,6 @@ Lighting.Brightness = 0
 Lighting.GlobalShadows = false
 settings().Rendering.QualityLevel = "Level01"
 --- Optimization stuff :3
-
-local function setTween(targetPos)
-    local tween = TweenService:Create(localHumanoid, TweenInfo.new(0, Enum.EasingStyle.Linear), { CFrame = CFrame.new(targetPos) })
-    tween:Play()
-    tween.Completed:Wait()
-end
 
 local function GameStart()
     print("Game started")
@@ -63,8 +57,8 @@ local function GameStart()
     end
 end
 
-LocalPlayer.Backpack.ChildAdded:Connect(function(child)
-    if child.Name == "Knife" then
+LocalPlayer.Backpack.ChildAdded:Connect(function(v)
+    if v.Name == "Knife" then
         GameStart()
     end
 end)
