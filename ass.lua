@@ -23,8 +23,8 @@ local function DestroyMap()
     end
 end
 
-function getRoot(char)
-    local rootPart = char:FindFirstChild('HumanoidRootPart') or char:FindFirstChild('Torso') or char:FindFirstChild('UpperTorso') or char:FindFirstChild('LowerTorso') or char:FindFirstChild('Head')
+function getRoot(targetChar)
+    local rootPart = targetChar:FindFirstChild('HumanoidRootPart') or targetChar:FindFirstChild('Torso') or targetChar:FindFirstChild('UpperTorso') or targetChar:FindFirstChild('LowerTorso') or targetChar:FindFirstChild('Head')
     return rootPart
 end
 
