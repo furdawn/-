@@ -22,33 +22,16 @@ Terrain.WaterTransparency = 0
 Lighting.Brightness = 0
 Lighting.GlobalShadows = false
 settings().Rendering.QualityLevel = "Level01"
-local function Optimizer()
-    for _, v in ipairs(game.Workspace:GetDescendants()) do
-        if v:IsA("Texture") or v:IsA("Decal") then
-            v:Destroy()
-        end
-        if v:IsA("Part") or v:IsA("MeshPart") then
-            v.Material = "Plastic"
-            v.Reflectance = 0
-        end
-        if v:IsA("ParticleEmitter") or v:IsA("Trail") then
-            v.Enabled = false
-        end
-    end
-    print("Optimizer Done")
-end
 --- Optimization stuff :3
 
 local function setTween(targetPos)
-    local tweenInfo = TweenInfo.new(0, Enum.EasingStyle.Linear)
-    local tween = TweenService:Create(localHumanoid, tweenInfo, { CFrame = CFrame.new(targetPos) })
+    local tween = TweenService:Create(localHumanoid, TweenInfo.new(0, Enum.EasingStyle.Linear), { CFrame = CFrame.new(targetPos) })
     tween:Play()
     tween.Completed:Wait()
 end
 
 local function GameStart()
     print("Game started")
-    Optimizer()
 
     local targetGui = Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target
     local targetText = targetGui.TargetText.Text
@@ -69,10 +52,10 @@ local function GameStart()
                     [2] = 0,
                     [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
                 }
-                setTween(targetPosition - Vector3.new(0, -5, 0))
-                print("Tween")
+                local tween = TweenService:Create(localHumanoid, TweenInfo.new(0, Enum.EasingStyle.Linear), { CFrame = CFrame.new(targetPosition - Vector3.new(0, -5, 0)) })
+                tween:Play()
+                tween.Completed:Wait()
                 ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("ThrowKnife"):FireServer(unpack(args))
-                print("Thrown")
             end
         end
         targetText = targetGui.TargetText.Text
