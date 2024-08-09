@@ -55,11 +55,14 @@ local function onGameStart()
     Players.LocalPlayer.Character.Animate.Disabled = true
     ReplicatedStorage.Remotes.WaitForChild("SheathKnife"):FireServer("off")
     local targetGui = Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target
-    local targetName = targetGui.TargetText.Text
+    local targetText = targetGui.TargetText.Text
     local previousTarget = ""
 
+    warn("Game started")
+
     while targetGui.Visible do
-        local targetName = targetNameText
+        warn("Visible")
+        local targetName = targetText
         if targetName ~= previousTarget then
             previousTarget = targetName
             local targetPlayer = game.Players:FindFirstChild(targetName)
@@ -71,10 +74,13 @@ local function onGameStart()
                     [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
                 }
                 setTween(targetPosition - Vector3.new(-3, 0, 0))
+                warn("Tween")
                 ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("ThrowKnife"):FireServer(unpack(args))
+                warn("Thrown")
             end
         end
-        targetNameText = targetGui.TargetText.Text
+        targetText = targetGui.TargetText.Text
+        warn("Updated targetText")
     end    
 end
 
