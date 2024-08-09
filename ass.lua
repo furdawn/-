@@ -44,9 +44,12 @@ local function GameStart()
 
     local targetGui = Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target
     local targetText = targetGui.TargetText.Text
+    print(targetText)
+    print(targetGui.Visible)
     local knifeFound = true
 
     while knifeFound do
+        print("easdasdsa")
         local targetPlayer = game.Players:FindFirstChild(targetText)
         if targetPlayer and targetPlayer:FindFirstChild("Backpack") then
             local knife = targetPlayer.Backpack:FindFirstChild("Knife")
