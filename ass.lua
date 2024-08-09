@@ -57,6 +57,6 @@ local function Assassinate()
     end
 end
 
-Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target").TargetText.Text:GetPropertyChangedSignal("Text"):Connect(function()
+Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target.TargetText:GetPropertyChangedSignal("Text"):Connect(function()
     Assassinate()
 end)
