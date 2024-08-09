@@ -46,7 +46,7 @@ local function setTween(targetPos)
     tween.Completed:Wait()
 end
 
-local function onGameStart()
+local function GameStart()
     print("Game started")
     Optimizer()
 
@@ -82,6 +82,6 @@ end
 
 LocalPlayer.Backpack.ChildAdded:Connect(function(child)
     if child.Name == "Knife" then
-        onGameStart()
+        GameStart()
     end
 end)
