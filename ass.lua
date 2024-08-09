@@ -24,15 +24,17 @@ Lighting.GlobalShadows = false
 settings().Rendering.QualityLevel = "Level01"
 local function Optimizer()
     LocalPlayer.Character.Animate.Disabled = true
-    if v:IsA("Texture") or v:IsA("Decal") then
-        v:Destroy()
-    end
-    if v:IsA("Part") or v:IsA("MeshPart") then
-        v.Material = "Plastic"
-        v.Reflectance = 0
-    end
-    if v:IsA("ParticleEmitter") or v:IsA("Trail") then
-        v.Enabled = false
+    for _, v in ipairs(game.Workspace:GetDescendants()) do
+        if v:IsA("Texture") or v:IsA("Decal") then
+            v:Destroy()
+        end
+        if v:IsA("Part") or v:IsA("MeshPart") then
+            v.Material = "Plastic"
+            v.Reflectance = 0
+        end
+        if v:IsA("ParticleEmitter") or v:IsA("Trail") then
+            v.Enabled = false
+        end
     end
     print("Optimizer Done")
 end
