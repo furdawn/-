@@ -23,12 +23,17 @@ local function DestroyMap()
     end
 end
 
+function getRoot(char)
+    local rootPart = char:FindFirstChild('HumanoidRootPart') or char:FindFirstChild('Torso') or char:FindFirstChild('UpperTorso')
+    return rootPart
+end
+
 local function GotoTarget(targetUser)
-    local femboyRoot = Players.LocalPlayer.Character.HumanoidRootPart
+    local femboyRoot = getRoot(Players.LocalPlayer)
     local targetPlayer = Players:FindFirstChild(targetUser)
 
     if targetPlayer then
-        local targetRoot = targetPlayer.Character.HumanoidRootPart
+        local targetRoot = getRoot(targetPlayer)
         local tween = TweenService:Create(femboyRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetRoot.CFrame + Vector3.new(-2, -2, 0)})
         tween:Play()
     else
@@ -48,10 +53,8 @@ local function Assassinate()
     if Players:FindFirstChild(targetUser) then
         print("Passed")
         GotoTarget(targetUser)
-        print("Went")
-        local targetPosition = Players.targetUser.Character.HumanoidRootPart.Position
         local args = {
-            [1] = targetPosition,
+            [1] = getRoot(targetUser),
             [2] = 0,
             [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
         }
