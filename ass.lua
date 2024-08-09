@@ -72,5 +72,4 @@ Players.LocalPlayer.Backpack.ChildAdded:Connect(function(v)
     if v.Name == "Knife" then
         GameStart()
     end
-    task.wait(3)
 end)
