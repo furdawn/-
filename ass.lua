@@ -1,4 +1,4 @@
-print("123123")
+print("7777")
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
@@ -32,34 +32,32 @@ end
 
 local function GameStart()
     print("Game started.")
+    game.Workspace.Gravity = 0
+    DestroyMap()
+
     local targetGui = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
-    if targetGui.Visible then
-        game.Workspace.Gravity = 0
-        DestroyMap()
+    local targetText = targetGui.TargetText.Text
+    local gameEnded = false
 
-        local targetText = targetGui.TargetText.Text
-        local gameEnded = false
+    print(targetText)
 
-        print(targetText)
-
-        while not gameEnded do
-            local targetPlayer = game.Players:FindFirstChild(targetText)
-            if targetPlayer and targetPlayer.Backpack then
-                local knife = targetPlayer.Backpack:FindFirstChild("Knife")
-                if knife then
-                    if Players.LocalPlayer.Character and targetPlayer.Character then
-                        GotoTarget(targetPlayer)
-                        local targetPosition = targetPlayer.Character.HumanoidRootPart.Position
-                        local args = {
-                            [1] = targetPosition,
-                            [2] = 0,
-                            [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-                        }
-                        ReplicatedStorage.Remotes:FindFirstChild("ThrowKnife"):FireServer(unpack(args))
-                    end
-                else
-                    gameEnded = true
+    while not gameEnded do
+        local targetPlayer = game.Players:FindFirstChild(targetText)
+        if targetPlayer and targetPlayer.Backpack then
+            local knife = targetPlayer.Backpack:FindFirstChild("Knife")
+            if knife then
+                if Players.LocalPlayer.Character and targetPlayer.Character then
+                    GotoTarget(targetPlayer)
+                    local targetPosition = targetPlayer.Character.HumanoidRootPart.Position
+                    local args = {
+                        [1] = targetPosition,
+                        [2] = 0,
+                        [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+                    }
+                    ReplicatedStorage.Remotes:FindFirstChild("ThrowKnife"):FireServer(unpack(args))
                 end
+            else
+                gameEnded = true
             end
         end
     end
