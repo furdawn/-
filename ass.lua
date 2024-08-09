@@ -1,4 +1,4 @@
-print("99988")
+print("123123")
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
@@ -38,10 +38,11 @@ local function GameStart()
         DestroyMap()
 
         local targetText = targetGui.TargetText.Text
+        local gameEnded = false
 
         print(targetText)
 
-        while targetGui.Visible do
+        while not gameEnded do
             local targetPlayer = game.Players:FindFirstChild(targetText)
             if targetPlayer and targetPlayer.Backpack then
                 local knife = targetPlayer.Backpack:FindFirstChild("Knife")
@@ -56,6 +57,8 @@ local function GameStart()
                         }
                         ReplicatedStorage.Remotes:FindFirstChild("ThrowKnife"):FireServer(unpack(args))
                     end
+                else
+                    gameEnded = true
                 end
             end
         end
