@@ -6,6 +6,7 @@ if game.PlaceId ~= 379614936 then
 end
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local TweenService = game:GetService("TweenService")
 local Lighting = game:GetService("Lighting")
 local Terrain = game.Workspace.Terrain
 local Players = game:GetService("Players")
@@ -32,12 +33,7 @@ end
 
 local function HidePlayer()
     LocalPlayer.Character.Animate.Disabled = true
-    if LocalPlayer.Character then
-        local rootPart = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-        if rootPart then
-            rootPart.CFrame = rootPart.CFrame - Vector3.new(0, 10, 0)
-        end
-    end
+    TweenService:Create(LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = Vector3.new(0,-5, 0)}):Play()
     LocalPlayer.Character.HumanoidRootPart.Anchored = true
 end
 
@@ -45,6 +41,7 @@ local function GameStart()
     DestroyMap()
     HidePlayer()
     print("Game started thing")
+
 end
 
 LocalPlayer.Backpack.ChildAdded:Connect(function(v)
