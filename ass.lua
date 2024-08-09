@@ -38,33 +38,35 @@ end
 
 local function GameStart()
     print("Game started.")
-
-    game.Workspace.Gravity = 0
-    DestroyMap()
-
     local targetGui = Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target
-    local targetText = targetGui.TargetText.Text
-    print(targetText)
-    local knifeFound = true
+    if targetGui.Visible then
+        game.Workspace.Gravity = 0
+        DestroyMap()
 
-    while knifeFound do
-        print("easdasdsa")
-        local targetPlayer = game.Players:FindFirstChild(targetText)
-        if targetPlayer and targetPlayer:FindFirstChild("Backpack") then
-            local knife = targetPlayer.Backpack:FindFirstChild("Knife")
-            if knife then
-                if Players.LocalPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                    GotoTarget(targetPlayer)
-                    local targetPosition = targetPlayer.Character.HumanoidRootPart.Position
-                    local args = {
-                        [1] = targetPosition,
-                        [2] = 0,
-                        [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-                    }
-                    ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("ThrowKnife"):FireServer(unpack(args))
+        local targetText = targetGui.TargetText.Text
+        local knifeFound = true
+
+        print(targetText)
+
+        while knifeFound do
+            print("easdasdsa")
+            local targetPlayer = game.Players:FindFirstChild(targetText)
+            if targetPlayer and targetPlayer:FindFirstChild("Backpack") then
+                local knife = targetPlayer.Backpack:FindFirstChild("Knife")
+                if knife then
+                    if Players.LocalPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                        GotoTarget(targetPlayer)
+                        local targetPosition = targetPlayer.Character.HumanoidRootPart.Position
+                        local args = {
+                            [1] = targetPosition,
+                            [2] = 0,
+                            [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+                        }
+                        ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("ThrowKnife"):FireServer(unpack(args))
+                    end
+                else
+                    knifeFound = false
                 end
-            else
-                knifeFound = false
             end
         end
     end
