@@ -3,8 +3,12 @@ if game.PlaceId ~= 379614936 then
     game.Players.LocalPlayer:Kick("Wrong game! (Assassin!)")
 end
 
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Lighting = game:GetService("Lighting")
 local Terrain = game.Workspace.Terrain
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local Backpack = LocalPlayer:FindFirstChild("Backpack")
 
 --- Optimization stuff :3
 Terrain.WaterWaveSize = 0
@@ -14,7 +18,8 @@ Terrain.WaterTransparency = 0
 Lighting.Brightness = 0
 Lighting.GlobalShadows = false
 settings().Rendering.QualityLevel = "Level01"
-for _, v in ipairs(game.Workspace:GetDescendants()) do
+local function Optimizer()
+    LocalPlayer.Character.Animate.Disabled = true
     if v:IsA("Texture") or v:IsA("Decal") then
         v:Destroy()
     end
@@ -27,11 +32,6 @@ for _, v in ipairs(game.Workspace:GetDescendants()) do
     end
 end
 --- Optimization stuff :3
-
-local GameRemote = ReplicatedStorage.Remotes.IsDual
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
 
 local function NoclipLoop()
     if Clip == false and speaker.Character ~= nil then
@@ -52,7 +52,7 @@ local function setTween(targetPos)
 end
 
 local function onGameStart()
-    Players.LocalPlayer.Character.Animate.Disabled = true
+    Optimizer()
     ReplicatedStorage.Remotes.WaitForChild("SheathKnife"):FireServer("off")
     local targetGui = Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target
     local targetText = targetGui.TargetText.Text
@@ -81,7 +81,11 @@ local function onGameStart()
         end
         targetText = targetGui.TargetText.Text
         warn("Updated targetText")
-    end    
+    end
 end
 
-GameRemote.OnClientEvent:Connect(onGameStart)
+Backpack.ChildAdded:Connect(function(child)
+    if child:IsA("Tool") and child.Name == "Knife" then
+        onGameStart()
+    end
+end)
