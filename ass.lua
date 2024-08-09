@@ -1,13 +1,9 @@
--- Detect gamemodes
--- Server hopper
-
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
 local Lighting = game:GetService("Lighting")
 local Terrain = game.Workspace.Terrain
 local Players = game:GetService("Players")
 
---- Optimization stuff :3
 Terrain.WaterWaveSize = 0
 Terrain.WaterWaveSpeed = 0
 Terrain.WaterReflectance = 0
@@ -15,7 +11,6 @@ Terrain.WaterTransparency = 0
 Lighting.Brightness = 0
 Lighting.GlobalShadows = false
 settings().Rendering.QualityLevel = "Level01"
---- Optimization stuff :3
 
 local function DestroyMap()
     Players.LocalPlayer.Character.Animate.Disabled = true
