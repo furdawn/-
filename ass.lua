@@ -1,4 +1,4 @@
-print("7777")
+print("5555")
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
@@ -24,6 +24,7 @@ local function DestroyMap()
 end
 
 local function GotoTarget(targetPlayer)
+    print("Going")
     local femboyRoot = Players.LocalPlayer.HumanoidRootPart
     local targetRoot = targetPlayer.Character.HumanoidRootPart
     local tween = TweenService:Create(femboyRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetRoot.CFrame + Vector3.new(-2, -2, 0)})
@@ -41,24 +42,19 @@ local function GameStart()
 
     print(targetText)
 
-    while not gameEnded do
-        local targetPlayer = game.Players:FindFirstChild(targetText)
-        if targetPlayer and targetPlayer.Backpack then
-            local knife = targetPlayer.Backpack:FindFirstChild("Knife")
-            if knife then
-                if Players.LocalPlayer.Character and targetPlayer.Character then
-                    GotoTarget(targetPlayer)
-                    local targetPosition = targetPlayer.Character.HumanoidRootPart.Position
-                    local args = {
-                        [1] = targetPosition,
-                        [2] = 0,
-                        [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-                    }
-                    ReplicatedStorage.Remotes:FindFirstChild("ThrowKnife"):FireServer(unpack(args))
-                end
-            else
-                gameEnded = true
-            end
+    local targetPlayer = game.Players:FindFirstChild(targetText)
+    if targetPlayer then
+        print("Passed IF")
+        if Players.LocalPlayer.Character and targetPlayer.Character then
+            GotoTarget(targetPlayer)
+            print("Went")
+            local targetPosition = targetPlayer.Character.HumanoidRootPart.Position
+            local args = {
+                [1] = targetPosition,
+                [2] = 0,
+                [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+            }
+            ReplicatedStorage.Remotes:FindFirstChild("ThrowKnife"):FireServer(unpack(args))
         end
     end
 end
