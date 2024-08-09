@@ -32,7 +32,7 @@ end
 
 local function GameStart()
     print("Game started.")
-    local targetGui = Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target
+    local targetGui = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
     if targetGui.Visible then
         game.Workspace.Gravity = 0
         DestroyMap()
