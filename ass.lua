@@ -37,7 +37,7 @@ local function GotoTarget(targetPlayer)
 end
 
 local function GameStart()
-    print("Game started thing")
+    print("Game started.")
 
     game.Workspace.Gravity = 0
     DestroyMap()
@@ -45,7 +45,6 @@ local function GameStart()
     local targetGui = Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target
     local targetText = targetGui.TargetText.Text
     print(targetText)
-    print(targetGui.Visible)
     local knifeFound = true
 
     while knifeFound do
