@@ -1,4 +1,4 @@
-print("1asdasfdsbdfb")
+print("ads")
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
@@ -25,9 +25,15 @@ end
 
 local function GotoTarget(targetUser)
     local femboyRoot = Players.LocalPlayer.Character.HumanoidRootPart
-    local faggotRoot = Players.targetUser.Character.HumanoidRootPart
-    local tween = TweenService:Create(femboyRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = faggotRoot.CFrame + Vector3.new(-2, -2, 0)})
-    tween:Play()
+    local targetPlayer = Players:FindFirstChild(targetUser)
+
+    if targetPlayer then
+        local targetRoot = targetPlayer.Character.HumanoidRootPart
+        local tween = TweenService:Create(femboyRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetRoot.CFrame + Vector3.new(-2, -2, 0)})
+        tween:Play()
+    else
+        print("Player not found.")
+    end
 end
 
 local function Assassinate()
@@ -39,7 +45,7 @@ local function Assassinate()
     local targetGui = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
     local targetUser = targetGui.TargetText.Text
 
-    if Players.targetUser then
+    if Players:FindFirstChild(targetUser) then
         print("Passed")
         GotoTarget(targetUser)
         print("Went")
