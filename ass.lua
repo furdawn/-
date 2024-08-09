@@ -1,4 +1,4 @@
--- Detect gamemodes
+print("mewmeramstdgfrdsg")
 
 repeat wait() until game:IsLoaded()
 if game.PlaceId ~= 379614936 then
@@ -22,13 +22,32 @@ Lighting.GlobalShadows = false
 settings().Rendering.QualityLevel = "Level01"
 --- Optimization stuff :3
 
-local function GameStart()
-    print("Game started")
+local function DestroyMap()
+    for _, v in ipairs(game.Workspace.GameMap:GetDescendants()) do
+        if v:IsA("BasePart") then
+            v:Destroy()
+        end
+    end
+end
+
+local function HidePlayer()
     LocalPlayer.Character.Animate.Disabled = true
+    LocalPlayer.Character.HumanoidRootPart.Anchored = true
+    if LocalPlayer.Character then
+        local rootPart = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+        if rootPart then
+            rootPart.CFrame = rootPart.CFrame - Vector3.new(0, 10, 0)
+        end
+    end
+end
+
+local function GameStart()
+    DestroyMap()
+    HidePlayer()
+
     local targetGui = Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target
     local previousTarget = ""
     local knifeFound = true
-    print("Got Data")
 
     while knifeFound do
         local targetText = targetGui.TargetText.Text
