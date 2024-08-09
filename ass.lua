@@ -1,4 +1,4 @@
-print("5555")
+print("23242")
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
@@ -25,7 +25,7 @@ end
 
 local function GotoTarget(targetPlayer)
     print("Going")
-    local femboyRoot = Players.LocalPlayer.HumanoidRootPart
+    local femboyRoot = Players.LocalPlayer.Character.HumanoidRootPart
     local targetRoot = targetPlayer.Character.HumanoidRootPart
     local tween = TweenService:Create(femboyRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetRoot.CFrame + Vector3.new(-2, -2, 0)})
     tween:Play()
