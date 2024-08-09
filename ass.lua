@@ -10,7 +10,6 @@ local Lighting = game:GetService("Lighting")
 local Terrain = game.Workspace.Terrain
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
-local Backpack = LocalPlayer:FindFirstChild("Backpack")
 
 print("Optimization")
 
@@ -35,6 +34,7 @@ local function Optimizer()
     if v:IsA("ParticleEmitter") or v:IsA("Trail") then
         v.Enabled = false
     end
+    print("Optimizer Done")
 end
 --- Optimization stuff :3
 
@@ -48,8 +48,6 @@ end
 local function onGameStart()
     Optimizer()
 
-    print("Optimizer Done")
-    ReplicatedStorage.Remotes.WaitForChild("SheathKnife"):FireServer("off")
     local targetGui = Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target
     local targetText = targetGui.TargetText.Text
     local previousTarget = ""
@@ -80,7 +78,7 @@ local function onGameStart()
     end
 end
 
-Backpack.ChildAdded:Connect(function(child)
+LocalPlayer.Backpack.ChildAdded:Connect(function(child)
     if child.Name == "Knife" then
         onGameStart()
     end
