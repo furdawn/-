@@ -32,7 +32,6 @@ end
 local function GotoTarget(targetPlayer)
     local femboyRoot = Players.LocalPlayer.HumanoidRootPart
     local targetRoot = targetPlayer.Character.HumanoidRootPart
-    game.Workspace.Gravity = 0
     Players.LocalPlayer.Character.Animate.Disabled = true
     TweenService:Create(femboyRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetRoot.CFrame + Vector3.new(-2, -2, 0)}):Play()
 end
@@ -40,7 +39,7 @@ end
 local function GameStart()
     print("Game started thing")
 
-    game.Workspace.Gravity = 196.2
+    game.Workspace.Gravity = 0
     DestroyMap()
 
     local targetGui = Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target
@@ -73,4 +72,5 @@ Players.LocalPlayer.Backpack.ChildAdded:Connect(function(v)
     if v.Name == "Knife" then
         GameStart()
     end
+    task.wait(3)
 end)
