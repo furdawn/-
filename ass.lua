@@ -1,3 +1,5 @@
+-- Detect gamemodes
+
 repeat wait() until game:IsLoaded()
 if game.PlaceId ~= 379614936 then
     game.Players.LocalPlayer:Kick("Wrong game! (Assassin!)")
@@ -43,35 +45,43 @@ local function setTween(targetPos)
     tween.Completed:Wait()
 end
 
-Optimizer()
+local function onGameStart()
+    Optimizer()
 
-print("Optimizer Done")
-ReplicatedStorage.Remotes.WaitForChild("SheathKnife"):FireServer("off")
-local targetGui = Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target
-local targetText = targetGui.TargetText.Text
-local previousTarget = ""
+    print("Optimizer Done")
+    ReplicatedStorage.Remotes.WaitForChild("SheathKnife"):FireServer("off")
+    local targetGui = Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target
+    local targetText = targetGui.TargetText.Text
+    local previousTarget = ""
 
-print("Game started")
+    print("Game started")
 
-while targetGui.Visible do
-    print("Visible")
-    local targetName = targetText
-    if targetName ~= previousTarget then
-        previousTarget = targetName
-        local targetPlayer = game.Players:FindFirstChild(targetName)
-        if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
-            local targetPosition = targetPlayer.Character.HumanoidRootPart.Position
-            local args = {
-                [1] = targetPosition,
-                [2] = 0,
-                [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-            }
-            setTween(targetPosition - Vector3.new(0, -5, 0))
-            print("Tween")
-            ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("ThrowKnife"):FireServer(unpack(args))
-            print("Thrown")
+    while targetGui.Visible do
+        print("Visible")
+        local targetName = targetText
+        if targetName ~= previousTarget then
+            previousTarget = targetName
+            local targetPlayer = game.Players:FindFirstChild(targetName)
+            if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                local targetPosition = targetPlayer.Character.HumanoidRootPart.Position
+                local args = {
+                    [1] = targetPosition,
+                    [2] = 0,
+                    [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+                }
+                setTween(targetPosition - Vector3.new(0, -5, 0))
+                print("Tween")
+                ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("ThrowKnife"):FireServer(unpack(args))
+                print("Thrown")
+            end
         end
+        targetText = targetGui.TargetText.Text
+        print("Updated targetText")
     end
-    targetText = targetGui.TargetText.Text
-    print("Updated targetText")
 end
+
+Backpack.ChildAdded:Connect(function(child)
+    if child:IsA("Tool") and child.Name == "Knife" then
+        onGameStart()
+    end
+end)
