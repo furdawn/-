@@ -1,4 +1,4 @@
-print("sex")
+print("ads")
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
@@ -23,8 +23,9 @@ local function DestroyMap()
     end
 end
 
-local function GotoTarget(targetPlayer)
+local function GotoTarget(targetText)
     print("Going")
+    local targetPlayer = Players:FindFirstChild(targetText)
     local femboyRoot = Players.LocalPlayer.Character.HumanoidRootPart
     local targetRoot = targetPlayer.Character.HumanoidRootPart
     local tween = TweenService:Create(femboyRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetRoot.CFrame + Vector3.new(-2, -2, 0)})
@@ -40,12 +41,10 @@ local function Assassinate()
     local targetGui = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
     local targetText = targetGui.TargetText.Text
 
-    print(targetText)
-
     local targetPlayer = Players:FindFirstChild(targetText)
     if targetPlayer then
         print("Passed")
-        GotoTarget(targetPlayer)
+        GotoTarget(targetText)
         print("Went")
         local targetPosition = targetPlayer.Character.HumanoidRootPart.Position
         local args = {
