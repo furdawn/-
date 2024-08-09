@@ -1,4 +1,4 @@
-print("ads")
+print("1asdasfdsbdfb")
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
@@ -23,12 +23,10 @@ local function DestroyMap()
     end
 end
 
-local function GotoTarget(targetText)
-    print("Going")
-    local targetPlayer = Players:FindFirstChild(targetText)
+local function GotoTarget(targetUser)
     local femboyRoot = Players.LocalPlayer.Character.HumanoidRootPart
-    local targetRoot = targetPlayer.Character.HumanoidRootPart
-    local tween = TweenService:Create(femboyRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetRoot.CFrame + Vector3.new(-2, -2, 0)})
+    local faggotRoot = Players.targetUser.Character.HumanoidRootPart
+    local tween = TweenService:Create(femboyRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = faggotRoot.CFrame + Vector3.new(-2, -2, 0)})
     tween:Play()
 end
 
@@ -39,14 +37,13 @@ local function Assassinate()
     game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SheathKnife"):FireServer("off")
 
     local targetGui = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
-    local targetText = targetGui.TargetText.Text
+    local targetUser = targetGui.TargetText.Text
 
-    local targetPlayer = Players:FindFirstChild(targetText)
-    if targetPlayer then
+    if Players.targetUser then
         print("Passed")
-        GotoTarget(targetText)
+        GotoTarget(targetUser)
         print("Went")
-        local targetPosition = targetPlayer.Character.HumanoidRootPart.Position
+        local targetPosition = Players.targetUser.Character.HumanoidRootPart.Position
         local args = {
             [1] = targetPosition,
             [2] = 0,
@@ -56,10 +53,4 @@ local function Assassinate()
     end
 end
 
-local function onChildAdded(child)
-    if child.Name == "Knife" then
-        Assassinate()
-    end
-end
-
-Players.LocalPlayer.Backpack.ChildAdded:Connect(onChildAdded)
+Players.LocalPlayer.Backpack.ChildAdded:Connect(Assassinate)
