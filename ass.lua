@@ -1,4 +1,4 @@
-print("mewmeramstdgfrdsg")
+-- Detect gamemodes
 
 repeat wait() until game:IsLoaded()
 if game.PlaceId ~= 379614936 then
@@ -32,50 +32,19 @@ end
 
 local function HidePlayer()
     LocalPlayer.Character.Animate.Disabled = true
-    LocalPlayer.Character.HumanoidRootPart.Anchored = true
     if LocalPlayer.Character then
         local rootPart = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
         if rootPart then
             rootPart.CFrame = rootPart.CFrame - Vector3.new(0, 10, 0)
         end
     end
+    LocalPlayer.Character.HumanoidRootPart.Anchored = true
 end
 
 local function GameStart()
     DestroyMap()
     HidePlayer()
-
-    local targetGui = Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target
-    local previousTarget = ""
-    local knifeFound = true
-
-    while knifeFound do
-        local targetText = targetGui.TargetText.Text
-        if targetText ~= previousTarget then
-            previousTarget = targetText
-            local targetPlayer = game.Players:FindFirstChild(targetText)
-            if targetPlayer and targetPlayer:FindFirstChild("Backpack") then
-                local backpack = targetPlayer.Backpack
-                local knife = backpack:FindFirstChild("Knife")
-                
-                if knife then
-                    if LocalPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                        LocalPlayer.Character.Animate.Disabled = true
-                        local targetPosition = targetPlayer.Character.HumanoidRootPart.Position
-                        local args = {
-                            [1] = targetPosition,
-                            [2] = 0,
-                            [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-                        }
-                        ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("ThrowKnife"):FireServer(unpack(args))
-                    end
-                else
-                    knifeFound = false
-                end
-            end
-        end
-        wait(0.1)
-    end
+    print("Game started thing")
 end
 
 LocalPlayer.Backpack.ChildAdded:Connect(function(v)
