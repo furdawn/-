@@ -23,7 +23,6 @@ Lighting.Brightness = 0
 Lighting.GlobalShadows = false
 settings().Rendering.QualityLevel = "Level01"
 local function Optimizer()
-    LocalPlayer.Character.Animate.Disabled = true
     for _, v in ipairs(game.Workspace:GetDescendants()) do
         if v:IsA("Texture") or v:IsA("Decal") then
             v:Destroy()
@@ -62,7 +61,8 @@ local function onGameStart()
         if targetName ~= previousTarget then
             previousTarget = targetName
             local targetPlayer = game.Players:FindFirstChild(targetName)
-            if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            if LocalPlayer and targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                LocalPlayer.Character.Animate.Disabled = true
                 local targetPosition = targetPlayer.Character.HumanoidRootPart.Position
                 local args = {
                     [1] = targetPosition,
