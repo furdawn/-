@@ -1,4 +1,4 @@
-print(",mm")
+print("sex")
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
@@ -34,6 +34,12 @@ end
 local function Assassinate()
     game.Workspace.Gravity = 0
     DestroyMap()
+
+    local knife = Players.LocalPlayer.Backpack:FindFirstChild("knife")
+    while not knife do
+        task.wait(0.5)
+        knife = Players.LocalPlayer.Backpack:FindFirstChild("knife")
+    end
 
     game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SheathKnife"):FireServer("off")
 
