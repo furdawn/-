@@ -11,7 +11,7 @@ local Terrain = game.Workspace.Terrain
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 
-print("Test")
+print("Ewww")
 
 --- Optimization stuff :3
 game.Workspace.Gravity = 0
@@ -26,6 +26,7 @@ settings().Rendering.QualityLevel = "Level01"
 
 local function GameStart()
     print("Game started")
+    LocalPlayer.Character.Animate.Disabled = true
 end
 
 LocalPlayer.Backpack.ChildAdded:Connect(function(v)
