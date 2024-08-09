@@ -1,4 +1,4 @@
-print("123")
+print("BAMAMAMA")
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
@@ -62,4 +62,4 @@ local function Assassinate()
     end
 end
 
-Players.LocalPlayer.Backpack.ChildAdded:Connect(Assassinate)
+Players.LocalPlayer.Backpack.ChildAdded:Connect(Assassinate())
