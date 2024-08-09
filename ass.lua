@@ -10,10 +10,8 @@ local TweenService = game:GetService("TweenService")
 local Lighting = game:GetService("Lighting")
 local Terrain = game.Workspace.Terrain
 local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
 
 --- Optimization stuff :3
-game.Workspace.Gravity = 0
 Terrain.WaterWaveSize = 0
 Terrain.WaterWaveSpeed = 0
 Terrain.WaterReflectance = 0
@@ -32,19 +30,22 @@ local function DestroyMap()
 end
 
 local function HidePlayer()
-    LocalPlayer.Character.Animate.Disabled = true
-    TweenService:Create(LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = Vector3.new(0,-5, 0)}):Play()
-    LocalPlayer.Character.HumanoidRootPart.Anchored = true
+    game.Workspace.Gravity = 0
+    local FemboyRoot = Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    Players.LocalPlayer.Character.Animate.Disabled = true
+    TweenService:Create(FemboyRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = Vector3.new(0,-5, 0)}):Play()
+    Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
 end
 
 local function GameStart()
+    game.Workspace.Gravity = 196.2
     DestroyMap()
     HidePlayer()
     print("Game started thing")
 
 end
 
-LocalPlayer.Backpack.ChildAdded:Connect(function(v)
+Players.LocalPlayer.Backpack.ChildAdded:Connect(function(v)
     if v.Name == "Knife" then
         GameStart()
     end
