@@ -36,26 +36,26 @@ local function GameStart()
     game.Workspace.Gravity = 0
     DestroyMap()
 
+    game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SheathKnife"):FireServer("off")
+
     local targetGui = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
     local targetText = targetGui.TargetText.Text
     local gameEnded = false
 
     print(targetText)
 
-    local targetPlayer = game.Players:FindFirstChild(targetText)
+    local targetPlayer = Players:FindFirstChild(targetText)
     if targetPlayer then
         print("Passed IF")
-        if Players.LocalPlayer.Character and targetPlayer.Character then
-            GotoTarget(targetPlayer)
-            print("Went")
-            local targetPosition = targetPlayer.Character.HumanoidRootPart.Position
-            local args = {
-                [1] = targetPosition,
-                [2] = 0,
-                [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-            }
-            ReplicatedStorage.Remotes:FindFirstChild("ThrowKnife"):FireServer(unpack(args))
-        end
+        GotoTarget(targetPlayer)
+        print("Went")
+        local targetPosition = targetPlayer.Character.HumanoidRootPart.Position
+        local args = {
+            [1] = targetPosition,
+            [2] = 0,
+            [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+        }
+        ReplicatedStorage.Remotes:FindFirstChild("ThrowKnife"):FireServer(unpack(args))
     end
 end
 
