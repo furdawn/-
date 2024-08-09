@@ -1,9 +1,5 @@
 -- Detect gamemodes
-
-repeat wait() until game:IsLoaded()
-if game.PlaceId ~= 379614936 then
-    game.Players.LocalPlayer:Kick("Wrong game! (Assassin!)")
-end
+-- Server hopper
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
@@ -50,10 +46,10 @@ local function GameStart()
 
         while targetGui.Visible do
             local targetPlayer = game.Players:FindFirstChild(targetText)
-            if targetPlayer and targetPlayer:FindFirstChild("Backpack") then
+            if targetPlayer and targetPlayer.Backpack then
                 local knife = targetPlayer.Backpack:FindFirstChild("Knife")
                 if knife then
-                    if Players.LocalPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                    if Players.LocalPlayer.Character and targetPlayer.Character then
                         GotoTarget(targetPlayer)
                         local targetPosition = targetPlayer.Character.HumanoidRootPart.Position
                         local args = {
