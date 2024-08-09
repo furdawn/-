@@ -22,6 +22,7 @@ settings().Rendering.QualityLevel = "Level01"
 --- Optimization stuff :3
 
 local function DestroyMap()
+    Players.LocalPlayer.Character.Animate.Disabled = true
     for _, v in ipairs(game.Workspace.GameMap:GetDescendants()) do
         if v:IsA("BasePart") then
             v:Destroy()
@@ -32,8 +33,8 @@ end
 local function GotoTarget(targetPlayer)
     local femboyRoot = Players.LocalPlayer.HumanoidRootPart
     local targetRoot = targetPlayer.Character.HumanoidRootPart
-    Players.LocalPlayer.Character.Animate.Disabled = true
-    TweenService:Create(femboyRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetRoot.CFrame + Vector3.new(-2, -2, 0)}):Play()
+    local tween = TweenService:Create(femboyRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetRoot.CFrame + Vector3.new(-2, -2, 0)})
+    tween:Play()
 end
 
 local function GameStart()
@@ -44,12 +45,10 @@ local function GameStart()
         DestroyMap()
 
         local targetText = targetGui.TargetText.Text
-        local knifeFound = true
 
         print(targetText)
 
-        while knifeFound do
-            print("easdasdsa")
+        while targetGui.Visible do
             local targetPlayer = game.Players:FindFirstChild(targetText)
             if targetPlayer and targetPlayer:FindFirstChild("Backpack") then
                 local knife = targetPlayer.Backpack:FindFirstChild("Knife")
@@ -64,8 +63,6 @@ local function GameStart()
                         }
                         ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("ThrowKnife"):FireServer(unpack(args))
                     end
-                else
-                    knifeFound = false
                 end
             end
         end
