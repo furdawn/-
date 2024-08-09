@@ -22,21 +22,6 @@ Terrain.WaterTransparency = 0
 Lighting.Brightness = 0
 Lighting.GlobalShadows = false
 settings().Rendering.QualityLevel = "Level01"
-local function Optimizer()
-    for _, v in ipairs(game.Workspace:GetDescendants()) do
-        if v:IsA("Texture") or v:IsA("Decal") then
-            v:Destroy()
-        end
-        if v:IsA("Part") or v:IsA("MeshPart") then
-            v.Material = "Plastic"
-            v.Reflectance = 0
-        end
-        if v:IsA("ParticleEmitter") or v:IsA("Trail") then
-            v.Enabled = false
-        end
-    end
-    print("Optimizer Done")
-end
 --- Optimization stuff :3
 
 local function setTween(targetPos)
@@ -47,13 +32,10 @@ local function setTween(targetPos)
 end
 
 local function onGameStart()
-    Optimizer()
-
+    print("Game started")
     local targetGui = Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target
     local targetText = targetGui.TargetText.Text
     local previousTarget = ""
-
-    print("Game started")
 
     while targetGui.Visible do
         print("Visible")
