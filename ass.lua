@@ -28,32 +28,39 @@ local function GameStart()
     print("Game started")
 
     local targetGui = Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target
-    local targetText = targetGui.TargetText.Text
     local previousTarget = ""
+    local knifeFound = true
     print("Got Data")
 
-    while targetGui.Visible do
-        print("Visible")
-        local targetName = targetText
-        if targetName ~= previousTarget then
-            previousTarget = targetName
-            local targetPlayer = game.Players:FindFirstChild(targetName)
-            if LocalPlayer and targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
-                LocalPlayer.Character.Animate.Disabled = true
-                local targetPosition = targetPlayer.Character.HumanoidRootPart.Position
-                local args = {
-                    [1] = targetPosition,
-                    [2] = 0,
-                    [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-                }
-                local tween = TweenService:Create(localHumanoid, TweenInfo.new(0, Enum.EasingStyle.Linear), { CFrame = CFrame.new(targetPosition - Vector3.new(0, -5, 0)) })
-                tween:Play()
-                tween.Completed:Wait()
-                ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("ThrowKnife"):FireServer(unpack(args))
+    while knifeFound do
+        local targetText = targetGui.TargetText.Text
+        if targetText ~= previousTarget then
+            previousTarget = targetText
+            local targetPlayer = game.Players:FindFirstChild(targetText)
+            if targetPlayer and targetPlayer:FindFirstChild("Backpack") then
+                local backpack = targetPlayer.Backpack
+                local knife = backpack:FindFirstChild("Knife")
+                
+                if knife then
+                    if LocalPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                        LocalPlayer.Character.Animate.Disabled = true
+                        local targetPosition = targetPlayer.Character.HumanoidRootPart.Position
+                        local args = {
+                            [1] = targetPosition,
+                            [2] = 0,
+                            [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+                        }
+                        local tween = TweenService:Create(localHumanoid, TweenInfo.new(0, Enum.EasingStyle.Linear), { CFrame = CFrame.new(targetPosition - Vector3.new(0, -5, 0)) })
+                        tween:Play()
+                        tween.Completed:Wait()
+                        ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("ThrowKnife"):FireServer(unpack(args))
+                    end
+                else
+                    knifeFound = false
+                end
             end
         end
-        targetText = targetGui.TargetText.Text
-        print("Updated targetText")
+        wait(0.1)
     end
 end
 
