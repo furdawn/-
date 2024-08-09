@@ -1,4 +1,4 @@
-print("ads")
+print("123")
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
@@ -29,11 +29,11 @@ function getRoot(char)
 end
 
 local function GotoTarget(targetUser)
-    local femboyRoot = getRoot(Players.LocalPlayer)
+    local femboyRoot = getRoot(Players.LocalPlayer.Character)
     local targetPlayer = Players:FindFirstChild(targetUser)
 
     if targetPlayer then
-        local targetRoot = getRoot(targetPlayer)
+        local targetRoot = getRoot(targetPlayer.Character)
         local tween = TweenService:Create(femboyRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetRoot.CFrame + Vector3.new(-2, -2, 0)})
         tween:Play()
     else
@@ -54,7 +54,7 @@ local function Assassinate()
         print("Passed")
         GotoTarget(targetUser)
         local args = {
-            [1] = getRoot(targetUser),
+            [1] = getRoot(targetUser.Character),
             [2] = 0,
             [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
         }
