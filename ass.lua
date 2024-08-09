@@ -29,20 +29,44 @@ local function DestroyMap()
     end
 end
 
-local function HidePlayer()
+local function GotoTarget(targetPlayer)
+    local femboyRoot = Players.LocalPlayer.HumanoidRootPart
+    local targetRoot = targetPlayer.Character.HumanoidRootPart
     game.Workspace.Gravity = 0
-    local FemboyRoot = Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
     Players.LocalPlayer.Character.Animate.Disabled = true
-    TweenService:Create(FemboyRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = Vector3.new(0,-5, 0)}):Play()
-    Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+    TweenService:Create(femboyRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetRoot.CFrame + Vector3.new(-2, -2, 0)}):Play()
 end
 
 local function GameStart()
-    game.Workspace.Gravity = 196.2
-    DestroyMap()
-    HidePlayer()
     print("Game started thing")
 
+    game.Workspace.Gravity = 196.2
+    DestroyMap()
+
+    local targetGui = Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target
+    local targetText = targetGui.TargetText.Text
+    local knifeFound = true
+
+    while knifeFound do
+        local targetPlayer = game.Players:FindFirstChild(targetText)
+        if targetPlayer and targetPlayer:FindFirstChild("Backpack") then
+            local knife = targetPlayer.Backpack:FindFirstChild("Knife")
+            if knife then
+                if Players.LocalPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                    GotoTarget(targetPlayer)
+                    local targetPosition = targetPlayer.Character.HumanoidRootPart.Position
+                    local args = {
+                        [1] = targetPosition,
+                        [2] = 0,
+                        [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+                    }
+                    ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("ThrowKnife"):FireServer(unpack(args))
+                end
+            else
+                knifeFound = false
+            end
+        end
+    end
 end
 
 Players.LocalPlayer.Backpack.ChildAdded:Connect(function(v)
