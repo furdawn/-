@@ -10,6 +10,8 @@ local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local Backpack = LocalPlayer:FindFirstChild("Backpack")
 
+print("Optimization")
+
 --- Optimization stuff :3
 game.Workspace.Gravity = 0
 Terrain.WaterWaveSize = 0
@@ -34,6 +36,8 @@ local function Optimizer()
 end
 --- Optimization stuff :3
 
+print("Noclip")
+
 local function NoclipLoop()
     if Clip == false and speaker.Character ~= nil then
         for _, child in pairs(speaker.Character:GetDescendants()) do
@@ -51,6 +55,8 @@ local function setTween(targetPos)
     tween:Play()
     tween.Completed:Wait()
 end
+
+print("Optimizer")
 
 Optimizer()
 ReplicatedStorage.Remotes.WaitForChild("SheathKnife"):FireServer("off")
