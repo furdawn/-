@@ -35,12 +35,6 @@ local function Assassinate()
     game.Workspace.Gravity = 0
     DestroyMap()
 
-    local knife = Players.LocalPlayer.Backpack:FindFirstChild("knife")
-    while not knife do
-        task.wait(0.5)
-        knife = Players.LocalPlayer.Backpack:FindFirstChild("knife")
-    end
-
     game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SheathKnife"):FireServer("off")
 
     local targetGui = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
@@ -63,6 +57,10 @@ local function Assassinate()
     end
 end
 
-Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target.TargetText:GetPropertyChangedSignal("Text"):Connect(function()
-    Assassinate()
-end)
+local function onChildAdded(child)
+    if child.Name == "Knife" then
+        Assassinate()
+    end
+end
+
+Players.LocalPlayer.Backpack.ChildAdded:Connect(onChildAdded)
