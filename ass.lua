@@ -38,16 +38,18 @@ end
 
 print("Noclip")
 
-local function NoclipLoop()
-    if Clip == false and speaker.Character ~= nil then
-        for _, child in pairs(speaker.Character:GetDescendants()) do
-            if child:IsA("BasePart") and child.CanCollide == true and child.Name ~= floatName then
-                child.CanCollide = false
+local function Noclip()
+    local function NoclipLoop()
+        if Clip == false and speaker.Character ~= nil then
+            for _, child in pairs(speaker.Character:GetDescendants()) do
+                if child:IsA("BasePart") and child.CanCollide == true and child.Name ~= floatName then
+                    child.CanCollide = false
+                end
             end
         end
     end
+    Noclipping = RunService.Stepped:Connect(NoclipLoop)
 end
-Noclipping = RunService.Stepped:Connect(NoclipLoop)
 
 local function setTween(targetPos)
     local tweenInfo = TweenInfo.new(0, Enum.EasingStyle.Linear)
@@ -58,6 +60,7 @@ end
 
 print("Optimizer")
 
+Noclip()
 Optimizer()
 ReplicatedStorage.Remotes.WaitForChild("SheathKnife"):FireServer("off")
 local targetGui = Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target
