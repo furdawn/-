@@ -60,7 +60,5 @@ local function GameStart()
 end
 
 Players.LocalPlayer.Backpack.ChildAdded:Connect(function(v)
-    if v.Name == "Knife" then
-        GameStart()
-    end
+    GameStart()
 end)
