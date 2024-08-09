@@ -58,10 +58,10 @@ local targetGui = Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target
 local targetText = targetGui.TargetText.Text
 local previousTarget = ""
 
-warn("Game started")
+print("Game started")
 
 while targetGui.Visible do
-    warn("Visible")
+    print("Visible")
     local targetName = targetText
     if targetName ~= previousTarget then
         previousTarget = targetName
@@ -74,11 +74,11 @@ while targetGui.Visible do
                 [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
             }
             setTween(targetPosition - Vector3.new(0, -5, 0))
-            warn("Tween")
+            print("Tween")
             ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("ThrowKnife"):FireServer(unpack(args))
-            warn("Thrown")
+            print("Thrown")
         end
     end
     targetText = targetGui.TargetText.Text
-    warn("Updated targetText")
+    print("Updated targetText")
 end
