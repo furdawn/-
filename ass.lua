@@ -81,7 +81,7 @@ local function onGameStart()
 end
 
 Backpack.ChildAdded:Connect(function(child)
-    if child:IsA("Tool") and child.Name == "Knife" then
+    if child.Name == "Knife" then
         onGameStart()
     end
 end)
