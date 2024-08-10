@@ -8,7 +8,7 @@ local Players = game:GetService("Players")
 
 local TargetGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
 
-workspace.Gravity = 0
+game.Workspace.Gravity = 0
 Terrain.WaterWaveSize = 0
 Terrain.WaterWaveSpeed = 0
 Terrain.WaterReflectance = 0
@@ -16,6 +16,19 @@ Terrain.WaterTransparency = 0
 Lighting.Brightness = 0
 Lighting.GlobalShadows = false
 settings().Rendering.QualityLevel = 1
+for i,v in pairs(game:GetDescendants()) do
+    if v:IsA("Part") or v:IsA("UnionOperation") or v:IsA("MeshPart") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+        v.Material = "Plastic"
+        v.Reflectance = 0
+    elseif v:IsA("Decal") then
+        v.Transparency = 1
+    elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+        v.Lifetime = NumberRange.new(0)
+    elseif v:IsA("Explosion") then
+        v.BlastPressure = 1
+        v.BlastRadius = 1
+    end
+end
 for i,v in pairs(Lighting:GetDescendants()) do
     if v:IsA("BlurEffect") or v:IsA("SunRaysEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("BloomEffect") or v:IsA("DepthOfFieldEffect") then
         v.Enabled = false
@@ -42,8 +55,6 @@ local function CheckTarget(currentUser)
 end
 
 local function Assassinate()
-    Players.LocalPlayer.Character.Animate.Disabled = true
-
     while #Players.LocalPlayer:WaitForChild("Backpack"):GetChildren() == 0 do
         task.wait()
     end
