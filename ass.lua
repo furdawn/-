@@ -51,14 +51,21 @@ local function Assassinate()
     game.Workspace.Gravity = 0
     DestroyMap()
 
+    while #Players.LocalPlayer:WaitForChild("Backpack"):GetChildren() == 0 do
+        task.wait()
+    end
+
     game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SheathKnife"):FireServer("off")
 
     local targetGui = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
     local targetUser = targetGui.TargetText.Text
+    local targetPlr = Players:FindFirstChild(targetUser)
 
-    if Players:FindFirstChild(targetUser) then
+    if targetPlr then
         print("Passed")
-        GotoTarget(targetUser)
+        while targetPlr.Character or targetPlr.Humanoid.Health > 0 do
+            GotoTarget(targetUser)
+        end
         local args = {
             [1] = getRoot(targetUser.Character),
             [2] = 0,
