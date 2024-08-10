@@ -44,10 +44,14 @@ local function Start()
         local localHumanoid = Players.LocalPlayer.Character.HumanoidRootPart
         local targetHumanoid = targetPlayer:FindFirstChild("HumanoidRootPart")
         if localHumanoid and targetHumanoid then
-            localHumanoid.CFrame = CFrame.new(Vector3.new(targetHumanoid.CFrame.Position.X, targetHumanoid.CFrame.Position.Y - 3, targetHumanoid.CFrame.Position.Z - 2), targetHumanoid.CFrame.Position)
+            localHumanoid.CFrame = CFrame.new(targetHumanoid.Position - Vector3.new(0, 3, 2))
         end
     end
     BreakVelo()
+
+    local Knife = Players.LocalPlayer:FindFirstChildOfClass("Backpack").Knife
+    Knife.Parent = Players.LocalPlayer.Character
+
     if targetPlayer and targetPlayer:IsA("Model") and targetPlayer:FindFirstChild("HumanoidRootPart") then
         local targetHumanoid = targetPlayer:FindFirstChild("HumanoidRootPart")
         local args = {
