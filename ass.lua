@@ -64,12 +64,12 @@ local function Kill(targetPlayer)
 
         BreakVelo()
 
-        local knife = Players.LocalPlayer.Backpack:FindFirstChild("knife")
+        local knife = Players.LocalPlayer.Backpack:FindFirstChild("Knife")
         if knife then
             knife.Parent = Players.LocalPlayer
             knife:Activate()
         else
-            knife:Activate()
+            Players.LocalPlayer:FindFirstChild("Knife"):Activate()
         end
     end
 end
