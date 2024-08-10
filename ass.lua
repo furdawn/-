@@ -33,20 +33,6 @@ function getRoot(targetChar)
     return rootPart
 end
 
-
-local function GotoTarget(targetUser)
-    local femboyRoot = getRoot(Players.LocalPlayer.Character)
-    local targetPlayer = Players:FindFirstChild(targetUser)
-
-    if targetPlayer then
-        local targetRoot = getRoot(targetPlayer.Character)
-        local tween = TweenService:Create(femboyRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetRoot.CFrame + Vector3.new(-2, -2, 0)})
-        tween:Play()
-    else
-        print("Player not found.")
-    end
-end
-
 local function Assassinate()
     game.Workspace.Gravity = 0
     DestroyMap()
@@ -61,10 +47,31 @@ local function Assassinate()
     local targetUser = targetGui.TargetText.Text
     local targetPlr = Players:FindFirstChild(targetUser)
 
+    local function GotoTarget(gotoUser)
+        local femboyRoot = getRoot(Players.LocalPlayer.Character)
+        local targetPlayer = Players:FindFirstChild(gotoUser)
+
+        if targetPlayer then
+            local targetRoot = getRoot(targetPlayer.Character)
+            local tween = TweenService:Create(femboyRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetRoot.CFrame + Vector3.new(-2, -2, 0)})
+            tween:Play()
+        else
+            print("Player not found.")
+        end
+    end
+
+    local function checkTarget(currentUser)
+        if targetGui then
+            return targetGui.TargetText.Text ~= currentUser
+        end
+        return false
+    end
+
     if targetPlr then
         print("Passed")
-        while targetPlr.Character or targetPlr.Character:FindFirstChild("Humanoid").Health > 0 do
+        while not checkTarget(targetUser) do
             GotoTarget(targetUser)
+            task.wait(0.1)
         end
         local args = {
             [1] = getRoot(targetUser.Character),
