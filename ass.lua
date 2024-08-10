@@ -5,7 +5,7 @@ local Lighting = game:GetService("Lighting")
 local Terrain = game.Workspace.Terrain
 local Players = game:GetService("Players")
 
-local TargetGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
+local targetGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
 
 game.Workspace.Gravity = 0
 Terrain.WaterWaveSize = 0
@@ -17,8 +17,8 @@ Lighting.GlobalShadows = false
 settings().Rendering.QualityLevel = 1
 
 local function DestroyMap()
-    local Map = game.Workspace:FindFirstChild("GameMap")
-    for _, v in pairs(Map:GetDescendants()) do
+    local map = game.Workspace:FindFirstChild("GameMap")
+    for _, v in pairs(map:GetDescendants()) do
         if v:IsA("BasePart") then
             v:Destroy()
         end
@@ -37,25 +37,27 @@ local function Start()
     DestroyMap()
     BreakVelo()
 
-    local TargetUser = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target").TargetText.Text
-    local TargetPlayer = game.Workspace:FindFirstChild(TargetUser)
+    local targetUser = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target").TargetText.Text
+    local targetPlayer = game.Workspace:FindFirstChild(targetUser)
 
-    if TargetPlayer and TargetPlayer:IsA("Model") and TargetPlayer:FindFirstChild("HumanoidRootPart") then
+    if targetPlayer and targetPlayer:IsA("Model") and targetPlayer:FindFirstChild("HumanoidRootPart") then
         local localHumanoid = Players.LocalPlayer.Character.HumanoidRootPart
-        local targetHumanoid = TargetPlayer:FindFirstChild("HumanoidRootPart")
+        local targetHumanoid = targetPlayer:FindFirstChild("HumanoidRootPart")
         if localHumanoid and targetHumanoid then
-            localHumanoid.CFrame = targetHumanoid.CFrame * CFrame.new(0, -5, -5)
+            local targetCFrame = targetHumanoid.CFrame
+            local newPOS = targetCFrame.Position + targetCFrame.LookVector * -2
+
+            localHumanoid.CFrame = CFrame.new(Vector3.new(newPOS.X, newPOS.Y - 3, newPOS.Z), targetCFrame.Position)
         end
     end
     BreakVelo()
-    if TargetPlayer and TargetPlayer:IsA("Model") and TargetPlayer:FindFirstChild("HumanoidRootPart") then
-        local targetHumanoid = TargetPlayer:FindFirstChild("HumanoidRootPart")
+    if targetPlayer and targetPlayer:IsA("Model") and targetPlayer:FindFirstChild("HumanoidRootPart") then
+        local targetHumanoid = targetPlayer:FindFirstChild("HumanoidRootPart")
         local args = {
             [1] = targetHumanoid.Position,
             [2] = 0,
             [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
         }
-        print(targetHumanoid.Position)
         ReplicatedStorage.Remotes:FindFirstChild("ThrowKnife"):FireServer(unpack(args))
     end
 end
@@ -65,11 +67,11 @@ local function StartALT()
 end
 
 local function onVisibilityChanged()
-    if TargetGUI.Visible then
+    if targetGUI.Visible then
         Start()
     else
         StartALT()
     end
 end
 
-TargetGUI:GetPropertyChangedSignal("Visible"):Connect(onVisibilityChanged)
+targetGUI:GetPropertyChangedSignal("Visible"):Connect(onVisibilityChanged)
