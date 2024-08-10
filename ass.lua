@@ -62,7 +62,6 @@ local function Assassinate()
             print(targetHumanoid.Position)
             ReplicatedStorage.Remotes:FindFirstChild("ThrowKnife"):FireServer(unpack(args))
         end
-        task.wait(0.1)
     end
 end
 
