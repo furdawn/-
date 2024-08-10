@@ -1,10 +1,12 @@
-print("MEOWMEOWMEOW")
+print("asmfgsrjmhsd")
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
 local Lighting = game:GetService("Lighting")
 local Terrain = game.Workspace.Terrain
 local Players = game:GetService("Players")
+
+local TargetGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target").Visible
 
 Terrain.WaterWaveSize = 0
 Terrain.WaterWaveSpeed = 0
@@ -43,11 +45,10 @@ local function Assassinate()
     local targetPlr = Players:FindFirstChild(targetUser)
 
     local function GotoTarget(gotoUser)
-        local femboyRoot = Players.LocalPlayer.Character
-        local targetPlayer = Players:FindFirstChild(gotoUser).Character
+        local targetPlayer = Players:FindFirstChild(gotoUser)
 
         if targetPlayer then
-            local tween = TweenService:Create(femboyRoot.KnifeHandle.CFrame, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetPlayer.KnifeHandle.CFrame + Vector3.new(-2, -2, 0)})
+            local tween = TweenService:Create(Players.LocalPlayer.Character.KnifeHandle.CFrame, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetPlayer.Character.KnifeHandle.CFrame + Vector3.new(-2, -2, 0)})
             tween:Play()
         else
             print("Player not found.")
@@ -63,23 +64,23 @@ local function Assassinate()
 
     if targetPlr then
         print("Passed")
-        while not checkTarget(targetUser) do
+        while not checkTarget(targetUser) and TargetGUI.Visible do
             GotoTarget(targetUser)
-            task.wait(0.1)
+            task.wait(0.15)
+            local args = {
+                [1] = targetUser.KnifeHandle.CFrame,
+                [2] = 0,
+                [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+            }
+            ReplicatedStorage.Remotes:FindFirstChild("ThrowKnife"):FireServer(unpack(args))
         end
-        local args = {
-            [1] = targetUser.KnifeHandle.CFrame,
-            [2] = 0,
-            [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-        }
-        ReplicatedStorage.Remotes:FindFirstChild("ThrowKnife"):FireServer(unpack(args))
     end
 end
 
 local function onVisibilityChanged()
-    if Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target").Visible then
+    if TargetGUI.Visible then
         Assassinate()
     end
 end
 
-Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target"):GetPropertyChangedSignal("Visible"):Connect(onVisibilityChanged)
+TargetGUI:GetPropertyChangedSignal("Visible"):Connect(onVisibilityChanged)
