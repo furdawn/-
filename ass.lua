@@ -1,9 +1,6 @@
-print("asdasdasdsd")
+print("meow")
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local TweenService = game:GetService("TweenService")
-local Lighting = game:GetService("Lighting")
-local Terrain = game.Workspace.Terrain
 local Players = game:GetService("Players")
 
 local TargetGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
@@ -16,8 +13,7 @@ local function GotoTarget(gotoUser)
         local localHumanoid = Players.LocalPlayer.Character.HumanoidRootPart
         local targetHumanoid = TargetPlayer:FindFirstChild("HumanoidRootPart")
         if localHumanoid and targetHumanoid then
-            local tween = TweenService:Create(localHumanoid, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetHumanoid.CFrame * CFrame.new(0, -4, -5)})
-            tween:Play()
+            localHumanoid.CFrame = targetHumanoid.CFrame - CFrame.new(0, -5, -5)
         end
     end
 end
