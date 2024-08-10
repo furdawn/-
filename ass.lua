@@ -43,14 +43,11 @@ local function Assassinate()
     local targetPlr = Players:FindFirstChild(targetUser)
 
     local function GotoTarget(gotoUser)
-        local targetPlayer = Players:FindFirstChild(gotoUser)
+        local femboyRoot = Players.LocalPlayer.Character
+        local targetPlayer = Players:FindFirstChild(gotoUser).Character
 
-        local localChar = game.Workspace:FindFirstChild(game.Players.LocalPlayer.Name)
-        local localKnife = localChar:FindFirstChild("KnifeHandle")
-        local targetChar = game.Workspace:FindFirstChild(game.Players.gotoUser.Name)
-        local targetKnife = targetChar:FindFirstChild("KnifeHandle")
         if targetPlayer then
-            local tween = TweenService:Create(localKnife.CFrame, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetKnife.CFrame + Vector3.new(-2, -2, 0)})
+            local tween = TweenService:Create(femboyRoot.KnifeHandle.CFrame, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetPlayer.KnifeHandle.CFrame + Vector3.new(-2, -2, 0)})
             tween:Play()
         else
             print("Player not found.")
@@ -66,15 +63,12 @@ local function Assassinate()
 
     if targetPlr then
         print("Passed")
-
-        local targetChar = game.Workspace:FindFirstChild(game.Players.gotoUser.Name)
-        local targetKnife = targetChar:FindFirstChild("KnifeHandle")
         while not checkTarget(targetUser) do
             GotoTarget(targetUser)
             task.wait(0.1)
         end
         local args = {
-            [1] = targetKnife.CFrame,
+            [1] = targetUser.KnifeHandle.CFrame,
             [2] = 0,
             [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
         }
