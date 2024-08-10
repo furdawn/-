@@ -33,6 +33,19 @@ local function BreakVelo()
     end
 end
 
+local function GotoTarget(gotoUser)
+    local TargetPlayer = game.Workspace:FindFirstChild(gotoUser)
+    if TargetPlayer and TargetPlayer:IsA("Model") and TargetPlayer:FindFirstChild("HumanoidRootPart") then
+        local localHumanoid = Players.LocalPlayer.Character.HumanoidRootPart
+        local targetHumanoid = TargetPlayer:FindFirstChild("HumanoidRootPart")
+        if localHumanoid and targetHumanoid then
+            print("a")
+            --localHumanoid.CFrame = targetHumanoid.CFrame * CFrame.new(0, -5, -5)
+        end
+    end
+    BreakVelo()
+end
+
 local function Assassinate()
     Players.LocalPlayer.Character.Animate.Disabled = true
     DestroyMap()
@@ -51,6 +64,7 @@ local function Assassinate()
     local CurTarget = TargetUser
 
     while CurTarget == TargetUser do
+        GotoTarget(CurTarget)
         print("444")
         local TargetPlayer = game.Workspace:FindFirstChild(TargetUser)
         if TargetPlayer and TargetPlayer:IsA("Model") and TargetPlayer:FindFirstChild("HumanoidRootPart") then
