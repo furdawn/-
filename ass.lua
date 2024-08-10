@@ -70,10 +70,11 @@ local function Assassinate()
     Knife.Parent = Players.LocalPlayer.Character
 
     local TargetUser = MeowGUI.TargetText.Text
+    local CurTarget = TargetUser
 
     print("333")
 
-    while not CheckTarget(TargetUser) do
+    while CurTarget == TargetUser do
         print("444")
         GotoTarget(TargetUser)
         local TargetPlayer = game.Workspace:FindFirstChild(TargetUser)
