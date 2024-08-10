@@ -1,4 +1,4 @@
-print("afgsdhndgfnetgs")
+print("6564562643577i8")
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
