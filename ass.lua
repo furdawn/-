@@ -1,4 +1,4 @@
-print("4999000")
+print("Testing")
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
@@ -23,8 +23,7 @@ local function GotoTarget(gotoUser)
         local targetHumanoid = TargetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localHumanoid and targetHumanoid then
-            local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Linear)
-            local tween = TweenService:Create(localHumanoid, tweenInfo, {Position = targetHumanoid.Position})
+            local tween = TweenService:Create(localHumanoid, TweenInfo.new(0.3, Enum.EasingStyle.Linear), {CFrame = targetHumanoid.CFrame})
             tween:Play()
         end
     end
