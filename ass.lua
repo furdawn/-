@@ -53,10 +53,6 @@ local function Assassinate()
 
     print("111")
 
-    repeat wait() until #Players.LocalPlayer.Backpack:GetChildren() == 1
-
-    print("222")
-
     local Knife = Players.LocalPlayer:FindFirstChildOfClass("Backpack").Knife
     Knife.Parent = Players.LocalPlayer.Character
 
@@ -65,7 +61,7 @@ local function Assassinate()
 
     while CurTarget == TargetUser do
         GotoTarget(CurTarget)
-        print("444")
+        print("222")
         local TargetPlayer = game.Workspace:FindFirstChild(TargetUser)
         if TargetPlayer and TargetPlayer:IsA("Model") and TargetPlayer:FindFirstChild("HumanoidRootPart") then
             local targetHumanoid = TargetPlayer:FindFirstChild("HumanoidRootPart")
