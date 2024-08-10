@@ -33,19 +33,6 @@ local function BreakVelo()
     end
 end
 
-local function GotoTarget(gotoUser)
-    local TargetPlayer = game.Workspace:FindFirstChild(gotoUser)
-    if TargetPlayer and TargetPlayer:IsA("Model") and TargetPlayer:FindFirstChild("HumanoidRootPart") then
-        local localHumanoid = Players.LocalPlayer.Character.HumanoidRootPart
-        local targetHumanoid = TargetPlayer:FindFirstChild("HumanoidRootPart")
-        if localHumanoid and targetHumanoid then
-            print("a")
-            --localHumanoid.CFrame = targetHumanoid.CFrame * CFrame.new(0, -5, -5)
-        end
-    end
-    BreakVelo()
-end
-
 local function Assassinate()
     Players.LocalPlayer.Character.Animate.Disabled = true
     DestroyMap()
@@ -63,9 +50,21 @@ local function Assassinate()
     local TargetUser = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target").TargetText.Text
     local CurTarget = TargetUser
 
-    print(CurTarget)
-
-    print("333")
+    while CurTarget == TargetUser do
+        print("444")
+        local TargetPlayer = game.Workspace:FindFirstChild(TargetUser)
+        if TargetPlayer and TargetPlayer:IsA("Model") and TargetPlayer:FindFirstChild("HumanoidRootPart") then
+            local targetHumanoid = TargetPlayer:FindFirstChild("HumanoidRootPart")
+            local args = {
+                [1] = targetHumanoid.Position,
+                [2] = 0,
+                [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+            }
+            print(targetHumanoid.Position)
+            ReplicatedStorage.Remotes:FindFirstChild("ThrowKnife"):FireServer(unpack(args))
+        end
+        TargetUser = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target").TargetText.Text
+    end
 end
 
 local function onVisibilityChanged()
