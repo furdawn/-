@@ -1,4 +1,4 @@
-print("asd")
+print("MEOWMEOWMEOW")
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
@@ -47,7 +47,7 @@ local function Assassinate()
         local targetPlayer = Players:FindFirstChild(gotoUser)
 
         if targetPlayer then
-            local tween = TweenService:Create(femboyRoot.Position, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetPlayer.Position + Vector3.new(-2, -2, 0)})
+            local tween = TweenService:Create(femboyRoot.KnifeHandle.CFrame, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetPlayer.KnifeHandle.CFrame + Vector3.new(-2, -2, 0)})
             tween:Play()
         else
             print("Player not found.")
@@ -68,7 +68,7 @@ local function Assassinate()
             task.wait(0.1)
         end
         local args = {
-            [1] = targetUser.Position,
+            [1] = targetUser.KnifeHandle.CFrame,
             [2] = 0,
             [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
         }
