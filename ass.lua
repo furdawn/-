@@ -6,8 +6,6 @@ local Lighting = game:GetService("Lighting")
 local Terrain = game.Workspace.Terrain
 local Players = game:GetService("Players")
 
-local TargetGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
-
 game.Workspace.Gravity = 0
 
 local function GotoTarget(gotoUser)
@@ -23,15 +21,15 @@ local function GotoTarget(gotoUser)
 end
 
 local function CheckTarget(currentUser)
-    if TargetGUI then
-        return TargetGUI.TargetText.Text ~= currentUser
+    if Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target") then
+        return Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target").TargetText.Text ~= currentUser
     end
     return false
 end
 
 local function Assassinate()
     while #Players.LocalPlayer:WaitForChild("Backpack"):GetChildren() == 0 do
-        task.wait()
+        task.wait(0.5)
     end
 
     local knife = Players.LocalPlayer:FindFirstChildOfClass("Backpack").Knife
@@ -40,7 +38,7 @@ local function Assassinate()
     local targetGui = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
     local targetUser = targetGui.TargetText.Text
 
-    while not CheckTarget(targetUser) and TargetGUI.Visible do
+    while not CheckTarget(targetUser) and Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target").Visible do
         GotoTarget(targetUser)
         local TargetPlayer = game.Workspace:FindFirstChild(targetUser)
         if TargetPlayer and TargetPlayer:IsA("Model") and TargetPlayer:FindFirstChild("HumanoidRootPart") then
@@ -57,9 +55,9 @@ local function Assassinate()
 end
 
 local function onVisibilityChanged()
-    if TargetGUI.Visible then
+    if Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target").Visible then
         Assassinate()
     end
 end
 
-TargetGUI:GetPropertyChangedSignal("Visible"):Connect(onVisibilityChanged)
+Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target"):GetPropertyChangedSignal("Visible"):Connect(onVisibilityChanged)
