@@ -13,7 +13,6 @@ Terrain.WaterWaveSize = 0
 Terrain.WaterWaveSpeed = 0
 Terrain.WaterReflectance = 0
 Terrain.WaterTransparency = 0
-Lighting.FogEnd = 9e9
 Lighting.Brightness = 0
 Lighting.GlobalShadows = false
 settings().Rendering.QualityLevel = 1
@@ -29,7 +28,7 @@ local function GotoTarget(gotoUser)
         local localHumanoid = Players.LocalPlayer.Character.HumanoidRootPart
         local targetHumanoid = TargetPlayer:FindFirstChild("HumanoidRootPart")
         if localHumanoid and targetHumanoid then
-            local tween = TweenService:Create(localHumanoid, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetHumanoid.CFrame * CFrame.new(0, -4, -5) * CFrame.Angles(0, math.pi * 0.5, 0)})
+            local tween = TweenService:Create(localHumanoid, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetHumanoid.CFrame * CFrame.new(0, -4, -5)})
             tween:Play()
         end
     end
