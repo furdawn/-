@@ -23,7 +23,9 @@ local function GotoTarget(gotoUser)
         local targetHumanoid = TargetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localHumanoid and targetHumanoid then
-            local tween = TweenService:Create(localHumanoid, TweenInfo.new(0.3, Enum.EasingStyle.Linear), {CFrame = targetHumanoid.CFrame})
+            local offset = CFrame.new(0, -3, -2) * CFrame.Angles(0, math.rad(-90), 0)
+            local targetCFrame = targetHumanoid.CFrame * offset
+            local tween = TweenService:Create(localHumanoid, TweenInfo.new(0.3, Enum.EasingStyle.Linear), {CFrame = targetCFrame})
             tween:Play()
         end
     end
@@ -43,15 +45,14 @@ local function Assassinate()
         task.wait()
     end
 
+    local knife = Players.LocalPlayer:FindFirstChildOfClass("Backpack").Knife
+    knife.Parent = Players.LocalPlayer.Character
+
     local targetGui = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
     local targetUser = targetGui.TargetText.Text
 
-    task.wait(1)
-    game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SheathKnife"):FireServer("off")
-
     while not CheckTarget(targetUser) and TargetGUI.Visible do
         GotoTarget(targetUser)
-        task.wait(0.15)
         local TargetPlayer = game.Workspace:FindFirstChild(targetUser)
         if TargetPlayer and TargetPlayer:IsA("Model") and TargetPlayer:FindFirstChild("HumanoidRootPart") then
             local targetHumanoid = TargetPlayer:FindFirstChild("HumanoidRootPart")
@@ -63,6 +64,7 @@ local function Assassinate()
             }
             ReplicatedStorage.Remotes:FindFirstChild("ThrowKnife"):FireServer(unpack(args))
         end
+        task.wait(0.1)
     end
 end
 
