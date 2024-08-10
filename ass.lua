@@ -43,11 +43,10 @@ local function Assassinate()
     local targetPlr = Players:FindFirstChild(targetUser)
 
     local function GotoTarget(gotoUser)
-        local femboyRoot = Players.LocalPlayer
         local targetPlayer = Players:FindFirstChild(gotoUser)
 
         if targetPlayer then
-            local tween = TweenService:Create(femboyRoot.KnifeHandle.CFrame, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetPlayer.KnifeHandle.CFrame + Vector3.new(-2, -2, 0)})
+            local tween = TweenService:Create(Players.LocalPlayer.KnifeHandle.CFrame, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetPlayer.KnifeHandle.CFrame + Vector3.new(-2, -2, 0)})
             tween:Play()
         else
             print("Player not found.")
