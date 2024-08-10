@@ -33,6 +33,26 @@ local function BreakVelo()
     end
 end
 
+local function Kill(targetPlayer)
+    if targetPlayer and targetPlayer:IsA("Model") and targetPlayer:FindFirstChild("HumanoidRootPart") then
+        local localRoot = Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+        local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
+
+        if localRoot and targetRoot then
+            localRoot.CFrame = CFrame.new(targetRoot.Position - Vector3.new(0, 3, 2))
+        end
+
+        BreakVelo()
+
+        local args = {
+            [1] = targetRoot.Position,
+            [2] = 0,
+            [3] = CFrame.new()
+        }
+        ReplicatedStorage.Remotes:FindFirstChild("ThrowKnife"):FireServer(unpack(args))
+    end
+end
+
 local function Start()
     DestroyMap()
     BreakVelo()
@@ -41,39 +61,33 @@ local function Start()
         wait()
     end
 
-    local targetUser = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target").TargetText.Text
-    local targetPlayer = game.Workspace:FindFirstChild(targetUser)
+    local previousTarget = targetGUI.TargetText.Text
+    local targetPlayer = game.Workspace:FindFirstChild(previousTarget)
 
-    if targetPlayer and targetPlayer:IsA("Model") and targetPlayer:FindFirstChild("HumanoidRootPart") then
-        local localHumanoid = Players.LocalPlayer.Character.HumanoidRootPart
-        local targetHumanoid = targetPlayer:FindFirstChild("HumanoidRootPart")
-        if localHumanoid and targetHumanoid then
-            localHumanoid.CFrame = CFrame.new(targetHumanoid.Position - Vector3.new(0, 3, 2))
+
+    while targetGUI.Visible do
+        local currentTarget = targetGUI.TargetText.Text
+        if currentTarget ~= previousTarget then
+            targetPlayer = game.Workspace:FindFirstChild(currentTarget)
+            previousTarget = currentTarget
+
+            if not targetPlayer then
+                break
+            end
         end
+
+        if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
+            Kill(targetPlayer)
+        else
+            break
+        end
+        wait()
     end
-
-    BreakVelo()
-
-    if targetPlayer and targetPlayer:IsA("Model") and targetPlayer:FindFirstChild("HumanoidRootPart") then
-        local targetHumanoid = targetPlayer:FindFirstChild("HumanoidRootPart")
-        local args = {
-            [1] = targetHumanoid.Position,
-            [2] = 0,
-            [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-        }
-        ReplicatedStorage.Remotes:FindFirstChild("ThrowKnife"):FireServer(unpack(args))
-    end
-end
-
-local function StartALT()
-    print("Different gamemode")
 end
 
 local function onVisibilityChanged()
     if targetGUI.Visible then
         Start()
-    else
-        StartALT()
     end
 end
 
