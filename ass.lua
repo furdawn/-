@@ -19,7 +19,7 @@ local function GotoTarget(gotoUser)
 end
 
 local function CheckTarget(currentUser)
-    if TargetGUI then
+    if TargetGUI.Visible then
         return TargetGUI.TargetText.Text ~= currentUser
     end
     return false
@@ -41,7 +41,7 @@ local function Assassinate()
 
     print("333")
 
-    while not CheckTarget(targetUser) and Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target").Visible do
+    while not CheckTarget(targetUser) do
         print("444")
         GotoTarget(targetUser)
         local TargetPlayer = game.Workspace:FindFirstChild(targetUser)
