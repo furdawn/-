@@ -8,6 +8,7 @@ local Players = game:GetService("Players")
 
 local TargetGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
 
+workspace.Gravity = 0
 Terrain.WaterWaveSize = 0
 Terrain.WaterWaveSpeed = 0
 Terrain.WaterReflectance = 0
@@ -42,7 +43,6 @@ local function CheckTarget(currentUser)
 end
 
 local function Assassinate()
-    game.Workspace.Gravity = 0
     Players.LocalPlayer.Character.Animate.Disabled = true
 
     while #Players.LocalPlayer:WaitForChild("Backpack"):GetChildren() == 0 do
