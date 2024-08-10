@@ -66,10 +66,10 @@ local function Kill(targetPlayer)
 
         local knife = Players.LocalPlayer.Backpack:FindFirstChild("Knife")
         if knife then
-            knife.Parent = Players.LocalPlayer
-            knife:Activate()
+            knife.Parent = Players.LocalPlayer.Character
+            Players.LocalPlayer.Character:FindFirstChild("Knife"):Activate()
         else
-            Players.LocalPlayer:FindFirstChild("Knife"):Activate()
+            Players.LocalPlayer.Character:FindFirstChild("Knife"):Activate()
         end
     end
 end
