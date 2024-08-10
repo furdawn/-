@@ -1,4 +1,4 @@
-print("meow")
+print(":3")
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Lighting = game:GetService("Lighting")
