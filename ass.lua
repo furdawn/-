@@ -53,8 +53,8 @@ local function Assassinate()
 
     print("111")
 
-    while #Players.LocalPlayer:WaitForChild("Backpack"):GetChildren() == 0 do
-        task.wait(0.5)
+    while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
+        wait(0.5)
     end
 
     print("222")
