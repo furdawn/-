@@ -39,17 +39,11 @@ local function GotoTarget(gotoUser)
         local localHumanoid = Players.LocalPlayer.Character.HumanoidRootPart
         local targetHumanoid = TargetPlayer:FindFirstChild("HumanoidRootPart")
         if localHumanoid and targetHumanoid then
-            localHumanoid.CFrame = targetHumanoid.CFrame * CFrame.new(0, -5, -5)
+            print("a")
+            --localHumanoid.CFrame = targetHumanoid.CFrame * CFrame.new(0, -5, -5)
         end
     end
     BreakVelo()
-end
-
-local function CheckTarget(currentUser)
-    if TargetGUI.Visible then
-        return TargetGUI.TargetText.Text ~= currentUser
-    end
-    return false
 end
 
 local function Assassinate()
@@ -65,11 +59,10 @@ local function Assassinate()
 
     print("222")
 
-    local MeowGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
     local Knife = Players.LocalPlayer:FindFirstChildOfClass("Backpack").Knife
     Knife.Parent = Players.LocalPlayer.Character
 
-    local TargetUser = MeowGUI.TargetText.Text
+    local TargetUser = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target").TargetText.Text
     local CurTarget = TargetUser
 
     print("333")
@@ -88,7 +81,7 @@ local function Assassinate()
             print(targetHumanoid.Position)
             ReplicatedStorage.Remotes:FindFirstChild("ThrowKnife"):FireServer(unpack(args))
         end
-        TargetUser = MeowGUI.TargetText.Text
+        TargetUser = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target").TargetText.Text
     end
 end
 
