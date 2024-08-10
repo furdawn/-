@@ -63,7 +63,7 @@ local function Assassinate()
 
     if targetPlr then
         print("Passed")
-        while targetPlr.Character or targetPlr.Character.Humanoid.Health > 0 do
+        while targetPlr.Character or targetPlr.Character:FindFirstChild("Humanoid").Health > 0 do
             GotoTarget(targetUser)
         end
         local args = {
