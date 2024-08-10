@@ -53,9 +53,7 @@ local function Assassinate()
 
     print("111")
 
-    while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
-        wait(0.5)
-    end
+    repeat wait() until #Players.LocalPlayer.Backpack:GetChildren() == 1
 
     print("222")
 
