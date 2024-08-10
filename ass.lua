@@ -1,4 +1,4 @@
-print(":3")
+print("mwwowowowow")
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Lighting = game:GetService("Lighting")
@@ -26,7 +26,6 @@ local function DestroyMap()
 end
 
 local function BreakVelo()
-    task.wait(0.5)
     for _, v in ipairs(Players.LocalPlayer.Character:GetDescendants()) do
         if v:IsA("BasePart") then
             v.Velocity, v.RotVelocity = Vector3.zero, Vector3.zero
@@ -54,9 +53,9 @@ local function CheckTarget(currentUser)
 end
 
 local function Assassinate()
+    Players.LocalPlayer.Character.Animate.Disabled = true
     DestroyMap()
     BreakVelo()
-    Players.LocalPlayer.Character.Animate.Disabled = true
 
     print("111")
 
@@ -88,6 +87,7 @@ local function Assassinate()
             print(targetHumanoid.Position)
             ReplicatedStorage.Remotes:FindFirstChild("ThrowKnife"):FireServer(unpack(args))
         end
+        TargetUser = MeowGUI.TargetText.Text
     end
 end
 
