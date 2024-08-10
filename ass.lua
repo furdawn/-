@@ -1,4 +1,4 @@
-print("mwwowowowow")
+print("alkternart")
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Lighting = game:GetService("Lighting")
@@ -33,8 +33,13 @@ local function BreakVelo()
     end
 end
 
-local function GotoTarget(gotoUser)
-    local TargetPlayer = game.Workspace:FindFirstChild(gotoUser)
+local function Start()
+    DestroyMap()
+    BreakVelo()
+
+    local TargetUser = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target").TargetText.Text
+    local TargetPlayer = game.Workspace:FindFirstChild(TargetUser)
+
     if TargetPlayer and TargetPlayer:IsA("Model") and TargetPlayer:FindFirstChild("HumanoidRootPart") then
         local localHumanoid = Players.LocalPlayer.Character.HumanoidRootPart
         local targetHumanoid = TargetPlayer:FindFirstChild("HumanoidRootPart")
@@ -43,17 +48,6 @@ local function GotoTarget(gotoUser)
         end
     end
     BreakVelo()
-end
-
-local function Assassinate()
-    DestroyMap()
-    BreakVelo()
-
-    local TargetUser = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target").TargetText.Text
-    local CurTarget = TargetUser
-
-    GotoTarget(CurTarget)
-    local TargetPlayer = game.Workspace:FindFirstChild(TargetUser)
     if TargetPlayer and TargetPlayer:IsA("Model") and TargetPlayer:FindFirstChild("HumanoidRootPart") then
         local targetHumanoid = TargetPlayer:FindFirstChild("HumanoidRootPart")
         local args = {
@@ -66,9 +60,15 @@ local function Assassinate()
     end
 end
 
+local function StartALT()
+    print("Different gamemode")
+end
+
 local function onVisibilityChanged()
     if TargetGUI.Visible then
-        Assassinate()
+        Start()
+    else
+        StartALT()
     end
 end
 
