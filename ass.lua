@@ -37,6 +37,8 @@ local function Start()
     DestroyMap()
     BreakVelo()
 
+    repeat wait() until #Players.LocalPlayer.Backpack:GetChildren() >= 1
+
     local targetUser = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target").TargetText.Text
     local targetPlayer = game.Workspace:FindFirstChild(targetUser)
 
@@ -48,9 +50,6 @@ local function Start()
         end
     end
     BreakVelo()
-
-    local Knife = Players.LocalPlayer:FindFirstChildOfClass("Backpack").Knife
-    Knife.Parent = Players.LocalPlayer.Character
 
     if targetPlayer and targetPlayer:IsA("Model") and targetPlayer:FindFirstChild("HumanoidRootPart") then
         local targetHumanoid = targetPlayer:FindFirstChild("HumanoidRootPart")
