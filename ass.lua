@@ -57,7 +57,7 @@ local function Kill(targetPlayer)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            localRoot.CFrame = CFrame.new(targetRoot.Position - Vector3.new(0, 2, 1))
+            localRoot.CFrame = CFrame.new(targetRoot.Position - Vector3.new(0, 3, 4))
         end
 
         BreakVelo()
