@@ -53,28 +53,23 @@ local function Assassinate()
 
     print("111")
 
-    local Knife = Players.LocalPlayer:FindFirstChildOfClass("Backpack").Knife
-    Knife.Parent = Players.LocalPlayer.Character
-
     local TargetUser = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target").TargetText.Text
     local CurTarget = TargetUser
 
-    while CurTarget == TargetUser do
-        GotoTarget(CurTarget)
-        print("222")
-        local TargetPlayer = game.Workspace:FindFirstChild(TargetUser)
-        if TargetPlayer and TargetPlayer:IsA("Model") and TargetPlayer:FindFirstChild("HumanoidRootPart") then
-            local targetHumanoid = TargetPlayer:FindFirstChild("HumanoidRootPart")
-            local args = {
-                [1] = targetHumanoid.Position,
-                [2] = 0,
-                [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-            }
-            print(targetHumanoid.Position)
-            ReplicatedStorage.Remotes:FindFirstChild("ThrowKnife"):FireServer(unpack(args))
-        end
-        TargetUser = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target").TargetText.Text
+    GotoTarget(CurTarget)
+    print("222")
+    local TargetPlayer = game.Workspace:FindFirstChild(TargetUser)
+    if TargetPlayer and TargetPlayer:IsA("Model") and TargetPlayer:FindFirstChild("HumanoidRootPart") then
+        local targetHumanoid = TargetPlayer:FindFirstChild("HumanoidRootPart")
+        local args = {
+            [1] = targetHumanoid.Position,
+            [2] = 0,
+            [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+        }
+        print(targetHumanoid.Position)
+        ReplicatedStorage.Remotes:FindFirstChild("ThrowKnife"):FireServer(unpack(args))
     end
+    TargetUser = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target").TargetText.Text
 end
 
 local function onVisibilityChanged()
