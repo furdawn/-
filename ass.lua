@@ -1,5 +1,3 @@
-print("alkternart")
-
 local Players = game:GetService("Players")
 local Lighting = game:GetService("Lighting")
 local Terrain = game.Workspace.Terrain
