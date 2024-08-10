@@ -1,4 +1,4 @@
-print("6564562643577i8")
+print("4999000")
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TweenService = game:GetService("TweenService")
@@ -30,6 +30,27 @@ local function DestroyMap()
     end
 end
 
+local function GotoTarget(gotoUser)
+    local TargetPlayer = game.Workspace:FindFirstChild(gotoUser)
+    if TargetPlayer and TargetPlayer:IsA("Model") and TargetPlayer:FindFirstChild("HumanoidRootPart") then
+        local localHumanoid = Players.LocalPlayer.Character.HumanoidRootPart
+        local targetHumanoid = TargetPlayer:FindFirstChild("HumanoidRootPart")
+
+        if localHumanoid and targetHumanoid then
+            local tweenInfo = TweenInfo.new(0.15, Enum.EasingStyle.Linear)
+            local tween = TweenService:Create(localHumanoid, tweenInfo, {Position = targetHumanoid.Position})
+            tween:Play()
+        end
+    end
+end
+
+local function CheckTarget(currentUser)
+    if TargetGUI then
+        return TargetGUI.TargetText.Text ~= currentUser
+    end
+    return false
+end
+
 local function Assassinate()
     game.Workspace.Gravity = 0
     DestroyMap()
@@ -42,33 +63,16 @@ local function Assassinate()
 
     local targetGui = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
     local targetUser = targetGui.TargetText.Text
-    local targetPlr = Players:FindFirstChild(targetUser)
 
-    local function GotoTarget(gotoUser)
-        local targetPlayer = workspace:FindFirstChild(gotoUser)
-        if targetPlayer then
-            local tween = TweenService:Create(Players.LocalPlayer.Character.HumanoidRootPart.CFrame, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetPlayer.KnifeHandle.CFrame + Vector3.new(-2, -2, 0)})
-            tween:Play()
-        else
-            print("Player not found.")
-        end
-    end
+    while not CheckTarget(targetUser) and TargetGUI.Visible do
+        GotoTarget(targetUser)
+        task.wait(0.15)
+        local TargetPlayer = game.Workspace:FindFirstChild(targetUser)
+        if TargetPlayer and TargetPlayer:IsA("Model") and TargetPlayer:FindFirstChild("HumanoidRootPart") then
+            local targetHumanoid = TargetPlayer:FindFirstChild("HumanoidRootPart")
 
-    local function checkTarget(currentUser)
-        if targetGui then
-            return targetGui.TargetText.Text ~= currentUser
-        end
-        return false
-    end
-
-    if targetPlr then
-        print("Passed")
-        while not checkTarget(targetUser) and TargetGUI.Visible do
-            local targetPlayer = workspace:FindFirstChild(targetUser)
-            GotoTarget(targetUser)
-            task.wait(0.15)
             local args = {
-                [1] = targetPlayer.KnifeHandle.CFrame,
+                [1] = targetHumanoid.Position,
                 [2] = 0,
                 [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
             }
