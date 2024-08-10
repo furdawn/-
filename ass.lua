@@ -1,9 +1,8 @@
 print("alkternart")
 
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
 local Lighting = game:GetService("Lighting")
 local Terrain = game.Workspace.Terrain
-local Players = game:GetService("Players")
 
 local targetGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
 
@@ -15,6 +14,10 @@ Terrain.WaterTransparency = 0
 Lighting.Brightness = 0
 Lighting.GlobalShadows = false
 settings().Rendering.QualityLevel = 1
+
+local function ServerHop()
+    print("Yuh")
+end
 
 local function DestroyMap()
     local map = game.Workspace:FindFirstChild("GameMap")
@@ -33,29 +36,49 @@ local function BreakVelo()
     end
 end
 
+local function Hitbox()
+    local function Expand(Char)
+        local humanoidRootPart = Char:FindFirstChild("HumanoidRootPart")
+        if humanoidRootPart then
+            humanoidRootPart.Size = Vector3.new(10, 5, 10)
+        end
+    end
+
+    local LocalPLR = Players.LocalPlayer and Players.LocalPlayer.Character
+
+    for _, v in ipairs(game.Workspace:GetChildren()) do
+        if v:IsA("Model") and v:FindFirstChild("HumanoidRootPart") and v ~= LocalPLR then
+            Expand(v)
+        end
+    end
+end
+
 local function Kill(targetPlayer)
     if targetPlayer and targetPlayer:IsA("Model") and targetPlayer:FindFirstChild("HumanoidRootPart") then
         local localRoot = Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            localRoot.CFrame = CFrame.new(targetRoot.Position - Vector3.new(0, 3, 2))
+            localRoot.CFrame = CFrame.new(targetRoot.Position - Vector3.new(0, 2, 1))
         end
 
         BreakVelo()
 
-        local args = {
-            [1] = targetRoot.Position,
-            [2] = 0,
-            [3] = CFrame.new()
-        }
-        ReplicatedStorage.Remotes:FindFirstChild("ThrowKnife"):FireServer(unpack(args))
+        local knife = Players.LocalPlayer.Backpack:FindFirstChild("knife")
+        if knife then
+            knife.Parent = Players.LocalPlayer
+            knife:Activate()
+        else
+            knife:Activate()
+        end
     end
 end
 
 local function Start()
+    Players.LocalPlayer.Character.Animate.Disabled = true
     DestroyMap()
     BreakVelo()
+    Hitbox()
 
     while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
         wait()
@@ -63,7 +86,6 @@ local function Start()
 
     local previousTarget = targetGUI.TargetText.Text
     local targetPlayer = game.Workspace:FindFirstChild(previousTarget)
-
 
     while targetGUI.Visible do
         local currentTarget = targetGUI.TargetText.Text
