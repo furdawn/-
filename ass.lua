@@ -28,11 +28,6 @@ local function DestroyMap()
     end
 end
 
-function getRoot(targetChar)
-    local rootPart = targetChar:FindFirstChild('HumanoidRootPart') or targetChar:FindFirstChild('Torso') or targetChar:FindFirstChild('UpperTorso') or targetChar:FindFirstChild('LowerTorso') or targetChar:FindFirstChild('Head')
-    return rootPart
-end
-
 local function Assassinate()
     game.Workspace.Gravity = 0
     DestroyMap()
@@ -48,12 +43,11 @@ local function Assassinate()
     local targetPlr = Players:FindFirstChild(targetUser)
 
     local function GotoTarget(gotoUser)
-        local femboyRoot = getRoot(Players.LocalPlayer.Character)
+        local femboyRoot = Players.LocalPlayer
         local targetPlayer = Players:FindFirstChild(gotoUser)
 
         if targetPlayer then
-            local targetRoot = getRoot(targetPlayer.Character)
-            local tween = TweenService:Create(femboyRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetRoot.CFrame + Vector3.new(-2, -2, 0)})
+            local tween = TweenService:Create(femboyRoot.CFrame, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetPlayer.CFrame + Vector3.new(-2, -2, 0)})
             tween:Play()
         else
             print("Player not found.")
@@ -74,7 +68,7 @@ local function Assassinate()
             task.wait(0.1)
         end
         local args = {
-            [1] = getRoot(targetUser.Character),
+            [1] = targetUser.Position,
             [2] = 0,
             [3] = CFrame.new(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1)
         }
