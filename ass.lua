@@ -16,20 +16,6 @@ Lighting.Brightness = 0
 Lighting.GlobalShadows = false
 settings().Rendering.QualityLevel = "Level01"
 
-local function DestroyMap()
-    Players.LocalPlayer.Character.Animate.Disabled = true
-    local Map = game.Workspace:FindFirstChild("GameMap")
-    if Map then
-        for _, v in ipairs(Map:GetDescendants()) do
-            if v and v:IsA("BasePart") then
-                pcall(function()
-                    v:Destroy()
-                end)
-            end
-        end
-    end
-end
-
 local function GotoTarget(gotoUser)
     local TargetPlayer = game.Workspace:FindFirstChild(gotoUser)
     if TargetPlayer and TargetPlayer:IsA("Model") and TargetPlayer:FindFirstChild("HumanoidRootPart") then
@@ -37,7 +23,7 @@ local function GotoTarget(gotoUser)
         local targetHumanoid = TargetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localHumanoid and targetHumanoid then
-            local tweenInfo = TweenInfo.new(0.15, Enum.EasingStyle.Linear)
+            local tweenInfo = TweenInfo.new(0.3, Enum.EasingStyle.Linear)
             local tween = TweenService:Create(localHumanoid, tweenInfo, {Position = targetHumanoid.Position})
             tween:Play()
         end
@@ -53,16 +39,16 @@ end
 
 local function Assassinate()
     game.Workspace.Gravity = 0
-    DestroyMap()
 
     while #Players.LocalPlayer:WaitForChild("Backpack"):GetChildren() == 0 do
         task.wait()
     end
 
-    game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SheathKnife"):FireServer("off")
-
     local targetGui = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
     local targetUser = targetGui.TargetText.Text
+
+    task.wait(1)
+    game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("SheathKnife"):FireServer("off")
 
     while not CheckTarget(targetUser) and TargetGUI.Visible do
         GotoTarget(targetUser)
