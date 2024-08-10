@@ -6,7 +6,7 @@ local Lighting = game:GetService("Lighting")
 local Terrain = game.Workspace.Terrain
 local Players = game:GetService("Players")
 
-local TargetGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target").Visible
+local TargetGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
 
 Terrain.WaterWaveSize = 0
 Terrain.WaterWaveSpeed = 0
