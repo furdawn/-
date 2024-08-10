@@ -39,8 +39,7 @@ local function GotoTarget(gotoUser)
         local localHumanoid = Players.LocalPlayer.Character.HumanoidRootPart
         local targetHumanoid = TargetPlayer:FindFirstChild("HumanoidRootPart")
         if localHumanoid and targetHumanoid then
-            print("a")
-            --localHumanoid.CFrame = targetHumanoid.CFrame * CFrame.new(0, -5, -5)
+            localHumanoid.CFrame = targetHumanoid.CFrame * CFrame.new(0, -5, -5)
         end
     end
     BreakVelo()
@@ -51,13 +50,10 @@ local function Assassinate()
     DestroyMap()
     BreakVelo()
 
-    print("111")
-
     local TargetUser = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target").TargetText.Text
     local CurTarget = TargetUser
 
     GotoTarget(CurTarget)
-    print("222")
     local TargetPlayer = game.Workspace:FindFirstChild(TargetUser)
     if TargetPlayer and TargetPlayer:IsA("Model") and TargetPlayer:FindFirstChild("HumanoidRootPart") then
         local targetHumanoid = TargetPlayer:FindFirstChild("HumanoidRootPart")
