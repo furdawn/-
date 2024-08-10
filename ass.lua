@@ -37,7 +37,9 @@ local function Start()
     DestroyMap()
     BreakVelo()
 
-    repeat wait() until #Players.LocalPlayer.Backpack:GetChildren() >= 1
+    while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
+        wait()
+    end
 
     local targetUser = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target").TargetText.Text
     local targetPlayer = game.Workspace:FindFirstChild(targetUser)
@@ -49,6 +51,7 @@ local function Start()
             localHumanoid.CFrame = CFrame.new(targetHumanoid.Position - Vector3.new(0, 3, 2))
         end
     end
+
     BreakVelo()
 
     if targetPlayer and targetPlayer:IsA("Model") and targetPlayer:FindFirstChild("HumanoidRootPart") then
