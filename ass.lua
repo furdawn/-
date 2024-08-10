@@ -44,10 +44,7 @@ local function Start()
         local localHumanoid = Players.LocalPlayer.Character.HumanoidRootPart
         local targetHumanoid = targetPlayer:FindFirstChild("HumanoidRootPart")
         if localHumanoid and targetHumanoid then
-            local targetCFrame = targetHumanoid.CFrame
-            local newPOS = targetCFrame.Position + targetCFrame.LookVector * -2
-
-            localHumanoid.CFrame = CFrame.new(Vector3.new(newPOS.X, newPOS.Y - 3, newPOS.Z), targetCFrame.Position)
+            localHumanoid.CFrame = CFrame.new(Vector3.new(targetHumanoid.CFrame.Position.X, targetHumanoid.CFrame.Position.Y - 3, targetHumanoid.CFrame.Position.Z - 2), targetHumanoid.CFrame.Position)
         end
     end
     BreakVelo()
