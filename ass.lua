@@ -23,9 +23,9 @@ local function GotoTarget(gotoUser)
         local targetHumanoid = TargetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localHumanoid and targetHumanoid then
-            local offset = CFrame.new(0, -3, -2) * CFrame.Angles(0, math.rad(-90), 0)
+            local offset = CFrame.new(0, -4, -5) * CFrame.Angles(0, math.rad(-90), 0)
             local targetCFrame = targetHumanoid.CFrame * offset
-            local tween = TweenService:Create(localHumanoid, TweenInfo.new(0.3, Enum.EasingStyle.Linear), {CFrame = targetCFrame})
+            local tween = TweenService:Create(localHumanoid, TweenInfo.new(0.15, Enum.EasingStyle.Linear), {CFrame = targetCFrame})
             tween:Play()
         end
     end
@@ -40,6 +40,7 @@ end
 
 local function Assassinate()
     game.Workspace.Gravity = 0
+    Players.LocalPlayer.Character.Animate.Disabled = true
 
     while #Players.LocalPlayer:WaitForChild("Backpack"):GetChildren() == 0 do
         task.wait()
@@ -56,7 +57,6 @@ local function Assassinate()
         local TargetPlayer = game.Workspace:FindFirstChild(targetUser)
         if TargetPlayer and TargetPlayer:IsA("Model") and TargetPlayer:FindFirstChild("HumanoidRootPart") then
             local targetHumanoid = TargetPlayer:FindFirstChild("HumanoidRootPart")
-
             local args = {
                 [1] = targetHumanoid.Position,
                 [2] = 0,
