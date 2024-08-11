@@ -73,7 +73,6 @@ local function Hitbox()
     end
 end
 
-local lastFireTime = 0
 local function Kill(targetPlayer)
     if targetPlayer and targetPlayer:IsA("Model") and targetPlayer:FindFirstChild("HumanoidRootPart") then
         local localRoot = Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
@@ -82,10 +81,7 @@ local function Kill(targetPlayer)
         if localRoot and targetRoot then
             local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-1.5, 0, 1) + Vector3.new(0, -3, 0))
             localRoot.CFrame = targetRoot.CFrame + offset
-            if tick() - lastFireTime >= 0.8 then
-                Players.LocalPlayer.PlayerScripts:FindFirstChild("localknifehandler").HitCheck:Fire(targetPlayer)
-                lastFireTime = tick()
-            end
+            Players.LocalPlayer.PlayerScripts:FindFirstChild("localknifehandler").HitCheck:Fire(targetPlayer)
         end
     end
 end
@@ -103,25 +99,17 @@ local function Start()
     local previousTarget = targetGUI.TargetText.Text
     local targetPlayer = game.Workspace:FindFirstChild(previousTarget)
 
-    while targetGUI.Visible do
-        local currentTarget = targetGUI.TargetText.Text
-        if currentTarget ~= previousTarget then
-            targetPlayer = game.Workspace:FindFirstChild(currentTarget)
-            previousTarget = currentTarget
-
-            if not targetPlayer then
-                break
-            end
-        end
-
-        if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
-            Kill(targetPlayer)
-            task.wait(0.25)
-       else
-            break
-        end
-        task.wait()
+    local currentTarget = targetGUI.TargetText.Text
+    if currentTarget ~= previousTarget then
+        targetPlayer = game.Workspace:FindFirstChild(currentTarget)
+        previousTarget = currentTarget
     end
+
+    if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
+        Kill(targetPlayer)
+        task.wait(0.25)
+    end
+    task.wait()
 end
 
 local function onVisibilityChanged()
