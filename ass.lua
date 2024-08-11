@@ -107,6 +107,7 @@ local function Start()
 
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
             Kill(targetPlayer, currentTarget)
+            task.wait(0.1)
         else
             break
         end
