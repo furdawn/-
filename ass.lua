@@ -39,8 +39,8 @@ local function Hitbox()
         local humanoidRootPart = Char:FindFirstChild("HumanoidRootPart")
         if humanoidRootPart then
             humanoidRootPart.Size = Vector3.new(10, 5, 10)
-            humanoidRootPart.Transparency = 0.8
-            humanoidRootPart.BrickColor = BrickColor.new("Really blue")
+            humanoidRootPart.BrickColor = BrickColor.new("Pink")
+            humanoidRootPart.Transparency = 0.95
             humanoidRootPart.CanCollide = false
         end
     end
@@ -68,9 +68,9 @@ local function Kill(targetPlayer)
         local knife = Players.LocalPlayer.Backpack:FindFirstChild("Knife")
         if knife then
             knife.Parent = Players.LocalPlayer.Character
-            Players.LocalPlayer.Character:FindFirstChild("Knife"):Activate()
+            Players.LocalPlayer.Character.Knife:Activate()
         else
-            Players.LocalPlayer.Character:FindFirstChild("Knife"):Activate()
+            Players.LocalPlayer.Character.Knife:Activate()
         end
     end
 end
