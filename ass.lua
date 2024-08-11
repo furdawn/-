@@ -1,5 +1,6 @@
+getgenv().Autofarm = nil
+
 local TweenService = game:GetService("TweenService")
-local VirtualUser = game:GetService("VirtualUser")
 local Players = game:GetService("Players")
 local Lighting = game:GetService("Lighting")
 local Terrain = game.Workspace.Terrain
@@ -75,15 +76,12 @@ local function Kill(targetPlayer, currentTarget)
             tween:Play()
         end
 
-        VirtualUser:CaptureController()
-        VirtualUser:ClickButton1(Vector2.new())
-        task.wait(0.1)
-        VirtualUser:CaptureController()
-        VirtualUser:ClickButton1(Vector2.new())
+        Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(targetPlayer)
     end
 end
 
 local function Start()
+    getgenv().Autofarm = true
     Hitbox()
     BreakVelo()
     Players.LocalPlayer.Character.Animate.Disabled = true
@@ -92,9 +90,6 @@ local function Start()
     while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
         task.wait()
     end
-
-    local knife = Players.LocalPlayer.Backpack.Knife
-    knife.Parent = Players.LocalPlayer.Character
 
     local previousTarget = targetGUI.TargetText.Text
     local targetPlayer = game.Workspace:FindFirstChild(previousTarget)
@@ -112,12 +107,12 @@ local function Start()
 
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
             Kill(targetPlayer, currentTarget)
-            task.wait(0.1)
         else
             break
         end
         task.wait()
     end
+    getgenv().Autofarm = false
 end
 
 local function onVisibilityChanged()
