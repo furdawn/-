@@ -33,7 +33,7 @@ end
 
 local function SetupPLR()
     Players.LocalPlayer.Character.Animate.Disabled = true
-    for i,v in pairs(speaker.Character:GetChildren()) do
+    for i,v in pairs(Players.LocalPlayer.Character:GetChildren()) do
         if v:IsA("BasePart") and
             v.Name == "Right Leg" or
             v.Name == "Left Leg" then
@@ -81,7 +81,7 @@ local function Kill(targetPlayer, currentTarget)
         if localRoot and targetRoot then
             local targetCFrame = targetRoot.CFrame + targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-2, -2.5, 1))
             localRoot.CFrame = targetCFrame
-            Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(targetPlayer)
+            Players.LocalPlayer.PlayerScripts:FindFirstChild("localknifehandler").HitCheck:Fire(targetPlayer)
         end
     end
 end
