@@ -69,7 +69,7 @@ local function DestroyMap()
 end
 
 local function SetupAtlas()
-    for i,v in pairs(Players.LocalPlayer.Character:GetChildren()) do
+    for _, v in pairs(Players.LocalPlayer.Character:GetChildren()) do
         if v:IsA("BasePart") and
             v.Name == "Right Leg" or
             v.Name == "Left Leg" then
@@ -117,7 +117,7 @@ local function Start()
 
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
             Kill(targetPlayer)
-            task.wait(0.25)
+            task.wait(0.1)
        else
             break
         end
@@ -181,15 +181,15 @@ altGUI:GetPropertyChangedSignal("Visible"):Connect(altVisible)
 task.spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
         if Players.LocalPlayer.Character and targetGUI.Visible == true and getgenv().Autofarm == true then
-            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace.targetPlayer.Head.Position) <= 8 then
-                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace.targetPlayer)
+            if Players.LocalPlayer:DistanceFromCharacter(targetPlayer.Head.Position) <= 8 then
+                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace.targetPlayer.Name)
                 task.wait(0.1)
             else
                 task.wait()
             end
         elseif Players.LocalPlayer.Character and altGUI.Visible == true and getgenv().Altfarm == true then
-            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace.targetPlayer.Head.Position) <= 8 then
-                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace.targetPlayer)
+            if Players.LocalPlayer:DistanceFromCharacter(targetPlayer.Head.Position) <= 8 then
+                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace.targetPlayer.Name)
                 task.wait(0.1)
             else
                 task.wait()
