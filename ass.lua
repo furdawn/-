@@ -55,7 +55,9 @@ local function Hitbox()
         if character and player.Name ~= Players.LocalPlayer.Name then
             local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
             if humanoidRootPart then
-                humanoidRootPart.Size = Vector3.new(15, 15, 15)
+                humanoidRootPart.Size = Vector3.new(12, 12, 12)
+                humanoidRootPart.Transparency = 0.90
+                humanoidRootPart.BrickColor = BrickColor.New("Pink")
             end
         end
     end
@@ -65,10 +67,9 @@ local function Kill(targetPlayer, currentTarget)
     if targetPlayer and targetPlayer:IsA("Model") and targetPlayer:FindFirstChild("HumanoidRootPart") then
         local localRoot = Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
-        local rdmstring
 
         if localRoot and targetRoot then
-            local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(2, 0, 2)) + Vector3.new(0, -5, 0)
+            local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(3, 0, 2)) + Vector3.new(0, -5, 0)
             local targetCFrame = targetRoot.CFrame + offset
             local tween = TweenService:Create(localRoot, TweenInfo.new(0.1, Enum.EasingStyle.Linear), {CFrame = targetCFrame})
             tween:Play()
@@ -92,7 +93,7 @@ local function Start()
         task.wait()
     end
 
-    local knife = Players.LocalPlayer.Backpack.knife
+    local knife = Players.LocalPlayer.Backpack.Knife
     knife.Parent = Players.LocalPlayer.Character
 
     local previousTarget = targetGUI.TargetText.Text
