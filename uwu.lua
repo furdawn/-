@@ -65,7 +65,7 @@ local function Hitbox()
         if character and player.Name ~= Players.LocalPlayer.Name then
             local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
             if humanoidRootPart then
-                humanoidRootPart.Size = Vector3.new(8, 8, 8)
+                humanoidRootPart.Size = Vector3.new(6, 6, 6)
                 humanoidRootPart.Transparency = 0.90
                 humanoidRootPart.BrickColor = BrickColor.New("Pink")
             end
@@ -79,7 +79,7 @@ local function Kill(targetPlayer, currentTarget)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            local targetCFrame = targetRoot.CFrame + targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-2, -2.5, 1))
+            local targetCFrame = targetRoot.CFrame + targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-2, -1.5, 2))
             localRoot.CFrame = targetCFrame
             Players.LocalPlayer.PlayerScripts:FindFirstChild("localknifehandler").HitCheck:Fire(targetPlayer)
         end
@@ -112,7 +112,7 @@ local function Start()
 
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
             Kill(targetPlayer, currentTarget)
-            task.wait(0.1)
+            task.wait(0.25)
         else
             break
         end
