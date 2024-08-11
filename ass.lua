@@ -12,6 +12,19 @@ Terrain.WaterTransparency = 0
 Lighting.Brightness = 0
 Lighting.GlobalShadows = false
 settings().Rendering.QualityLevel = 1
+for i,v in pairs(game:GetDescendants()) do
+    if v:IsA("BasePart") then
+        v.Material = "Plastic"
+        v.Reflectance = 0
+    elseif v:IsA("Decal") then
+        v.Transparency = 1
+    elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+        v.Lifetime = NumberRange.new(0)
+    elseif v:IsA("Explosion") then
+        v.BlastPressure = 1
+        v.BlastRadius = 1
+    end
+end
 
 local function ServerHop()
     -- Make this teleport when the server size is less than <= 3
