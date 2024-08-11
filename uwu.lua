@@ -79,8 +79,8 @@ local function Kill(targetPlayer, currentTarget)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            local targetCFrame = targetRoot.CFrame + targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-2.5, 0, 2))
-            localRoot.CFrame = targetCFrame
+            local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-2.5, 0, 3) + Vector3.new(0, -3, 0))
+            localRoot.CFrame = targetRoot.CFrame + offset
             task.wait(0.15)
             Players.LocalPlayer.PlayerScripts:FindFirstChild("localknifehandler").HitCheck:Fire(targetPlayer)
         end
@@ -113,6 +113,7 @@ local function Start()
 
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
             Kill(targetPlayer, currentTarget)
+            task.wait(0.25)
        else
             break
         end
