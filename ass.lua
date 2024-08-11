@@ -40,11 +40,9 @@ local function Kill(targetPlayer)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            local offset = CFrame.new(0, 0, -4) * CFrame.Angles(math.pi * 0.5, 0, 0)
-            localRoot.CFrame = targetRoot.CFrame * offset + Vector3.new(0, -3, 0)
+            local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(0, 0, 4)) + Vector3.new(0, -3, 0)
+            localRoot.CFrame = targetRoot.CFrame + offset
         end
-
-        BreakVelo()
 
         local args = {
             [1] = targetRoot.Position,
@@ -57,6 +55,14 @@ end
 
 local function Start()
     Players.LocalPlayer.Character.Animate.Enabled = false
+    Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Players.LocalPlayer.Character.HumanoidRootPart.RootPart.CFrame * CFrame.Angles(math.pi * 0.5, 0, 0)
+    for _, v in pairs(Players.LocalPlayer.Character:GetChildren()) do
+        if v:IsA("BasePart") and
+            v.Name == "Right Leg" or
+            v.Name == "Left Leg" then
+            v:Destroy()
+        end
+    end
     DestroyMap()
     BreakVelo()
 
@@ -85,7 +91,7 @@ local function Start()
 
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
             Kill(targetPlayer)
-            task.wait(1)
+            task.wait(0.25)
         else
             break
         end
