@@ -65,7 +65,7 @@ local function Hitbox()
         if character and player.Name ~= Players.LocalPlayer.Name then
             local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
             if humanoidRootPart then
-                humanoidRootPart.Size = Vector3.new(10, 10, 10)
+                humanoidRootPart.Size = Vector3.new(5, 5, 5)
                 humanoidRootPart.Transparency = 0.85
                 humanoidRootPart.BrickColor = BrickColor.New("Pink")
             end
@@ -73,7 +73,8 @@ local function Hitbox()
     end
 end
 
-local function Kill(targetPlayer, currentTarget)
+local lastFireTime = 0
+local function Kill(targetPlayer)
     if targetPlayer and targetPlayer:IsA("Model") and targetPlayer:FindFirstChild("HumanoidRootPart") then
         local localRoot = Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
@@ -81,7 +82,10 @@ local function Kill(targetPlayer, currentTarget)
         if localRoot and targetRoot then
             local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-1.5, 0, 1) + Vector3.new(0, -3, 0))
             localRoot.CFrame = targetRoot.CFrame + offset
-            Players.LocalPlayer.PlayerScripts:FindFirstChild("localknifehandler").HitCheck:Fire(targetPlayer)
+            if tick() - lastFireTime >= 0.8 then
+                Players.LocalPlayer.PlayerScripts:FindFirstChild("localknifehandler").HitCheck:Fire(targetPlayer)
+                lastFireTime = tick()
+            end
         end
     end
 end
@@ -111,7 +115,7 @@ local function Start()
         end
 
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
-            Kill(targetPlayer, currentTarget)
+            Kill(targetPlayer)
             task.wait(0.25)
        else
             break
