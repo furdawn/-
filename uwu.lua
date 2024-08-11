@@ -31,6 +31,17 @@ local function ServerHop()
     -- Make this teleport when the server size is less than <= 3
 end
 
+local function SetupPLR()
+    Players.LocalPlayer.Character.Animate.Disabled = true
+    for i,v in pairs(speaker.Character:GetChildren()) do
+        if v:IsA("BasePart") and
+            v.Name == "Right Leg" or
+            v.Name == "Left Leg" then
+            v:Destroy()
+        end
+    end
+end
+
 local function DestroyMap()
     local map = game.Workspace:FindFirstChild("GameMap")
     for _, v in pairs(map:GetDescendants()) do
@@ -54,7 +65,7 @@ local function Hitbox()
         if character and player.Name ~= Players.LocalPlayer.Name then
             local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
             if humanoidRootPart then
-                humanoidRootPart.Size = Vector3.new(12, 12, 12)
+                humanoidRootPart.Size = Vector3.new(8, 8, 8)
                 humanoidRootPart.Transparency = 0.90
                 humanoidRootPart.BrickColor = BrickColor.New("Pink")
             end
@@ -68,7 +79,7 @@ local function Kill(targetPlayer, currentTarget)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            local targetCFrame = targetRoot.CFrame + targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-2, -5, 1))
+            local targetCFrame = targetRoot.CFrame + targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-2, -2.5, 1))
             localRoot.CFrame = targetCFrame
             Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(targetPlayer)
         end
@@ -78,7 +89,7 @@ end
 local function Start()
     Hitbox()
     BreakVelo()
-    Players.LocalPlayer.Character.Animate.Disabled = true
+    SetupPLR()
     DestroyMap()
 
     while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
