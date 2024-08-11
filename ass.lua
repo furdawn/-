@@ -71,8 +71,12 @@ local function Kill(targetPlayer, currentTarget)
 
         if localRoot and targetRoot then
             local targetCFrame = targetRoot.CFrame + targetRoot.CFrame:vectorToWorldSpace(Vector3.new(3, 0, 2)) + Vector3.new(0, -4, 0)
-            local tween = TweenService:Create(localRoot, TweenInfo.new(0.15, Enum.EasingStyle.Linear), {CFrame = targetCFrame})
-            tween:Play()
+            local tween = TweenService:Create(localRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetCFrame})
+
+            tween.Completed:Connect(function()
+                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(targetPlayer)
+            end)
+            tween:Play()        
         end
     end
 end
@@ -104,7 +108,7 @@ local function Start()
 
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
             Kill(targetPlayer, currentTarget)
-            task.wait(3)
+            task.wait(0.1)
         else
             break
         end
