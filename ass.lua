@@ -1,5 +1,3 @@
-getgenv().Meowza = true
-
 local TweenService = game:GetService("TweenService")
 local Players = game:GetService("Players")
 local Lighting = game:GetService("Lighting")
@@ -71,18 +69,14 @@ local function Kill(targetPlayer, currentTarget)
 
         if localRoot and targetRoot then
             local targetCFrame = targetRoot.CFrame + targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-1.5, 0, 1)) + Vector3.new(0, -4, 0)
-            local tween = TweenService:Create(localRoot, TweenInfo.new(0.25, Enum.EasingStyle.Linear), {CFrame = targetCFrame})
-
-            tween.Completed:Connect(function()
-                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(targetPlayer)
-            end)
+            local tween = TweenService:Create(localRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetCFrame})
             tween:Play()
+            tween.Completed:Wait()
         end
     end
 end
 
 local function Start()
-    getgenv().Meowza = true
     Hitbox()
     BreakVelo()
     Players.LocalPlayer.Character.Animate.Disabled = true
@@ -95,7 +89,7 @@ local function Start()
     local previousTarget = targetGUI.TargetText.Text
     local targetPlayer = game.Workspace:FindFirstChild(previousTarget)
 
-    while targetGUI.Visible and getgenv().Meowza do
+    while targetGUI.Visible do
         local currentTarget = targetGUI.TargetText.Text
         if currentTarget ~= previousTarget then
             targetPlayer = game.Workspace:FindFirstChild(currentTarget)
@@ -114,7 +108,6 @@ local function Start()
         end
         task.wait()
     end
-    getgenv().Meowza = false
 end
 
 local function onVisibilityChanged()
