@@ -14,7 +14,7 @@ Lighting.GlobalShadows = false
 settings().Rendering.QualityLevel = 1
 
 local function ServerHop()
-    print("Yuh")
+    -- Make this teleport when the server size is less than <= 3
 end
 
 local function DestroyMap()
@@ -46,7 +46,6 @@ local function Kill(targetPlayer)
 
         BreakVelo()
 
-        Players.LocalPlayer.Character.Knife.Handle.CFrame = targetRoot.CFrame
         local args = {
             [1] = targetRoot.Position,
             [2] = 0,
