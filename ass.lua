@@ -56,7 +56,7 @@ local function Hitbox()
         if character and player.Name ~= Players.LocalPlayer.Name then
             local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
             if humanoidRootPart then
-                humanoidRootPart.Size = Vector3.new(12, 12, 12)
+                humanoidRootPart.Size = Vector3.new(8, 8, 8)
                 humanoidRootPart.Transparency = 0.90
                 humanoidRootPart.BrickColor = BrickColor.New("Pink")
             end
@@ -70,13 +70,10 @@ local function Kill(targetPlayer, currentTarget)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(3, 0, 2)) + Vector3.new(0, -4, 0)
-            local targetCFrame = targetRoot.CFrame + offset
-            local tween = TweenService:Create(localRoot, TweenInfo.new(5, Enum.EasingStyle.Linear), {CFrame = targetCFrame})
+            local targetCFrame = targetRoot.CFrame + targetRoot.CFrame:vectorToWorldSpace(Vector3.new(3, 0, 2)) + Vector3.new(0, -4, 0)
+            local tween = TweenService:Create(localRoot, TweenInfo.new(0.15, Enum.EasingStyle.Linear), {CFrame = targetCFrame})
             tween:Play()
         end
-
-        Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(targetPlayer)
     end
 end
 
