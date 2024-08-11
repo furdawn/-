@@ -1,3 +1,5 @@
+-- Detect alt gamemodes, Should be easy by just teleporting to every player and stabbing them repeatedly until the match is over.
+
 getgenv().Autofarm = nil
 
 local TweenService = game:GetService("TweenService")
@@ -94,7 +96,7 @@ local function Start()
     local previousTarget = targetGUI.TargetText.Text
     local targetPlayer = game.Workspace:FindFirstChild(previousTarget)
 
-    while targetGUI.Visible do
+    while targetGUI.Visible and getgenv.Autofarm == true do
         local currentTarget = targetGUI.TargetText.Text
         if currentTarget ~= previousTarget then
             targetPlayer = game.Workspace:FindFirstChild(currentTarget)
