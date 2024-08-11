@@ -82,6 +82,7 @@ local function Kill(targetPlayer, currentTarget)
         for _, v in ipairs(game:GetService("SocialService"):GetChildren()) do
             if v:IsA("RemoteEvent") then
                 v:FireServer(unpack(args))
+                break
             end
         end
     end
