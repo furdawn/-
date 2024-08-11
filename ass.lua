@@ -40,7 +40,7 @@ local function Kill(targetPlayer)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            localRoot.RootPart.CFrame = localRoot.RootPart.CFrame * CFrame.Angles(math.pi * 0.5, 0, 0)
+            localRoot.CFrame = localRoot.CFrame * CFrame.Angles(math.pi * 0.5, 0, 0)
             local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(0, 0, 4)) + Vector3.new(0, -3, 0)
             localRoot.CFrame = targetRoot.CFrame + offset
         end
