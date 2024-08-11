@@ -4,6 +4,7 @@ local Terrain = game.Workspace.Terrain
 
 local targetGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
 
+game.Workspace.Gravity = 0
 Terrain.WaterWaveSize = 0
 Terrain.WaterWaveSpeed = 0
 Terrain.WaterReflectance = 0
@@ -30,7 +31,6 @@ local function ServerHop()
 end
 
 local function DestroyMap()
-    game.Workspace.Gravity = 0
     local map = game.Workspace:FindFirstChild("GameMap")
     for _, v in pairs(map:GetDescendants()) do
         if v:IsA("BasePart") then
@@ -68,6 +68,8 @@ local function Kill(targetPlayer, currentTarget)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
         local rdmstring
 
+        task.wait(0.1)
+
         if localRoot and targetRoot then
             local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(0, 0, 2.5)) + Vector3.new(0, -4, 0)
             localRoot.CFrame = targetRoot.CFrame + offset
@@ -91,12 +93,11 @@ end
 local function Start()
     Hitbox()
     BreakVelo()
-    game.Workspace.Gravity = 200
     Players.LocalPlayer.Character.Animate.Disabled = true
     DestroyMap()
 
     while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
-        wait()
+        task.wait()
     end
 
     local previousTarget = targetGUI.TargetText.Text
@@ -118,6 +119,7 @@ local function Start()
         else
             break
         end
+        task.wait()
     end
 end
 
