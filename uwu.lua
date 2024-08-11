@@ -31,7 +31,7 @@ local function ServerHop()
     -- Make this teleport when the server size is less than <= 3
 end
 
-local function SetupPLR()
+local function SetupAtlas()
     Players.LocalPlayer.Character.Animate.Disabled = true
     for i,v in pairs(Players.LocalPlayer.Character:GetChildren()) do
         if v:IsA("BasePart") and
@@ -89,7 +89,7 @@ end
 local function Start()
     Hitbox()
     BreakVelo()
-    SetupPLR()
+    SetupAtlas()
     DestroyMap()
 
     while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
