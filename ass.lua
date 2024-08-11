@@ -39,6 +39,9 @@ local function Hitbox()
         local humanoidRootPart = Char:FindFirstChild("HumanoidRootPart")
         if humanoidRootPart then
             humanoidRootPart.Size = Vector3.new(10, 5, 10)
+            humanoidRootPart.Transparency = 0.8
+            humanoidRootPart.BrickColor = BrickColor.new("Really blue")
+            humanoidRootPart.CanCollide = false
         end
     end
 
