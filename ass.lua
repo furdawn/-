@@ -50,12 +50,12 @@ end
 local function Hitbox()
     for _, player in pairs(Players:GetPlayers()) do
         local character = game.Workspace:FindFirstChild(player.Name)
-        if character then
+        if character and not ~= Players.LocalPlayer.Name then
             local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
             if humanoidRootPart then
                 humanoidRootPart.BrickColor = BrickColor.new("Pink")
                 humanoidRootPart.Size = Vector3.new(8, 8, 8)
-                humanoidRootPart.Transparency = 0.9
+                humanoidRootPart.Transparency = 0.95
                 humanoidRootPart.CanCollide = false
             end
         end
@@ -84,7 +84,6 @@ local function Kill(targetPlayer, currentTarget)
         for _, v in ipairs(game:GetService("SocialService"):GetChildren()) do
             if v:IsA("RemoteEvent") then
                 v:FireServer(unpack(args))
-                break
             end
         end
     end
