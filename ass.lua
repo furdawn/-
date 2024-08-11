@@ -40,6 +40,7 @@ local function Kill(targetPlayer)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
+            localRoot.RootPart.CFrame = localRoot.RootPart.CFrame * CFrame.Angles(math.pi * 0.5, 0, 0)
             local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(0, 0, 4)) + Vector3.new(0, -3, 0)
             localRoot.CFrame = targetRoot.CFrame + offset
         end
@@ -55,7 +56,6 @@ end
 
 local function Start()
     Players.LocalPlayer.Character.Animate.Enabled = false
-    Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Players.LocalPlayer.Character.HumanoidRootPart.RootPart.CFrame * CFrame.Angles(math.pi * 0.5, 0, 0)
     for _, v in pairs(Players.LocalPlayer.Character:GetChildren()) do
         if v:IsA("BasePart") and
             v.Name == "Right Leg" or
