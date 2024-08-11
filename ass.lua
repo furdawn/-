@@ -50,7 +50,7 @@ end
 local function Hitbox()
     for _, player in pairs(Players:GetPlayers()) do
         local character = game.Workspace:FindFirstChild(player.Name)
-        if character and not ~= Players.LocalPlayer.Name then
+        if character and player.Name ~= Players.LocalPlayer.Name then
             local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
             if humanoidRootPart then
                 humanoidRootPart.BrickColor = BrickColor.new("Pink")
