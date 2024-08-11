@@ -65,24 +65,29 @@ local function Kill(targetPlayer)
 
         BreakVelo()
 
-        local knife = Players.LocalPlayer.Backpack:FindFirstChild("Knife")
-        if knife then
-            knife.Parent = Players.LocalPlayer.Character
-            Players.LocalPlayer.Character.Knife:Activate()
-        else
-            Players.LocalPlayer.Character.Knife:Activate()
-        end
+        Players.LocalPlayer.Character.Knife.Handle.Positon = targetRoot.Position
+        local args = {
+            [1] = targetRoot.Position,
+            [2] = 0,
+            [3] = CFrame.new(0, 0, 0, 0, -1, 0, 0, 0, 1, -1, 0, 0)
+        }
+        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("ThrowKnife"):FireServer(unpack(args))
     end
 end
 
 local function Start()
-    Players.LocalPlayer.Character.Animate.Disabled = true
+    Players.LocalPlayer.Character.Animate.Enabled = false
     DestroyMap()
     BreakVelo()
     Hitbox()
 
     while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
         wait()
+    end
+
+    local knife = Players.LocalPlayer.Backpack:FindFirstChild("Knife")
+    if knife then
+        knife.Parent = Players.LocalPlayer.Character
     end
 
     local previousTarget = targetGUI.TargetText.Text
