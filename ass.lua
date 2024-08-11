@@ -96,7 +96,7 @@ local function Start()
     local previousTarget = targetGUI.TargetText.Text
     local targetPlayer = game.Workspace:FindFirstChild(previousTarget)
 
-    while targetGUI.Visible and getgenv.Autofarm == true do
+    while targetGUI.Visible and getgenv().Autofarm == true do
         local currentTarget = targetGUI.TargetText.Text
         if currentTarget ~= previousTarget then
             targetPlayer = game.Workspace:FindFirstChild(currentTarget)
