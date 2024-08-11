@@ -1,4 +1,5 @@
 local TweenService = game:GetService("TweenService")
+local VirtualUser = game:GetService("VirtualUser")
 local Players = game:GetService("Players")
 local Lighting = game:GetService("Lighting")
 local Terrain = game.Workspace.Terrain
@@ -54,7 +55,7 @@ local function Hitbox()
         if character and player.Name ~= Players.LocalPlayer.Name then
             local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
             if humanoidRootPart then
-                humanoidRootPart.Size = Vector3.new(8, 8, 8)
+                humanoidRootPart.Size = Vector3.new(15, 15, 15)
             end
         end
     end
@@ -67,23 +68,17 @@ local function Kill(targetPlayer, currentTarget)
         local rdmstring
 
         if localRoot and targetRoot then
-            local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(0, 0, 2)) + Vector3.new(0, -4, 0)
+            local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(2, 0, 2)) + Vector3.new(0, -5, 0)
             local targetCFrame = targetRoot.CFrame + offset
             local tween = TweenService:Create(localRoot, TweenInfo.new(0.1, Enum.EasingStyle.Linear), {CFrame = targetCFrame})
             tween:Play()
         end
 
-        local args = {
-            [1] = game:GetService("Players"):WaitForChild(currentTarget),
-            [2] = "357a2a31448848af77500551969ebec5351969",
-            [3] = 0,
-            [4] = "3135089fb9ba3c65cec03b2a8745f79fa8658f"
-        }
-        for _, v in ipairs(game:GetService("SocialService"):GetChildren()) do
-            if v:IsA("RemoteEvent") then
-                v:FireServer(unpack(args))
-            end
-        end
+        VirtualUser:CaptureController()
+        VirtualUser:ClickButton1(Vector2.new())
+        task.wait(0.1)
+        VirtualUser:CaptureController()
+        VirtualUser:ClickButton1(Vector2.new())
     end
 end
 
@@ -96,6 +91,9 @@ local function Start()
     while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
         task.wait()
     end
+
+    local knife = Players.LocalPlayer.Backpack.knife
+    knife.Parent = Players.LocalPlayer.Character
 
     local previousTarget = targetGUI.TargetText.Text
     local targetPlayer = game.Workspace:FindFirstChild(previousTarget)
@@ -113,6 +111,7 @@ local function Start()
 
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
             Kill(targetPlayer, currentTarget)
+            task.wait(0.1)
         else
             break
         end
