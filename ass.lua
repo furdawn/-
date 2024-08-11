@@ -4,7 +4,6 @@ local Terrain = game.Workspace.Terrain
 
 local targetGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
 
-game.Workspace.Gravity = 0
 Terrain.WaterWaveSize = 0
 Terrain.WaterWaveSpeed = 0
 Terrain.WaterReflectance = 0
@@ -31,6 +30,7 @@ local function ServerHop()
 end
 
 local function DestroyMap()
+    game.Workspace.Gravity = 0
     local map = game.Workspace:FindFirstChild("GameMap")
     for _, v in pairs(map:GetDescendants()) do
         if v:IsA("BasePart") then
@@ -45,7 +45,6 @@ local function BreakVelo()
             v.Velocity, v.RotVelocity = Vector3.zero, Vector3.zero
         end
     end
-    Players.LocalPlayer.Character.Animate.Disabled = true
 end
 
 local function Hitbox()
@@ -67,6 +66,7 @@ local function Kill(targetPlayer, currentTarget)
     if targetPlayer and targetPlayer:IsA("Model") and targetPlayer:FindFirstChild("HumanoidRootPart") then
         local localRoot = Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
+        local rdmstring
 
         if localRoot and targetRoot then
             local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(0, 0, 4)) + Vector3.new(0, -3, 0)
@@ -79,8 +79,6 @@ local function Kill(targetPlayer, currentTarget)
             [3] = 0,
             [4] = "3135089fb9ba3c65cec03b2a8745f79fa8658f"
         }
-
-        local rdmstring
         for _, v in ipairs(game:GetService("SocialService"):GetChildren()) do
             if v:IsA("RemoteEvent") then
                 rdmstring = v
@@ -94,17 +92,14 @@ local function Kill(targetPlayer, currentTarget)
 end
 
 local function Start()
+    game.Workspace.Gravity = 200
+    Players.LocalPlayer.Character.Animate.Disabled = true
     DestroyMap()
     BreakVelo()
     Hitbox()
 
     while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
         wait()
-    end
-
-    local knife = Players.LocalPlayer.Backpack:FindFirstChild("Knife")
-    if knife then
-        knife.Parent = Players.LocalPlayer.Character
     end
 
     local previousTarget = targetGUI.TargetText.Text
@@ -123,11 +118,10 @@ local function Start()
 
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
             Kill(targetPlayer, currentTarget)
-            task.wait(0.25)
+            task.wait(0.05)
         else
             break
         end
-        wait()
     end
 end
 
