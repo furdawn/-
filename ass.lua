@@ -1,7 +1,6 @@
 -- Detect alt gamemodes, Should be easy by just teleporting to every player and stabbing them repeatedly until the match is over.
 
-getgenv().Autofarm = nil
-
+getgenv().Autofarm
 local TweenService = game:GetService("TweenService")
 local Players = game:GetService("Players")
 local Lighting = game:GetService("Lighting")
