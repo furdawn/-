@@ -1,3 +1,4 @@
+local TweenService = game:GetService("TweenService")
 local Players = game:GetService("Players")
 local Lighting = game:GetService("Lighting")
 local Terrain = game.Workspace.Terrain
@@ -53,10 +54,7 @@ local function Hitbox()
         if character and player.Name ~= Players.LocalPlayer.Name then
             local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
             if humanoidRootPart then
-                humanoidRootPart.BrickColor = BrickColor.new("Pink")
                 humanoidRootPart.Size = Vector3.new(8, 8, 8)
-                humanoidRootPart.Transparency = 0.95
-                humanoidRootPart.CanCollide = false
             end
         end
     end
@@ -69,7 +67,7 @@ local function Kill(targetPlayer, currentTarget)
         local rdmstring
 
         if localRoot and targetRoot then
-            local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(0, 0, 2.5)) + Vector3.new(0, -4, 0)
+            local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(0, 0, 2)) + Vector3.new(0, -4, 0)
             local targetCFrame = targetRoot.CFrame + offset
             local tween = TweenService:Create(localRoot, TweenInfo.new(0.1, Enum.EasingStyle.Linear), {CFrame = targetCFrame})
             tween:Play()
