@@ -65,7 +65,7 @@ local function Kill(targetPlayer)
 
         BreakVelo()
 
-        Players.LocalPlayer.Character.Knife.Handle.Positon = targetRoot.Position
+        Players.LocalPlayer.Character.Knife.Handle.Position = targetRoot.Position
         local args = {
             [1] = targetRoot.Position,
             [2] = 0,
