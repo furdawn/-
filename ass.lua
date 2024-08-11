@@ -54,8 +54,8 @@ local function Hitbox()
             local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
             if humanoidRootPart then
                 humanoidRootPart.BrickColor = BrickColor.new("Pink")
-                humanoidRootPart.Size = Vector3.new(10, 10, 10)
-                humanoidRootPart.Transparency = 0.85
+                humanoidRootPart.Size = Vector3.new(8, 8, 8)
+                humanoidRootPart.Transparency = 0.9
                 humanoidRootPart.CanCollide = false
             end
         end
@@ -69,7 +69,7 @@ local function Kill(targetPlayer, currentTarget)
         local rdmstring
 
         if localRoot and targetRoot then
-            local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(0, 0, 4)) + Vector3.new(0, -3, 0)
+            local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(0, 0, 2.5)) + Vector3.new(0, -4, 0)
             localRoot.CFrame = targetRoot.CFrame + offset
         end
 
@@ -81,22 +81,19 @@ local function Kill(targetPlayer, currentTarget)
         }
         for _, v in ipairs(game:GetService("SocialService"):GetChildren()) do
             if v:IsA("RemoteEvent") then
-                rdmstring = v
+                v:FireServer(unpack(args))
                 break
             end
-        end
-        if rdmstring then
-            rdmstring:FireServer(unpack(args))
         end
     end
 end
 
 local function Start()
+    Hitbox()
+    BreakVelo()
     game.Workspace.Gravity = 200
     Players.LocalPlayer.Character.Animate.Disabled = true
     DestroyMap()
-    BreakVelo()
-    Hitbox()
 
     while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
         wait()
@@ -118,7 +115,6 @@ local function Start()
 
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
             Kill(targetPlayer, currentTarget)
-            task.wait(0.05)
         else
             break
         end
