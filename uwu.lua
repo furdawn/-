@@ -1,4 +1,3 @@
-local TweenService = game:GetService("TweenService")
 local Players = game:GetService("Players")
 local Lighting = game:GetService("Lighting")
 local Terrain = game.Workspace.Terrain
@@ -42,15 +41,6 @@ local function SetupAtlas()
     end
 end
 
-local function DestroyMap()
-    local map = game.Workspace:FindFirstChild("GameMap")
-    for _, v in pairs(map:GetDescendants()) do
-        if v:IsA("BasePart") then
-            v:Destroy()
-        end
-    end
-end
-
 local function BreakVelo()
     for _, v in ipairs(Players.LocalPlayer.Character:GetDescendants()) do
         if v:IsA("BasePart") then
@@ -79,7 +69,7 @@ local function Kill(targetPlayer)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-1.5, 0, 1) + Vector3.new(0, -3, 0))
+            local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-1.5, 0, 1) + Vector3.new(0, -4, 0))
             localRoot.CFrame = targetRoot.CFrame + offset
             Players.LocalPlayer.PlayerScripts:FindFirstChild("localknifehandler").HitCheck:Fire(targetPlayer)
         end
@@ -90,7 +80,6 @@ local function Start()
     Hitbox()
     BreakVelo()
     SetupAtlas()
-    DestroyMap()
 
     while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
         task.wait()
@@ -99,17 +88,25 @@ local function Start()
     local previousTarget = targetGUI.TargetText.Text
     local targetPlayer = game.Workspace:FindFirstChild(previousTarget)
 
-    local currentTarget = targetGUI.TargetText.Text
-    if currentTarget ~= previousTarget then
-        targetPlayer = game.Workspace:FindFirstChild(currentTarget)
-        previousTarget = currentTarget
-    end
+    while targetGUI.Visible do
+        local currentTarget = targetGUI.TargetText.Text
+        if currentTarget ~= previousTarget then
+            targetPlayer = game.Workspace:FindFirstChild(currentTarget)
+            previousTarget = currentTarget
 
-    if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
-        Kill(targetPlayer)
-        task.wait(0.25)
+            if not targetPlayer then
+                break
+            end
+        end
+
+        if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
+            Kill(targetPlayer)
+            task.wait(0.25)
+       else
+            break
+        end
+        task.wait()
     end
-    task.wait()
 end
 
 local function onVisibilityChanged()
