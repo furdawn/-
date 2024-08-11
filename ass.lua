@@ -68,11 +68,11 @@ local function Kill(targetPlayer, currentTarget)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
         local rdmstring
 
-        task.wait(0.1)
-
         if localRoot and targetRoot then
             local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(0, 0, 2.5)) + Vector3.new(0, -4, 0)
-            localRoot.CFrame = targetRoot.CFrame + offset
+            local targetCFrame = targetRoot.CFrame + offset
+            local tween = TweenService:Create(localRoot, TweenInfo.new(0.1, Enum.EasingStyle.Linear), {CFrame = targetCFrame})
+            tween:Play()
         end
 
         local args = {
@@ -135,4 +135,4 @@ print("\n")
 print("Astra's Assassin autofarm has loaded!")
 print("\n")
 print("--------------------- <3")
-game:GetService("StarterGui"):SetCore("SendNotification",{["Title"] = "Correct key!",["Text"] = "Astra's Assassin autofarm has loaded.",["Duration"] = 5,["Button1"] = "Purrfect!"})
+game:GetService("StarterGui"):SetCore("SendNotification",{["Title"] = "Successfully loaded!",["Text"] = "Astra's Assassin autofarm has loaded.",["Duration"] = 5,["Button1"] = "Purrfect!"})
