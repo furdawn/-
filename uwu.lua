@@ -1,13 +1,13 @@
----@diagnostic disable: undefined-global
-getgenv().Autofarm = true
+getgenv().Autofarm = nil
+getgenv().Altfarm = nil
 
 local Players = game:GetService("Players")
 local Lighting = game:GetService("Lighting")
 local Terrain = game.Workspace.Terrain
 
 local targetGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
+local altGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("GamemodeMessage")
 
-game.Workspace.Gravity = 0
 Terrain.WaterWaveSize = 0
 Terrain.WaterWaveSpeed = 0
 Terrain.WaterReflectance = 0
@@ -15,7 +15,7 @@ Terrain.WaterTransparency = 0
 Lighting.Brightness = 0
 Lighting.GlobalShadows = false
 settings().Rendering.QualityLevel = 1
-for i,v in pairs(game:GetDescendants()) do
+for _, v in pairs(game:GetDescendants()) do
     if v:IsA("BasePart") then
         v.Material = "Plastic"
         v.Reflectance = 0
@@ -33,15 +33,33 @@ local function ServerHop()
     -- Make this teleport when the server size is less than <= 3
 end
 
+local function Hitbox()
+    for _, v in pairs(Players:GetPlayers()) do
+        local character = game.Workspace:FindFirstChild(v.Name)
+        if character and v.Name ~= Players.LocalPlayer.Name then
+            local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+            if humanoidRootPart then
+                humanoidRootPart.Size = Vector3.new(6, 6, 6)
+                humanoidRootPart.CanCollide = false
+                humanoidRootPart.Transparency = 0.95
+                humanoidRootPart.BrickColor = BrickColor.New("Pink")
+            end
+        end
+    end
+end
+
 local function BreakVelo()
+    game.Workspace.Gravity = 250
     for _, v in ipairs(Players.LocalPlayer.Character:GetDescendants()) do
         if v:IsA("BasePart") then
             v.Velocity, v.RotVelocity = Vector3.zero, Vector3.zero
         end
     end
+    Players.LocalPlayer.Character.Animate.Disabled = true
 end
 
 local function DestroyMap()
+    game.Workspace.Gravity = 0
     local map = game.Workspace:FindFirstChild("GameMap")
     for _, v in pairs(map:GetDescendants()) do
         if v:IsA("BasePart") then
@@ -51,7 +69,6 @@ local function DestroyMap()
 end
 
 local function SetupAtlas()
-    Players.LocalPlayer.Character.Animate.Disabled = true
     for i,v in pairs(Players.LocalPlayer.Character:GetChildren()) do
         if v:IsA("BasePart") and
             v.Name == "Right Leg" or
@@ -75,6 +92,7 @@ end
 
 local function Start()
     getgenv().Autofarm = true
+    Hitbox()
     BreakVelo()
     DestroyMap()
     SetupAtlas()
@@ -84,7 +102,7 @@ local function Start()
     end
 
     local previousTarget = targetGUI.TargetText.Text
-    local targetPlayer = game.Workspace:FindFirstChild(previousTarget)
+    targetPlayer = game.Workspace:FindFirstChild(previousTarget)
 
     while targetGUI.Visible and getgenv().Autofarm == true do
         local currentTarget = targetGUI.TargetText.Text
@@ -106,26 +124,73 @@ local function Start()
         task.wait()
     end
     getgenv().Autofarm = false
+    game.Workspace.Gravity = 250
 end
 
-local function onVisibilityChanged()
+local function StartAlt()
+    getgenv().Altfarm = true
+    Hitbox()
+    BreakVelo()
+    DestroyMap()
+    SetupAtlas()
+
+    while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
+        task.wait()
+    end
+
+    local allPlayers = Players:GetPlayers()
+
+    while altGUI.Visible and getgenv().Altfarm == true do
+        for i = #allPlayers, 1, -1 do
+            local randomPlayer = allPlayers[i]
+            local targetPlayer = game.Workspace:FindFirstChild(randomPlayer.Name)
+
+            if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
+                if targetPlayer:FindFirstChild("Knife") or randomPlayer.Backpack:FindFirstChild("Knife") then
+                    Kill(targetPlayer)
+                    task.wait(0.25)
+                else
+                    table.remove(allPlayers, i)
+                end
+            else
+                table.remove(allPlayers, i)
+            end
+            task.wait()
+        end
+        if #allPlayers == 0 then
+            break
+        end
+    end
+end
+
+local function MainVisible()
     if targetGUI.Visible then
         Start()
     end
 end
 
-targetGUI:GetPropertyChangedSignal("Visible"):Connect(onVisibilityChanged)
+local function altVisible()
+    if altGUI.Visible then
+        StartAlt()
+    end
+end
+
+targetGUI:GetPropertyChangedSignal("Visible"):Connect(MainVisible)
+altGUI:GetPropertyChangedSignal("Visible"):Connect(altVisible)
 
 task.spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
-        if Players.LocalPlayer.Character and not cooldown and game.Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target.Visible == true and getgenv().Autofarm == true then
-            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace[game.Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target.TargetText.Text].Head.Position) <= 6.5 then
-                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace[game.Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target.TargetText.Text])
-                coroutine.wrap(function()
-                    cooldown = true
-                    task.wait(0.8)
-                    cooldown = false
-                end)()
+        if Players.LocalPlayer.Character and targetGUI.Visible == true and getgenv().Autofarm == true then
+            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace.targetPlayer.Head.Position) <= 8 then
+                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace.targetPlayer)
+                task.wait(0.1)
+            else
+                task.wait()
+            end
+        elseif Players.LocalPlayer.Character and altGUI.Visible == true and getgenv().Altfarm == true then
+            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace.targetPlayer.Head.Position) <= 8 then
+                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace.targetPlayer)
+                task.wait(0.1)
             else
                 task.wait()
             end
