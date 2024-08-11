@@ -45,39 +45,58 @@ local function BreakVelo()
             v.Velocity, v.RotVelocity = Vector3.zero, Vector3.zero
         end
     end
+    Players.LocalPlayer.Character.Animate.Disabled = true
 end
 
-local function Kill(targetPlayer)
+local function Hitbox()
+    for _, player in pairs(Players:GetPlayers()) do
+        local character = game.Workspace:FindFirstChild(player.Name)
+        if character then
+            local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
+            if humanoidRootPart then
+                humanoidRootPart.BrickColor = BrickColor.new("Pink")
+                humanoidRootPart.Size = Vector3.new(10, 10, 10)
+                humanoidRootPart.Transparency = 0.85
+                humanoidRootPart.CanCollide = false
+            end
+        end
+    end
+end
+
+local function Kill(targetPlayer, currentTarget)
     if targetPlayer and targetPlayer:IsA("Model") and targetPlayer:FindFirstChild("HumanoidRootPart") then
         local localRoot = Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            localRoot.CFrame = localRoot.CFrame * CFrame.Angles(math.pi * 0.5, 0, 0)
             local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(0, 0, 4)) + Vector3.new(0, -3, 0)
             localRoot.CFrame = targetRoot.CFrame + offset
         end
 
         local args = {
-            [1] = targetRoot.Position,
-            [2] = 0,
-            [3] = CFrame.new(0, 0, 0, 0, -1, 0, 0, 0, 1, -1, 0, 0)
+            [1] = game:GetService("Players"):WaitForChild(currentTarget),
+            [2] = "357a2a31448848af77500551969ebec5351969",
+            [3] = 0,
+            [4] = "3135089fb9ba3c65cec03b2a8745f79fa8658f"
         }
-        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("ThrowKnife"):FireServer(unpack(args))
+
+        local rdmstring
+        for _, v in ipairs(game:GetService("SocialService"):GetChildren()) do
+            if v:IsA("RemoteEvent") then
+                rdmstring = v
+                break
+            end
+        end
+        if rdmstring then
+            rdmstring:FireServer(unpack(args))
+        end
     end
 end
 
 local function Start()
-    Players.LocalPlayer.Character.Animate.Enabled = false
-    for _, v in pairs(Players.LocalPlayer.Character:GetChildren()) do
-        if v:IsA("BasePart") and
-            v.Name == "Right Leg" or
-            v.Name == "Left Leg" then
-            v:Destroy()
-        end
-    end
     DestroyMap()
     BreakVelo()
+    Hitbox()
 
     while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
         wait()
@@ -103,7 +122,7 @@ local function Start()
         end
 
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
-            Kill(targetPlayer)
+            Kill(targetPlayer, currentTarget)
             task.wait(0.25)
         else
             break
