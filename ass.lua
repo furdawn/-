@@ -60,12 +60,12 @@ local function Kill(targetPlayer)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            localRoot.CFrame = targetRoot.CFrame * CFrame.new(0, -3, -4)
+            localRoot.CFrame = targetRoot.CFrame * CFrame.new(0, -3, -4) * CFrame.Angles(math.pi * 0.5, 0, 0)
         end
 
         BreakVelo()
 
-        Players.LocalPlayer.Character.Knife.Handle.Position = targetRoot.Position
+        Players.LocalPlayer.Character.Knife.Handle.CFrame = targetRoot.CFrame
         local args = {
             [1] = targetRoot.Position,
             [2] = 0,
