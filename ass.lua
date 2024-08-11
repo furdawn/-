@@ -34,33 +34,14 @@ local function BreakVelo()
     end
 end
 
-local function Hitbox()
-    local function Expand(Char)
-        local humanoidRootPart = Char:FindFirstChild("HumanoidRootPart")
-        if humanoidRootPart then
-            humanoidRootPart.Size = Vector3.new(10, 5, 10)
-            humanoidRootPart.BrickColor = BrickColor.new("Pink")
-            humanoidRootPart.Transparency = 0.95
-            humanoidRootPart.CanCollide = false
-        end
-    end
-
-    local LocalPLR = Players.LocalPlayer and Players.LocalPlayer.Character
-
-    for _, v in ipairs(game.Workspace:GetChildren()) do
-        if v:IsA("Model") and v:FindFirstChild("HumanoidRootPart") and v ~= LocalPLR then
-            Expand(v)
-        end
-    end
-end
-
 local function Kill(targetPlayer)
     if targetPlayer and targetPlayer:IsA("Model") and targetPlayer:FindFirstChild("HumanoidRootPart") then
         local localRoot = Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            localRoot.CFrame = targetRoot.CFrame * CFrame.new(0, -3, -4) * CFrame.Angles(math.pi * 0.5, 0, 0)
+            local offset = CFrame.new(0, 0, -4) * CFrame.Angles(math.pi * 0.5, 0, 0)
+            localRoot.CFrame = targetRoot.CFrame * offset + Vector3.new(0, -3, 0)
         end
 
         BreakVelo()
@@ -79,7 +60,6 @@ local function Start()
     Players.LocalPlayer.Character.Animate.Enabled = false
     DestroyMap()
     BreakVelo()
-    Hitbox()
 
     while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
         wait()
@@ -121,3 +101,10 @@ local function onVisibilityChanged()
 end
 
 targetGUI:GetPropertyChangedSignal("Visible"):Connect(onVisibilityChanged)
+
+print("--------------------- <3")
+print("\n")
+print("Astra's Assassin autofarm has loaded!")
+print("\n")
+print("--------------------- <3")
+game:GetService("StarterGui"):SetCore("SendNotification",{["Title"] = "Correct key!",["Text"] = "Astra's Assassin autofarm has loaded.",["Duration"] = 5,["Button1"] = "Purrfect!"})
