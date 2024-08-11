@@ -1,3 +1,6 @@
+---@diagnostic disable: undefined-global
+getgenv().Autofarm = true
+
 local Players = game:GetService("Players")
 local Lighting = game:GetService("Lighting")
 local Terrain = game.Workspace.Terrain
@@ -30,17 +33,6 @@ local function ServerHop()
     -- Make this teleport when the server size is less than <= 3
 end
 
-local function SetupAtlas()
-    Players.LocalPlayer.Character.Animate.Disabled = true
-    for i,v in pairs(Players.LocalPlayer.Character:GetChildren()) do
-        if v:IsA("BasePart") and
-            v.Name == "Right Leg" or
-            v.Name == "Left Leg" then
-            v:Destroy()
-        end
-    end
-end
-
 local function BreakVelo()
     for _, v in ipairs(Players.LocalPlayer.Character:GetDescendants()) do
         if v:IsA("BasePart") then
@@ -49,16 +41,22 @@ local function BreakVelo()
     end
 end
 
-local function Hitbox()
-    for _, player in pairs(Players:GetPlayers()) do
-        local character = game.Workspace:FindFirstChild(player.Name)
-        if character and player.Name ~= Players.LocalPlayer.Name then
-            local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
-            if humanoidRootPart then
-                humanoidRootPart.Size = Vector3.new(5, 5, 5)
-                humanoidRootPart.Transparency = 0.85
-                humanoidRootPart.BrickColor = BrickColor.New("Pink")
-            end
+local function DestroyMap()
+    local map = game.Workspace:FindFirstChild("GameMap")
+    for _, v in pairs(map:GetDescendants()) do
+        if v:IsA("BasePart") then
+            v:Destroy()
+        end
+    end
+end
+
+local function SetupAtlas()
+    Players.LocalPlayer.Character.Animate.Disabled = true
+    for i,v in pairs(Players.LocalPlayer.Character:GetChildren()) do
+        if v:IsA("BasePart") and
+            v.Name == "Right Leg" or
+            v.Name == "Left Leg" then
+            v:Destroy()
         end
     end
 end
@@ -71,14 +69,14 @@ local function Kill(targetPlayer)
         if localRoot and targetRoot then
             local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-1.5, 0, 1) + Vector3.new(0, -4, 0))
             localRoot.CFrame = targetRoot.CFrame + offset
-            Players.LocalPlayer.PlayerScripts:FindFirstChild("localknifehandler").HitCheck:Fire(targetPlayer)
         end
     end
 end
 
 local function Start()
-    Hitbox()
+    getgenv().Autofarm = true
     BreakVelo()
+    DestroyMap()
     SetupAtlas()
 
     while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
@@ -88,7 +86,7 @@ local function Start()
     local previousTarget = targetGUI.TargetText.Text
     local targetPlayer = game.Workspace:FindFirstChild(previousTarget)
 
-    while targetGUI.Visible do
+    while targetGUI.Visible and getgenv().Autofarm == true do
         local currentTarget = targetGUI.TargetText.Text
         if currentTarget ~= previousTarget then
             targetPlayer = game.Workspace:FindFirstChild(currentTarget)
@@ -107,6 +105,7 @@ local function Start()
         end
         task.wait()
     end
+    getgenv().Autofarm = false
 end
 
 local function onVisibilityChanged()
@@ -116,6 +115,23 @@ local function onVisibilityChanged()
 end
 
 targetGUI:GetPropertyChangedSignal("Visible"):Connect(onVisibilityChanged)
+
+task.spawn(function()
+    game:GetService("RunService").Stepped:Connect(function()
+        if Players.LocalPlayer.Character and not cooldown and game.Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target.Visible == true and getgenv().Autofarm == true then
+            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace[game.Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target.TargetText.Text].Head.Position) <= 6.5 then
+                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace[game.Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target.TargetText.Text])
+                coroutine.wrap(function()
+                    cooldown = true
+                    task.wait(0.8)
+                    cooldown = false
+                end)()
+            else
+                task.wait()
+            end
+        end
+    end)
+end)
 
 print("--------------------- <3")
 print("\n")
