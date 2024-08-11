@@ -68,10 +68,8 @@ local function Kill(targetPlayer, currentTarget)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            local targetCFrame = targetRoot.CFrame + targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-1.5, 0, 1)) + Vector3.new(0, -4, 0)
-            local tween = TweenService:Create(localRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), {CFrame = targetCFrame})
-            tween:Play()
-            tween.Completed:Wait()
+            local targetCFrame = targetRoot.CFrame + targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-1.5, 6, 1))
+            localRoot.CFrame = targetCFrame
         end
     end
 end
