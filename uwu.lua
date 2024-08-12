@@ -40,7 +40,7 @@ local function Hitbox()
         if character and v.Name ~= Players.LocalPlayer.Name then
             local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
             if humanoidRootPart then
-                humanoidRootPart.Size = Vector3.new(8, 8, 8)
+                humanoidRootPart.Size = Vector3.new(6, 6, 6)
                 humanoidRootPart.CanCollide = false
                 humanoidRootPart.Transparency = 0.85
                 humanoidRootPart.BrickColor = BrickColor.New("Pink")
@@ -137,13 +137,17 @@ end
 
 mainGUI:GetPropertyChangedSignal("Visible"):Connect(MainVisible)
 
+local cooldown = false
 task.spawn(function()
     game:GetService("RunService").Heartbeat:Connect(function()
-        if Players.LocalPlayer.Character and mainGUI.Visible and getgenv().Autofarm then
+        if not cooldown and Players.LocalPlayer.Character and mainGUI.Visible and getgenv().Autofarm then
             if Players.LocalPlayer:DistanceFromCharacter(game.Workspace[game.Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target.TargetText.Text].Head.Position) <= 6.5 then
                 Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace[game.Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target.TargetText.Text])
-                task.wait(0.1)
-                print("Main")
+                coroutine.wrap(function()
+                    cooldown = true
+                    task.wait(0.5)
+                    cooldown = false
+                end)()
             else
                 task.wait()
             end
