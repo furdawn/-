@@ -1,5 +1,4 @@
 repeat task.wait() until game:IsLoaded()
-getgenv().ServerHopper = true
 getgenv().Mainfarm = nil
 getgenv().Altfarm = nil
 
@@ -64,16 +63,9 @@ local function ServerHop()
 end
 
 local function PlayerCount()
-    local playerCount = #game.Players:GetPlayers()
+    local playerCount = #Players:GetPlayers()
     if playerCount <= 3 then
         ServerHop()
-    end
-end
-
-local function Checker()
-    while getgenv().ServerHopper do
-        PlayerCount()
-        task.wait(3600)
     end
 end
 
@@ -216,7 +208,13 @@ task.spawn(function()
     end)
 end)
 
-Checker()
+coroutine.wrap(function()
+    while true do
+        PlayerCount()
+        task.wait(3600)
+    end
+end)()
+
 Players.LocalPlayer.Idled:Connect(function()
     VirtualUser:CaptureController()
     VirtualUser:ClickButton2(Vector2.new())
