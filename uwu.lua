@@ -84,7 +84,7 @@ end
 local function DestroyMap()
     local map = game.Workspace:FindFirstChild("GameMap")
     for _, v in pairs(map:GetDescendants()) do
-        if v:IsA("BasePart") then
+        if v and v:IsA("BasePart") then
             v:Destroy()
         end
     end
