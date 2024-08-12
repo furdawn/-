@@ -10,7 +10,6 @@ local Terrain = game.Workspace.Terrain
 Players.LocalPlayer.PlayerGui.MobileShiftLock:Destroy()
 local mainGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
 local altGUI = Players.LocalPlayer.PlayerGui.ScreenGui.UI.GamemodeMessage.textD
-local targetText = nil
 
 Terrain.WaterWaveSize = 0
 Terrain.WaterWaveSpeed = 0
@@ -105,8 +104,11 @@ local function Kill(targetPlayer)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-1.25, 0, 2) + Vector3.new(0, -2, 0))
+            local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-1.25, 0, 1) + Vector3.new(0, -2, 0))
             localRoot.CFrame = targetRoot.CFrame + offset
+            if targetPlayer and Players.LocalPlayer:DistanceFromCharacter(targetPlayer.HumanoidRootPart.Position) <= 6.5 then
+                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(targetPlayer.Name)
+            end
         end
     end
 end
@@ -121,7 +123,7 @@ local function Start()
         task.wait()
     end
 
-    targetText = mainGUI.TargetText.Text
+    local targetText = mainGUI.TargetText.Text
     local targetPlayer = game.Workspace:FindFirstChild(targetText)
 
     getgenv().Mainfarm = true
@@ -166,7 +168,6 @@ local function AltStart()
             if game.Workspace[v.Name]:FindFirstChild("HumanoidRootPart") then
                 local knife = game.Workspace[v.Name]:FindFirstChild("Knife") or v.Backpack:FindFirstChild("Knife")
                 if knife then
-                    targetText = v.Name
                     Kill(v)
                     task.wait(0.1)
                 else
@@ -189,22 +190,6 @@ end)
 altGUI:GetPropertyChangedSignal("Text"):Connect(function()
     if altGUI.Text == "Free For All" or "Infection" then
         AltStart()
-    end
-end)
-
-local cooldown = false
-game:GetService("RunService").Heartbeat:Connect(function()
-    if not cooldown and Players.LocalPlayer.Character and (getgenv().Mainfarm or getgenv().Altfarm) then
-        if targetText then
-            if game.Workspace:FindFirstChild(targetText) and Players.LocalPlayer:DistanceFromCharacter(target.HumanoidRootPart.Position) <= 6.5 then
-                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace:FindFirstChild(targetText).Name)
-                cooldown = true
-                task.wait(0.35)
-                cooldown = false
-            end
-        else
-            task.wait()
-        end
     end
 end)
 
