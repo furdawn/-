@@ -2,6 +2,7 @@ repeat task.wait() until game:IsLoaded()
 getgenv().Mainfarm = nil
 getgenv().Altfarm = nil
 
+local VirtualUser = game:GetService("VirtualUser")
 local Players = game:GetService("Players")
 local Lighting = game:GetService("Lighting")
 local Terrain = game.Workspace.Terrain
@@ -175,6 +176,10 @@ task.spawn(function()
     end)
 end)
 
+Players.LocalPlayer.Idled:Connect(function()
+    VirtualUser:CaptureController()
+    VirtualUser:ClickButton2(Vector2.new())
+end)
 print("--------------------- <3")
 print("\n")
 print("Astra's Assassin autofarm has loaded!")
