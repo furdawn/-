@@ -105,7 +105,7 @@ local function Kill(targetPlayer)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-1.5, 0, 0.5) + Vector3.new(0, -2, 0))
+            local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-1.25, 0, 2) + Vector3.new(0, -2, 0))
             localRoot.CFrame = targetRoot.CFrame + offset
         end
     end
@@ -193,21 +193,16 @@ altGUI:GetPropertyChangedSignal("Text"):Connect(function()
 end)
 
 local cooldown = false
-task.spawn(function()
-    game:GetService("RunService").Heartbeat:Connect(function()
-        if not cooldown and Players.LocalPlayer.Character and game.Workspace[targetText].HumanoidRootPart and getgenv().Mainfarm or getgenv().Altfarm then
-            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace[targetText].HumanoidRootPart.Position) <= 6.5 then
-                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace[targetText])
-                coroutine.wrap(function()
-                    cooldown = true
-                    task.wait(0.35)
-                    cooldown = false
-                end)()
-            else
-                task.wait()
-            end
+game:GetService("RunService").Heartbeat:Connect(function()
+    if not cooldown and Players.LocalPlayer.Character and (getgenv().Mainfarm or getgenv().Altfarm) then
+        local target = workspace:FindFirstChild(targetText)
+        if target and Players.LocalPlayer:DistanceFromCharacter(target.HumanoidRootPart.Position) <= 6.5 then
+            Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(target)
+            cooldown = true
+            task.wait(0.35)
+            cooldown = false
         end
-    end)
+    end
 end)
 
 coroutine.wrap(function()
