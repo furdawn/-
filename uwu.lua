@@ -141,7 +141,7 @@ local cooldown = false
 task.spawn(function()
     game:GetService("RunService").Heartbeat:Connect(function()
         if not cooldown and Players.LocalPlayer.Character and mainGUI.Visible and getgenv().Autofarm then
-            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace[game.Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target.TargetText.Text].Head.Position) <= 6.5 then
+            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace[game.Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target.TargetText.Text].Head.Position) <= 8 then
                 Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace[game.Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target.TargetText.Text])
                 coroutine.wrap(function()
                     cooldown = true
