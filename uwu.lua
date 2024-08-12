@@ -126,7 +126,7 @@ local function Kill(targetPlayer)
 
         if localRoot and targetRoot then
             local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-1.25, -2.25, 0.5))
-            local targetCFrame = targetRoot.CFrame + offset
+            local targetCFrame = targetRoot.CFrame * CFrame.new(offset)
             targetCFrame = targetCFrame * CFrame.Angles(0, 0, math.pi * 0.5)
             local tween = TweenService:Create(localRoot, TweenInfo.new((Players.LocalPlayer.Character.HumanoidRootPart - targetCFrame.Position).Magnitude / 5, Enum.EasingStyle.Linear), { CFrame = targetCFrame })
             tween:Play()
