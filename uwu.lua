@@ -125,9 +125,8 @@ local function Kill(targetPlayer)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            localRoot.CFrame = localRoot.CFrame * CFrame.Angles(math.pi * 0.5, 0, 0)
-            local offset = CFrame.new(-1.25, -2.25, 0.5)
-            local targetCFrame = targetRoot.CFrame * offset
+            local offset = CFrame.new(-1.25, 4, 0)
+            local targetCFrame = targetRoot.CFrame * offset * CFrame.Angles(math.pi * 0.5, 0, 0)
             local distance = (localRoot.Position - targetRoot.Position).Magnitude
             local tween = TweenService:Create(localRoot, TweenInfo.new(distance / 250, Enum.EasingStyle.Linear), { CFrame = targetCFrame })
             tween:Play()
@@ -165,7 +164,6 @@ local function Start()
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
             knifePlayer = targetText
             Kill(targetPlayer)
-            task.wait(0.1)
         else
             break
         end
@@ -195,7 +193,6 @@ local function AltStart()
                     knifePlayer = v.Name
                     local targetPlayer = game.Workspace[v.Name]
                     Kill(targetPlayer)
-                    task.wait(0.1)
                 end
             end
         end
@@ -220,10 +217,10 @@ end)
 local cooldown = false
 task.spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
-        if knifePlayer and game.Workspace:FindFirstChild(knifePlayer) and game.Workspace[knifePlayer]:FindFirstChild("HumanoidRootPart") then
+        if knifePlayer and game.Workspace:FindFirstChild(knifePlayer) then
             if not cooldown and Players.LocalPlayer.Character and getgenv().MainFarm == true or getgenv().Altfarm == true then
                 if Players.LocalPlayer:DistanceFromCharacter(game.Workspace[knifePlayer].Head.Position) <= 8 then
-                    Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace[knifePlayer])
+                    Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace[knifePlayer].Name)
                     coroutine.wrap(function()
                         cooldown = true
                         task.wait(0.25)
