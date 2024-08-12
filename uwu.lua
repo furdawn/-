@@ -77,7 +77,6 @@ local function Kill(targetPlayer)
 end
 
 local function Start()
-    Hitbox()
     BreakVelo()
     DestroyMap()
     SetupAtlas()
