@@ -78,10 +78,10 @@ local function BreakVelo()
         end
     end
     Players.LocalPlayer.Character.Animate.Disabled = true
+    game.Workspace.Gravity = 0
 end
 
 local function DestroyMap()
-    game.Workspace.Gravity = 0
     local map = game.Workspace:FindFirstChild("GameMap")
     for _, v in pairs(map:GetDescendants()) do
         if v:IsA("BasePart") then
