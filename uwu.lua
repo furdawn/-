@@ -206,7 +206,7 @@ task.spawn(function()
                 Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace[targetText])
                 coroutine.wrap(function()
                     cooldown = true
-                    task.wait(0.15)
+                    task.wait(0.35)
                     cooldown = false
                 end)()
             else
