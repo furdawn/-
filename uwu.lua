@@ -10,6 +10,7 @@ local Terrain = game.Workspace.Terrain
 Players.LocalPlayer.PlayerGui.MobileShiftLock:Destroy()
 local mainGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
 local altGUI = Players.LocalPlayer.PlayerGui.ScreenGui.UI.GamemodeMessage.textD
+local knifePlayer
 
 Terrain.WaterWaveSize = 0
 Terrain.WaterWaveSpeed = 0
@@ -106,9 +107,6 @@ local function Kill(targetPlayer)
         if localRoot and targetRoot then
             local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-1.25, 0, 1) + Vector3.new(0, -2, 0))
             localRoot.CFrame = targetRoot.CFrame + offset
-            if targetPlayer and Players.LocalPlayer:DistanceFromCharacter(targetPlayer.HumanoidRootPart.Position) <= 6.5 then
-                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(targetPlayer.Name)
-            end
         end
     end
 end
@@ -140,6 +138,7 @@ local function Start()
         end
 
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
+            knifePlayer = targetText
             Kill(targetPlayer)
             task.wait(0.1)
         else
@@ -168,6 +167,7 @@ local function AltStart()
             if game.Workspace[v.Name]:FindFirstChild("HumanoidRootPart") then
                 local knife = game.Workspace[v.Name]:FindFirstChild("Knife") or v.Backpack:FindFirstChild("Knife")
                 if knife then
+                    knifePlayer = v.Name
                     Kill(v)
                     task.wait(0.1)
                 else
@@ -179,6 +179,8 @@ local function AltStart()
         end
         task.wait()
     end
+    getgenv().Altfarm = false
+    game.Workspace.Gravity = 215
 end
 
 mainGUI:GetPropertyChangedSignal("Visible"):Connect(function()
@@ -191,6 +193,24 @@ altGUI:GetPropertyChangedSignal("Text"):Connect(function()
     if altGUI.Text == "Free For All" or "Infection" then
         AltStart()
     end
+end)
+
+local cooldown = false
+task.spawn(function()
+    game:GetService("RunService").Stepped:Connect(function()
+        if Players.LocalPlayer.Character and not cooldown and Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target.Visible == true and getgenv().Mainfarm == true then
+            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace[knifePlayer].Head.Position) <= 6.5 then
+                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace[knifePlayer])
+                coroutine.wrap(function()
+                    cooldown = true
+                    task.wait(0.45)
+                    cooldown = false
+                end)()
+            else
+                task.wait()
+            end
+        end
+    end)
 end)
 
 coroutine.wrap(function()
