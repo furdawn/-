@@ -209,7 +209,7 @@ task.spawn(function()
         if knifePlayer and game.Workspace:FindFirstChild(knifePlayer) and game.Workspace[knifePlayer]:FindFirstChild("HumanoidRootPart") then
             if not cooldown and Players.LocalPlayer.Character and (getgenv().Altfarm == true or getgenv().MainFarm == true) then
                 local distance = (Players.LocalPlayer.Character.HumanoidRootPart.Position - game.Workspace[knifePlayer].HumanoidRootPart.Position).Magnitude
-                if distance <= 3 then
+                if distance <= 6 then
                     Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace[knifePlayer])
                     coroutine.wrap(function()
                         cooldown = true
