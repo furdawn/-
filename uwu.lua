@@ -108,7 +108,7 @@ local function Kill(targetPlayer)
         if localRoot and targetRoot then
             local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-1.25, 0, 1) + Vector3.new(0, -2, 0))
             local targetCFrame = targetRoot.CFrame + offset
-            local tween = TweenService:Create(localRoot, TweenInfo.new(0.5, Enum.EasingStyle.Linear), { CFrame = targetCFrame })
+            local tween = TweenService:Create(localRoot, TweenInfo.new(0, Enum.EasingStyle.Quad), { CFrame = targetCFrame })
             tween:Play()
             tween.Completed:Wait()
         end
@@ -195,7 +195,7 @@ local cooldown = false
 task.spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
         if not cooldown and Players.LocalPlayer.Character and Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target.Visible == true and (getgenv().Mainfarm == true or getgenv().Altfarm == true) then
-            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace[knifePlayer].Head.Position) <= 6.5 then
+            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace[knifePlayer].Head.Position) <= 3 then
                 Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace[knifePlayer])
                 coroutine.wrap(function()
                     cooldown = true
