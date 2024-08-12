@@ -70,7 +70,7 @@ local function PlayerCount()
 end
 
 local function BreakVelo()
-    game.Workspace.Gravity = 250
+    game.Workspace.Gravity = 215
     for _, v in ipairs(Players.LocalPlayer.Character:GetDescendants()) do
         if v:IsA("BasePart") then
             v.Velocity, v.RotVelocity = Vector3.zero, Vector3.zero
@@ -146,7 +146,7 @@ local function Start()
         task.wait()
     end
     getgenv().Mainfarm = false
-    game.Workspace.Gravity = 250
+    game.Workspace.Gravity = 215
 end
 
 local function AltStart()
@@ -198,7 +198,7 @@ task.spawn(function()
                 Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace[targetText])
                 coroutine.wrap(function()
                     cooldown = true
-                    task.wait(0.65)
+                    task.wait(0.25)
                     cooldown = false
                 end)()
             else
