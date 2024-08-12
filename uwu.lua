@@ -181,14 +181,14 @@ altGUI:GetPropertyChangedSignal("Visible"):Connect(altVisible)
 task.spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
         if Players.LocalPlayer.Character and targetGUI.Visible == true and getgenv().Autofarm == true then
-            if Players.LocalPlayer:DistanceFromCharacter(targetPlayer.Head.Position) <= 8 then
+            if Players.LocalPlayer:DistanceFromCharacter(targetPlayer.HumanoidRootPart.Position) <= 8 then
                 Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(targetPlayer.Name)
                 task.wait(0.1)
             else
                 task.wait()
             end
         elseif Players.LocalPlayer.Character and altGUI.Visible == true and getgenv().Altfarm == true then
-            if Players.LocalPlayer:DistanceFromCharacter(targetPlayer.Head.Position) <= 8 then
+            if Players.LocalPlayer:DistanceFromCharacter(targetPlayer.HumanoidRootPart.Position) <= 8 then
                 Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(targetPlayer.Name)
                 task.wait(0.1)
             else
