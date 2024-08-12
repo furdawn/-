@@ -1,5 +1,5 @@
 repeat task.wait() until game:IsLoaded()
-getgenv().Autofarm = nil
+getgenv().Autofarm = false
 
 local Players = game:GetService("Players")
 local Lighting = game:GetService("Lighting")
@@ -92,7 +92,6 @@ local function Kill(targetPlayer)
 end
 
 local function Start()
-    getgenv().Autofarm = true
     Hitbox()
     BreakVelo()
     DestroyMap()
@@ -104,6 +103,8 @@ local function Start()
 
     targetText = mainGUI.TargetText.Text
     local targetPlayer = game.Workspace:FindFirstChild(targetText)
+
+    getgenv().Autofarm = true
 
     while mainGUI.Visible and getgenv().Autofarm == true do
         local currentTarget = mainGUI.TargetText.Text
@@ -137,9 +138,9 @@ mainGUI:GetPropertyChangedSignal("Visible"):Connect(MainVisible)
 
 task.spawn(function()
     game:GetService("RunService").Heartbeat:Connect(function()
-        if Players.LocalPlayer.Character and mainGUI.Visible and getgenv().Autofarm and Players.LocalPlayer.Backpack:GetChildren() == 1 then
+        if Players.LocalPlayer.Character and mainGUI.Visible and getgenv().Autofarm then
             if Players.LocalPlayer:DistanceFromCharacter(game.Workspace[targetText].Head.Position) <= 8 then
-                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(targetText)
+                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace[game.Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target.TargetText.Text])
                 task.wait(0.1)
                 print("Main")
             else
