@@ -1,13 +1,13 @@
+repeat task.wait() until game:IsLoaded()
 getgenv().Autofarm = nil
-getgenv().Altfarm = nil
 
 local Players = game:GetService("Players")
 local Lighting = game:GetService("Lighting")
 local Terrain = game.Workspace.Terrain
 
-local targetGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
-local altGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("GamemodeMessage")
-local selectPlayer
+Players.LocalPlayer.PlayerGui.MobileShiftLock:Destroy()
+local mainGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
+local targetText
 
 Terrain.WaterWaveSize = 0
 Terrain.WaterWaveSpeed = 0
@@ -102,14 +102,14 @@ local function Start()
         task.wait()
     end
 
-    selectPlayer = targetGUI.TargetText.Text
-    local targetPlayer = game.Workspace:FindFirstChild(selectPlayer)
+    targetText = mainGUI.TargetText.Text
+    local targetPlayer = game.Workspace:FindFirstChild(targetText)
 
-    while targetGUI.Visible and getgenv().Autofarm == true do
-        local currentTarget = targetGUI.TargetText.Text
-        if currentTarget ~= selectPlayer then
+    while mainGUI.Visible and getgenv().Autofarm == true do
+        local currentTarget = mainGUI.TargetText.Text
+        if currentTarget ~= targetText then
             targetPlayer = game.Workspace:FindFirstChild(currentTarget)
-            selectPlayer = currentTarget
+            targetText = currentTarget
 
             if not targetPlayer then
                 break
@@ -127,73 +127,21 @@ local function Start()
     game.Workspace.Gravity = 250
 end
 
-local function StartAlt()
-    getgenv().Altfarm = true
-    Hitbox()
-    BreakVelo()
-    DestroyMap()
-    SetupAtlas()
-
-    while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
-        task.wait()
-    end
-
-    local allPlayers = Players:GetPlayers()
-
-    while altGUI.Visible and getgenv().Altfarm == true do
-        for i = #allPlayers, 1, -1 do
-            selectPlayer = allPlayers[i]
-            local targetPlayer = game.Workspace:FindFirstChild(selectPlayer.Name)
-
-            if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
-                if targetPlayer:FindFirstChild("Knife") or selectPlayer.Backpack:FindFirstChild("Knife") then
-                    Kill(targetPlayer)
-                else
-                    table.remove(allPlayers, i)
-                end
-            else
-                table.remove(allPlayers, i)
-            end
-            task.wait()
-        end
-        if #allPlayers == 0 then
-            break
-        end
-    end
-end
-
 local function MainVisible()
-    if targetGUI.Visible then
+    if mainGUI.Visible then
         Start()
     end
 end
 
-local function altVisible()
-    if altGUI.Visible then
-        StartAlt()
-    end
-end
-
-targetGUI:GetPropertyChangedSignal("Visible"):Connect(MainVisible)
-altGUI:GetPropertyChangedSignal("Visible"):Connect(altVisible)
+mainGUI:GetPropertyChangedSignal("Visible"):Connect(MainVisible)
 
 task.spawn(function()
     game:GetService("RunService").Heartbeat:Connect(function()
-        if Players.LocalPlayer.Character and targetGUI.Visible and getgenv().Autofarm then
-            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace[selectPlayer].Head.Position) <= 8 then
-                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(selectPlayer)
+        if Players.LocalPlayer.Character and mainGUI.Visible and getgenv().Autofarm and Players.LocalPlayer.Backpack:GetChildren() == 1 then
+            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace[targetText].Head.Position) <= 8 then
+                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(targetText)
                 task.wait(0.1)
                 print("Main")
-            else
-                task.wait()
-            end
-        end
-
-        if Players.LocalPlayer.Character and altGUI.Visible and getgenv().Altfarm then
-            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace[selectPlayer].Head.Position) <= 8 then
-                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(selectPlayer)
-                task.wait(0.1)
-                print("Alt")
             else
                 task.wait()
             end
