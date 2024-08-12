@@ -170,8 +170,6 @@ local function AltStart()
             if game.Workspace[v.Name] and game.Workspace[v.Name]:FindFirstChild("HumanoidRootPart") then
                 knifePlayer = v.Name
                 Kill(v)
-            else
-                break
             end
         end
         task.wait()
