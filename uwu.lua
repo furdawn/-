@@ -195,12 +195,13 @@ end)
 local cooldown = false
 game:GetService("RunService").Heartbeat:Connect(function()
     if not cooldown and Players.LocalPlayer.Character and (getgenv().Mainfarm or getgenv().Altfarm) then
-        local target = game.Workspace:FindFirstChild(targetText)
-        if target and Players.LocalPlayer:DistanceFromCharacter(target.HumanoidRootPart.Position) <= 6.5 then
-            Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(target)
-            cooldown = true
-            task.wait(0.35)
-            cooldown = false
+        if targetText then
+            if game.Workspace:FindFirstChild(targetText) and Players.LocalPlayer:DistanceFromCharacter(target.HumanoidRootPart.Position) <= 6.5 then
+                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace:FindFirstChild(targetText).Name)
+                cooldown = true
+                task.wait(0.35)
+                cooldown = false
+            end
         else
             task.wait()
         end
