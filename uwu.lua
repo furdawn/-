@@ -108,7 +108,7 @@ local function Kill(targetPlayer)
         if localRoot and targetRoot then
             local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-1.25, 0, 1) + Vector3.new(0, -2, 0))
             local targetCFrame = targetRoot.CFrame + offset
-            local tween = TweenService:Create(localRoot, TweenInfo.new(0.05, Enum.EasingStyle.Linear), { CFrame = targetCFrame })
+            local tween = TweenService:Create(localRoot, TweenInfo.new(0.5, Enum.EasingStyle.Linear), { CFrame = targetCFrame })
             tween:Play()
             tween.Completed:Wait()
         end
@@ -199,7 +199,7 @@ task.spawn(function()
                 Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace[knifePlayer])
                 coroutine.wrap(function()
                     cooldown = true
-                    task.wait(0.6)
+                    task.wait(0.1)
                     cooldown = false
                 end)()
             else
