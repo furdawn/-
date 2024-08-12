@@ -71,14 +71,14 @@ local function PlayerCount()
 end
 
 local function BreakVelo()
-    game.Workspace.Gravity = 215
+    workspace.Gravity = 215
     for _, v in ipairs(Players.LocalPlayer.Character:GetDescendants()) do
         if v:IsA("BasePart") then
             v.Velocity, v.RotVelocity = Vector3.zero, Vector3.zero
         end
     end
     Players.LocalPlayer.Character.Animate.Disabled = true
-    game.Workspace.Gravity = 0
+    workspace.Gravity = 0
 end
 
 local function DestroyMap()
@@ -153,14 +153,13 @@ local function Start()
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
             knifePlayer = targetText
             Kill(targetPlayer)
-            task.wait(0.15)
         else
             break
         end
         task.wait()
     end
     getgenv().Mainfarm = false
-    game.Workspace.Gravity = 215
+    workspace.Gravity = 215
 end
 
 local function AltStart()
@@ -177,17 +176,19 @@ local function AltStart()
 
     while altGUI.Text == "Free For All" or altGUI.Text == "Infection" and getgenv().Altfarm do
         for _, v in pairs(Players:GetPlayers()) do
-            if game.Workspace[v.Name] and game.Workspace[v.Name]:FindFirstChild("HumanoidRootPart") then
-                knifePlayer = v.Name
-                local targetPlayer = game.Workspace[v.Name]
-                Kill(targetPlayer)
-                task.wait(0.8)
+            local startTime = tick()
+            while tick() - startTime < 3 do
+                if game.Workspace[v.Name] and game.Workspace[v.Name]:FindFirstChild("HumanoidRootPart") then
+                    knifePlayer = v.Name
+                    local targetPlayer = game.Workspace[v.Name]
+                    Kill(targetPlayer)
+                end
             end
         end
         task.wait()
     end
     getgenv().Altfarm = false
-    game.Workspace.Gravity = 215
+    workspace.Gravity = 215
 end
 
 mainGUI:GetPropertyChangedSignal("Visible"):Connect(function()
