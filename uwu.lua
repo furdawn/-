@@ -120,6 +120,7 @@ local function Kill(targetPlayer)
             local tween = TweenService:Create(localRoot, TweenInfo.new(0, Enum.EasingStyle.Quad), { CFrame = targetCFrame })
             tween:Play()
             tween.Completed:Wait()
+            BreakVelo()
         end
     end
 end
