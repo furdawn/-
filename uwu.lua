@@ -172,6 +172,8 @@ local function AltStart()
                 else
                     break
                 end
+            else
+                break
             end
         end
         task.wait()
@@ -193,12 +195,12 @@ end)
 local cooldown = false
 task.spawn(function()
     game:GetService("RunService").Heartbeat:Connect(function()
-        if not cooldown and Players.LocalPlayer.Character and getgenv().Mainfarm or getgenv().Altfarm then
-            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace[targetText].Head.Position) <= 6.5 then
+        if not cooldown and Players.LocalPlayer.Character and game.Workspace[targetText].HumanoidRootPart and getgenv().Mainfarm or getgenv().Altfarm then
+            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace[targetText].HumanoidRootPart.Position) <= 6.5 then
                 Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace[targetText])
                 coroutine.wrap(function()
                     cooldown = true
-                    task.wait(0.5)
+                    task.wait(0.35)
                     cooldown = false
                 end)()
             else
