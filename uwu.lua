@@ -10,7 +10,7 @@ local Players = game:GetService("Players")
 local Lighting = game:GetService("Lighting")
 local Terrain = game.Workspace.Terrain
 
-Players.LocalPlayer.PlayerGui.MobileShiftLock:Destroy()
+Players.LocalPlayer.PlayerGui:WaitForChild("MobileShiftLock"):Destroy()
 local mainGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
 local altGUI = Players.LocalPlayer.PlayerGui.ScreenGui.UI.GamemodeMessage.textD
 local knifePlayer
