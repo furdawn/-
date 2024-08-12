@@ -34,21 +34,6 @@ local function ServerHop()
     -- Make this teleport when the server size is less than <= 3
 end
 
-local function Hitbox()
-    for _, v in pairs(Players:GetPlayers()) do
-        local character = game.Workspace:FindFirstChild(v.Name)
-        if character and v.Name ~= Players.LocalPlayer.Name then
-            local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
-            if humanoidRootPart then
-                humanoidRootPart.Size = Vector3.new(6, 6, 6)
-                humanoidRootPart.CanCollide = false
-                humanoidRootPart.Transparency = 0.85
-                humanoidRootPart.BrickColor = BrickColor.New("Pink")
-            end
-        end
-    end
-end
-
 local function BreakVelo()
     game.Workspace.Gravity = 250
     for _, v in ipairs(Players.LocalPlayer.Character:GetDescendants()) do
@@ -85,7 +70,7 @@ local function Kill(targetPlayer)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-1.5, 0, 2) + Vector3.new(0, -4, 0))
+            local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-1.5, 0, 1) + Vector3.new(0, -4, 0))
             localRoot.CFrame = targetRoot.CFrame + offset
         end
     end
