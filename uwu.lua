@@ -206,15 +206,17 @@ end)
 local cooldown = false
 task.spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
-        if not cooldown and Players.LocalPlayer.Character and game.Workspace[knifePlayer].HumanoidRootPart and (getgenv().Altfarm == true or getgenv().Altfarm == true) then
-            local distance = (Players.LocalPlayer.Character.HumanoidRootPart.Position - game.Workspace[knifePlayer].HumanoidRootPart.Position).Magnitude
-            if distance <= 3 then
-                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace[knifePlayer])
-                coroutine.wrap(function()
-                    cooldown = true
-                    task.wait(0.75)
-                    cooldown = false
-                end)()
+        if knifePlayer and game.Workspace:FindFirstChild(knifePlayer) and game.Workspace[knifePlayer]:FindFirstChild("HumanoidRootPart") then
+            if not cooldown and Players.LocalPlayer.Character and (getgenv().Altfarm == true or getgenv().MainFarm == true) then
+                local distance = (Players.LocalPlayer.Character.HumanoidRootPart.Position - game.Workspace[knifePlayer].HumanoidRootPart.Position).Magnitude
+                if distance <= 3 then
+                    Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace[knifePlayer])
+                    coroutine.wrap(function()
+                        cooldown = true
+                        task.wait(0.75)
+                        cooldown = false
+                    end)()
+                end
             end
         end
     end)
