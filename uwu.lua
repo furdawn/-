@@ -167,7 +167,7 @@ local function AltStart()
 
     while altGUI.Text == "Free For All" or altGUI.Text == "Infection" and getgenv().Altfarm do
         for _, v in ipairs(Players:GetPlayers()) do
-            if game.Workspace[v.Name] and game.Workspace[v.Name]:FindFirstChild("HumanoidRootPart") then
+            if game.Workspace:FindFirstChild(v.Name) and game.Workspace[v.Name]:FindFirstChild("HumanoidRootPart") then
                 knifePlayer = v.Name
                 Kill(v)
             end
