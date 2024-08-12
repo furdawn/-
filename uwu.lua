@@ -206,7 +206,7 @@ end)
 local cooldown = false
 task.spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
-        if not cooldown and Players.LocalPlayer.Character and game.Workspace[knifePlayer].HumanoidRootPart and (getgenv().Altfarm == true and Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target.Visible == true or getgenv().Altfarm == true) then
+        if not cooldown and Players.LocalPlayer.Character and game.Workspace[knifePlayer].HumanoidRootPart and (getgenv().Altfarm == true or getgenv().Altfarm == true) then
             local distance = (Players.LocalPlayer.Character.HumanoidRootPart.Position - game.Workspace[knifePlayer].HumanoidRootPart.Position).Magnitude
             if distance <= 3 then
                 Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace[knifePlayer])
