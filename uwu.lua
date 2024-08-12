@@ -1,5 +1,5 @@
 repeat task.wait() until game:IsLoaded()
-getgenv().Mainfarm = false
+getgenv().Mainfarm = nil
 getgenv().Altfarm = nil
 
 local Players = game:GetService("Players")
@@ -9,7 +9,7 @@ local Terrain = game.Workspace.Terrain
 Players.LocalPlayer.PlayerGui.MobileShiftLock:Destroy()
 local mainGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
 local altGUI = Players.LocalPlayer.PlayerGui.ScreenGui.UI.GamemodeMessage.textD
-local targetText
+local targetText = nil
 
 Terrain.WaterWaveSize = 0
 Terrain.WaterWaveSpeed = 0
@@ -79,6 +79,7 @@ local function Kill(targetPlayer)
 end
 
 local function Start()
+    targetText = nil
     BreakVelo()
     DestroyMap()
     SetupAtlas()
@@ -116,6 +117,7 @@ local function Start()
 end
 
 local function AltStart()
+    targetText = nil
     BreakVelo()
     DestroyMap()
     SetupAtlas()
@@ -124,30 +126,22 @@ local function AltStart()
         task.wait()
     end
 
-    local allPlayers = Players:GetPlayers()
-
     getgenv().Altfarm = true
 
-    while altGUI.Text == "Free For All" or "Infection" and getgenv().Altfarm == true do
-        for i = #allPlayers, 1, -1 do
-            targetText = allPlayers[i]
-            local targetPlayer = game.Workspace:FindFirstChild(targetText.Name)
-
-            if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
-                if targetPlayer:FindFirstChild("Knife") or targetText.Backpack:FindFirstChild("Knife") then
-                    Kill(targetPlayer)
+    while altGUI.Text == "Free For All" or altGUI.Text == "Infection" and getgenv().Altfarm do
+        for _, v in ipairs(Players:GetPlayers()) do
+            if game.Workspace[v.Name]:FindFirstChild("HumanoidRootPart") then
+                local knife = game.Workspace[v.Name]:FindFirstChild("Knife") or v.Backpack:FindFirstChild("Knife")
+                if knife then
+                    targetText = v.Name
+                    Kill(v)
                     task.wait(0.2)
                 else
-                    table.remove(allPlayers, i)
+                    break
                 end
-            else
-                table.remove(allPlayers, i)
             end
-            task.wait()
         end
-        if #allPlayers == 0 then
-            break
-        end
+        task.wait()
     end
 end
 
