@@ -2,6 +2,8 @@ repeat task.wait() until game:IsLoaded()
 getgenv().Mainfarm = nil
 getgenv().Altfarm = nil
 
+local myAccounts = {"cuffedpaws", "DMADusk", "tr4nsfem"}
+
 local TweenService = game:GetService("TweenService")
 local VirtualUser = game:GetService("VirtualUser")
 local Players = game:GetService("Players")
@@ -65,7 +67,16 @@ end
 
 local function PlayerCount()
     local playerCount = #Players:GetPlayers()
-    if playerCount <= 3 then
+    local myAccountPresent = false
+
+    for _, player in pairs(Players:GetPlayers()) do
+        if table.find(myAccounts, player.Name) then
+            myAccountPresent = true
+            break
+        end
+    end
+
+    if playerCount <= 3 and not myAccountPresent then
         ServerHop()
     end
 end
