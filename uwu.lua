@@ -39,9 +39,9 @@ local function Hitbox()
         if character and v.Name ~= Players.LocalPlayer.Name then
             local humanoidRootPart = character:FindFirstChild("HumanoidRootPart")
             if humanoidRootPart then
-                humanoidRootPart.Size = Vector3.new(6, 6, 6)
+                humanoidRootPart.Size = Vector3.new(8, 8, 8)
                 humanoidRootPart.CanCollide = false
-                humanoidRootPart.Transparency = 0.95
+                humanoidRootPart.Transparency = 0.85
                 humanoidRootPart.BrickColor = BrickColor.New("Pink")
             end
         end
@@ -84,7 +84,7 @@ local function Kill(targetPlayer)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-1.5, 0, 1) + Vector3.new(0, -4, 0))
+            local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-1.5, 0, 2) + Vector3.new(0, -4, 0))
             localRoot.CFrame = targetRoot.CFrame + offset
         end
     end
@@ -182,14 +182,14 @@ task.spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
         if Players.LocalPlayer.Character and targetGUI.Visible == true and getgenv().Autofarm == true then
             if Players.LocalPlayer:DistanceFromCharacter(targetPlayer.Head.Position) <= 8 then
-                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace.targetPlayer.Name)
+                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(targetPlayer.Name)
                 task.wait(0.1)
             else
                 task.wait()
             end
         elseif Players.LocalPlayer.Character and altGUI.Visible == true and getgenv().Altfarm == true then
             if Players.LocalPlayer:DistanceFromCharacter(targetPlayer.Head.Position) <= 8 then
-                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace.targetPlayer.Name)
+                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(targetPlayer.Name)
                 task.wait(0.1)
             else
                 task.wait()
