@@ -83,9 +83,18 @@ end
 
 local function DestroyMap()
     local map = game.Workspace:FindFirstChild("GameMap")
-    for _, v in pairs(map:GetDescendants()) do
+    for _, v in ipairs(map:GetDescendants()) do
         if v:IsA("BasePart") then
             v:Destroy()
+        end
+    end
+    for _, v in ipairs(Players:GetPlayers()) do
+        if game.Workspace[v.Name] then
+            for _, child in ipairs(game.Workspace[v.Name]:GetChildren()) do
+                if child:IsA("BasePart") then
+                    child.CanCollide = false
+                end
+            end
         end
     end
 end
@@ -106,7 +115,7 @@ local function Kill(targetPlayer)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-1.25, 0, 0.25) + Vector3.new(0, -2, 0))
+            local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-1.25, 0, 0.5) + Vector3.new(0, -2, 0))
             local targetCFrame = targetRoot.CFrame + offset
             local tween = TweenService:Create(localRoot, TweenInfo.new(0, Enum.EasingStyle.Quad), { CFrame = targetCFrame })
             tween:Play()
@@ -144,7 +153,7 @@ local function Start()
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
             knifePlayer = targetText
             Kill(targetPlayer)
-            task.wait(0.75)
+            task.wait(0.15)
         else
             break
         end
@@ -172,7 +181,7 @@ local function AltStart()
                 knifePlayer = v.Name
                 local targetPlayer = game.Workspace[v.Name]
                 Kill(targetPlayer)
-                task.wait(0.75)
+                task.wait(0.8)
             end
         end
         task.wait()
@@ -204,7 +213,7 @@ task.spawn(function()
                 Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace[knifePlayer])
                 coroutine.wrap(function()
                     cooldown = true
-                    task.wait(0.1)
+                    task.wait(0.35)
                     cooldown = false
                 end)()
             end
