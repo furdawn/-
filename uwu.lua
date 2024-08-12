@@ -72,8 +72,8 @@ end
 
 local function Checker()
     while getgenv().ServerHopper do
-        task.wait(3600)
         PlayerCount()
+        task.wait(3600)
     end
 end
 
