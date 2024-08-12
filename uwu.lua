@@ -128,7 +128,8 @@ local function Kill(targetPlayer)
             local rotation = CFrame.Angles(0, 0, math.pi * 0.5)
             local offset = CFrame.new(-1.25, -2.25, 0.5)
             local targetCFrame = targetRoot.CFrame * rotation * offset
-            local tween = TweenService:Create(localRoot, TweenInfo.new((Players.LocalPlayer.Character.HumanoidRootPart - targetCFrame.Position).Magnitude / 5, Enum.EasingStyle.Linear), { CFrame = targetCFrame })
+            local distance = (Players.LocalPlayer.Character.HumanoidRootPart.PositionrPosition - targetRoot.Position).Magnitude
+            local tween = TweenService:Create(localRoot, TweenInfo.new(distance / 5, Enum.EasingStyle.Linear), { CFrame = targetCFrame })
             tween:Play()
             tween.Completed:Wait()
         end
