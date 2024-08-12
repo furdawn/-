@@ -119,6 +119,7 @@ local function Start()
 
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
             Kill(targetPlayer)
+            task.wait(0.15)
        else
             break
         end
@@ -139,7 +140,7 @@ mainGUI:GetPropertyChangedSignal("Visible"):Connect(MainVisible)
 task.spawn(function()
     game:GetService("RunService").Heartbeat:Connect(function()
         if Players.LocalPlayer.Character and mainGUI.Visible and getgenv().Autofarm then
-            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace[targetText].Head.Position) <= 8 then
+            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace[game.Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target.TargetText.Text].Head.Position) <= 6.5 then
                 Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace[game.Players.LocalPlayer.PlayerGui.ScreenGui.UI.Target.TargetText.Text])
                 task.wait(0.1)
                 print("Main")
