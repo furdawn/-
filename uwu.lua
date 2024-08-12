@@ -144,6 +144,7 @@ local function Start()
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
             knifePlayer = targetText
             Kill(targetPlayer)
+            task.wait(0.75)
         else
             break
         end
