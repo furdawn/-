@@ -82,12 +82,6 @@ local function BreakVelo()
 end
 
 local function DestroyMap()
-    local map = game.Workspace:FindFirstChild("GameMap")
-    for _, v in pairs(map:GetDescendants()) do
-        if v and v:IsA("BasePart") then
-            v:Destroy()
-        end
-    end
     for _, v in pairs(Players:GetPlayers()) do
         if game.Workspace[v.Name] then
             for _, child in ipairs(game.Workspace[v.Name]:GetDescendants()) do
@@ -95,6 +89,11 @@ local function DestroyMap()
                     child.CanCollide = false
                 end
             end
+        end
+    end
+    for _, v in pairs(game.Workspace.GameMap:GetDescendants()) do
+        if v and v:IsA("BasePart") then
+            v:Destroy()
         end
     end
 end
@@ -201,8 +200,6 @@ end)
 altGUI:GetPropertyChangedSignal("Text"):Connect(function()
     if altGUI.Text == "Free For All" or "Infection" then
         AltStart()
-    elseif altGUI.Text == "Juggernaut" then
-        print("Juggernaut not implemented into my autofarm yet :3")
     end
 end)
 
@@ -215,7 +212,7 @@ task.spawn(function()
                 Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace[knifePlayer])
                 coroutine.wrap(function()
                     cooldown = true
-                    task.wait(0.35)
+                    task.wait(0.8)
                     cooldown = false
                 end)()
             end
