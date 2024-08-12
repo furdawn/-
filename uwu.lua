@@ -7,6 +7,7 @@ local Terrain = game.Workspace.Terrain
 
 local targetGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
 local altGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("GamemodeMessage")
+selectPlayer = nil
 
 Terrain.WaterWaveSize = 0
 Terrain.WaterWaveSpeed = 0
@@ -101,14 +102,14 @@ local function Start()
         task.wait()
     end
 
-    local previousTarget = targetGUI.TargetText.Text
-    targetPlayer = game.Workspace:FindFirstChild(previousTarget)
+    selectPlayer = targetGUI.TargetText.Text
+    local targetPlayer = game.Workspace:FindFirstChild(selectPlayer)
 
     while targetGUI.Visible and getgenv().Autofarm == true do
         local currentTarget = targetGUI.TargetText.Text
-        if currentTarget ~= previousTarget then
+        if currentTarget ~= selectPlayer then
             targetPlayer = game.Workspace:FindFirstChild(currentTarget)
-            previousTarget = currentTarget
+            selectPlayer = currentTarget
 
             if not targetPlayer then
                 break
@@ -142,11 +143,11 @@ local function StartAlt()
 
     while altGUI.Visible and getgenv().Altfarm == true do
         for i = #allPlayers, 1, -1 do
-            local randomPlayer = allPlayers[i]
-            local targetPlayer = game.Workspace:FindFirstChild(randomPlayer.Name)
+            selectPlayer = allPlayers[i]
+            local targetPlayer = game.Workspace:FindFirstChild(selectPlayer.Name)
 
             if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
-                if targetPlayer:FindFirstChild("Knife") or randomPlayer.Backpack:FindFirstChild("Knife") then
+                if targetPlayer:FindFirstChild("Knife") or selectPlayer.Backpack:FindFirstChild("Knife") then
                     Kill(targetPlayer)
                     task.wait(0.25)
                 else
@@ -180,17 +181,19 @@ altGUI:GetPropertyChangedSignal("Visible"):Connect(altVisible)
 
 task.spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
-        if Players.LocalPlayer.Character and targetGUI.Visible == true and getgenv().Autofarm == true then
-            if Players.LocalPlayer:DistanceFromCharacter(targetPlayer.HumanoidRootPart.Position) <= 8 then
-                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(targetPlayer.Name)
+        if Players.LocalPlayer.Character and targetGUI.Visible == true and getgenv().Autofarm == true and selectPlayer ~= nil then
+            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace.selectPlayer.Name.Head.Position) <= 8 then
+                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace.selectPlayer.Name)
                 task.wait(0.1)
+                print("Main")
             else
                 task.wait()
             end
-        elseif Players.LocalPlayer.Character and altGUI.Visible == true and getgenv().Altfarm == true then
-            if Players.LocalPlayer:DistanceFromCharacter(targetPlayer.HumanoidRootPart.Position) <= 8 then
-                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(targetPlayer.Name)
+        elseif Players.LocalPlayer.Character and altGUI.Visible == true and getgenv().Altfarm == true and selectPlayer ~= nil then
+            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace.selectPlayer.Name.Head.Position) <= 8 then
+                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace.selectPlayer.Name)
                 task.wait(0.1)
+                print("Alt")
             else
                 task.wait()
             end
