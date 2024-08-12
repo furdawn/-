@@ -118,7 +118,6 @@ local function Start()
 
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
             Kill(targetPlayer)
-            task.wait(0.1)
        else
             break
         end
@@ -149,7 +148,6 @@ local function StartAlt()
             if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
                 if targetPlayer:FindFirstChild("Knife") or selectPlayer.Backpack:FindFirstChild("Knife") then
                     Kill(targetPlayer)
-                    task.wait(0.25)
                 else
                     table.remove(allPlayers, i)
                 end
@@ -182,7 +180,7 @@ altGUI:GetPropertyChangedSignal("Visible"):Connect(altVisible)
 task.spawn(function()
     game:GetService("RunService").Heartbeat:Connect(function()
         if Players.LocalPlayer.Character and targetGUI.Visible and getgenv().Autofarm then
-            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace.selectPlayer.Head.Position) <= 8 then
+            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace[selectPlayer].Head.Position) <= 8 then
                 Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(selectPlayer)
                 task.wait(0.1)
                 print("Main")
@@ -192,7 +190,7 @@ task.spawn(function()
         end
 
         if Players.LocalPlayer.Character and altGUI.Visible and getgenv().Altfarm then
-            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace.selectPlayer.Head.Position) <= 8 then
+            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace[selectPlayer].Head.Position) <= 8 then
                 Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(selectPlayer)
                 task.wait(0.1)
                 print("Alt")
