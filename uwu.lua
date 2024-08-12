@@ -72,7 +72,7 @@ local function Kill(targetPlayer)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-1.5, 0, 1) + Vector3.new(0, -4.5, 0))
+            local offset = targetRoot.CFrame:vectorToWorldSpace(Vector3.new(-1.5, 0, 0.5) + Vector3.new(0, -4, 0))
             localRoot.CFrame = targetRoot.CFrame + offset
         end
     end
@@ -105,7 +105,7 @@ local function Start()
 
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
             Kill(targetPlayer)
-            task.wait(0.1)
+            task.wait(0.2)
         else
             break
         end
@@ -136,7 +136,7 @@ local function AltStart()
             if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
                 if targetPlayer:FindFirstChild("Knife") or targetText.Backpack:FindFirstChild("Knife") then
                     Kill(targetPlayer)
-                    task.wait(0.1)
+                    task.wait(0.2)
                 else
                     table.remove(allPlayers, i)
                 end
@@ -171,7 +171,7 @@ task.spawn(function()
                 Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace[targetText])
                 coroutine.wrap(function()
                     cooldown = true
-                    task.wait(0.3)
+                    task.wait(0.5)
                     cooldown = false
                 end)()
             else
