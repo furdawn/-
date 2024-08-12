@@ -7,7 +7,7 @@ local Terrain = game.Workspace.Terrain
 
 local targetGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
 local altGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("GamemodeMessage")
-selectPlayer = nil
+local selectPlayer
 
 Terrain.WaterWaveSize = 0
 Terrain.WaterWaveSpeed = 0
@@ -180,18 +180,20 @@ targetGUI:GetPropertyChangedSignal("Visible"):Connect(MainVisible)
 altGUI:GetPropertyChangedSignal("Visible"):Connect(altVisible)
 
 task.spawn(function()
-    game:GetService("RunService").Stepped:Connect(function()
-        if Players.LocalPlayer.Character and targetGUI.Visible == true and getgenv().Autofarm == true and selectPlayer ~= nil then
-            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace.selectPlayer.Name.Head.Position) <= 8 then
-                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace.selectPlayer.Name)
+    game:GetService("RunService").Heartbeat:Connect(function()
+        if Players.LocalPlayer.Character and targetGUI.Visible and getgenv().Autofarm then
+            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace.selectPlayer.Head.Position) <= 8 then
+                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(selectPlayer)
                 task.wait(0.1)
                 print("Main")
             else
                 task.wait()
             end
-        elseif Players.LocalPlayer.Character and altGUI.Visible == true and getgenv().Altfarm == true and selectPlayer ~= nil then
-            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace.selectPlayer.Name.Head.Position) <= 8 then
-                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(game.Workspace.selectPlayer.Name)
+        end
+
+        if Players.LocalPlayer.Character and altGUI.Visible and getgenv().Altfarm then
+            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace.selectPlayer.Head.Position) <= 8 then
+                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(selectPlayer)
                 task.wait(0.1)
                 print("Alt")
             else
