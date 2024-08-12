@@ -1,4 +1,5 @@
 repeat task.wait() until game:IsLoaded()
+getgenv().ServerHopper = true
 getgenv().Mainfarm = nil
 getgenv().Altfarm = nil
 
@@ -34,7 +35,46 @@ for _, v in pairs(game:GetDescendants()) do
 end
 
 local function ServerHop()
-    -- Make this teleport when the server size is less than <= 3
+    local Player = game.Players.LocalPlayer    
+    local Http = game:GetService("HttpService")
+    local TPS = game:GetService("TeleportService")
+    local Api = "https://games.roblox.com/v1/games/"
+
+    local _place,_id = game.PlaceId, game.JobId
+    local _servers = Api.._place.."/servers/Public?sortOrder=Desc&limit=100"
+
+    local function ListServers(cursor)
+        local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
+        return Http:JSONDecode(Raw)
+    end
+
+    local Next; repeat
+        local Servers = ListServers(Next)
+        for _,v in pairs(Servers.data) do
+            if v.playing >= 4 and v.playing < v.maxPlayers and v.id ~= _id then
+                local success, err = pcall(TPS.TeleportToPlaceInstance, TPS, _place, v.id, Player)
+                if success then
+                    break
+                end
+            end
+        end
+
+        Next = Servers.nextPageCursor
+    until not Next
+end
+
+local function PlayerCount()
+    local playerCount = #game.Players:GetPlayers()
+    if playerCount <= 3 then
+        ServerHop()
+    end
+end
+
+local function Checker()
+    while getgenv().ServerHopper do
+        task.wait(3600)
+        PlayerCount()
+    end
 end
 
 local function BreakVelo()
@@ -176,6 +216,7 @@ task.spawn(function()
     end)
 end)
 
+Checker()
 Players.LocalPlayer.Idled:Connect(function()
     VirtualUser:CaptureController()
     VirtualUser:ClickButton2(Vector2.new())
