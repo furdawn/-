@@ -67,7 +67,7 @@ local function Kill(targetPlayer)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            local offset = CFrame.new(-2, 0, 0.5)
+            local offset = CFrame.new(-1, -3.5, 0)
             local targetCFrame = targetRoot.CFrame * offset
             local tween = TweenService:Create(localRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), { CFrame = targetCFrame })
             tween:Play()
@@ -174,7 +174,7 @@ task.spawn(function()
                 end
                 coroutine.wrap(function()
                     cooldown = true
-                    task.wait(0.7)
+                    task.wait(0.35)
                     cooldown = false
                 end)()
             else
