@@ -67,7 +67,7 @@ local function Kill(targetPlayer)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            local offset = CFrame.new(0, -4.8, 0)
+            local offset = CFrame.new(-2, 0, 0.5)
             local targetCFrame = targetRoot.CFrame * offset
             local tween = TweenService:Create(localRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), { CFrame = targetCFrame })
             tween:Play()
@@ -169,12 +169,12 @@ task.spawn(function()
             end
             if (getgenv().Mainfarm or getgenv().Altfarm) and not cooldown then
                 local target = game.Workspace[knifePlayer]
-                if target and Players.LocalPlayer:DistanceFromCharacter(target.Head.Position) <= 8 then
+                if target and Players.LocalPlayer:DistanceFromCharacter(target.Head.Position) <= 10 then
                     Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(target)
                 end
                 coroutine.wrap(function()
                     cooldown = true
-                    task.wait(0.8)
+                    task.wait(0.7)
                     cooldown = false
                 end)()
             else
