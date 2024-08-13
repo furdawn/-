@@ -12,7 +12,7 @@ local Terrain = game.Workspace.Terrain
 Players.LocalPlayer.PlayerGui:WaitForChild("MobileShiftLock"):Destroy()
 local mainGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
 local altGUI = Players.LocalPlayer.PlayerGui.ScreenGui.UI.GamemodeMessage.textD
-local knifePlayer
+local targetText
 
 Terrain.WaterWaveSize = 0
 Terrain.WaterWaveSpeed = 0
@@ -134,7 +134,6 @@ local function Kill(targetPlayer)
 end
 
 local function Start()
-    targetText = nil
     BreakVelo()
     DestroyMap()
     SetupAtlas()
@@ -143,7 +142,7 @@ local function Start()
         task.wait()
     end
 
-    local targetText = mainGUI.TargetText.Text
+    targetText = mainGUI.TargetText.Text
     local targetPlayer = game.Workspace:FindFirstChild(targetText)
 
     getgenv().Mainfarm = true
@@ -160,7 +159,6 @@ local function Start()
         end
 
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
-            knifePlayer = targetText
             Kill(targetPlayer)
             task.wait(0.3)
         else
@@ -188,7 +186,7 @@ local function AltStart()
             local startTime = tick()
             while tick() - startTime < 3 do
                 if game.Workspace[v.Name] and game.Workspace[v.Name]:FindFirstChild("HumanoidRootPart") then
-                    knifePlayer = v.Name
+                    targetText = v.Name
                     local targetPlayer = game.Workspace[v.Name]
                     Kill(targetPlayer)
                     task.wait(0.3)
@@ -216,9 +214,9 @@ end)
 coroutine.wrap(function()
     game:GetService("RunService").Stepped:Connect(function()
         if Players.LocalPlayer.Character and getgenv().Autofarm == true then
-            local target = game.Workspace:FindFirstChild(knifePlayer)
+            local target = game.Workspace:FindFirstChild(targetText)
             if target and Players.LocalPlayer:DistanceFromCharacter(target.Head.Position) <= 8 then
-                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(knifePlayer)
+                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(targetText)
             else
                 task.wait()
             end
