@@ -1,5 +1,6 @@
 repeat task.wait() until game:IsLoaded()
-getgenv().Autofarm = nil
+getgenv().Mainfarm = nil
+getgenv().Altfarm = nil
 
 local TweenService = game:GetService("TweenService")
 local VirtualUser = game:GetService("VirtualUser")
@@ -61,16 +62,6 @@ local function DestroyMap()
     end
 end
 
-local function SetupAtlas()
-    for _, v in pairs(Players.LocalPlayer.Character:GetChildren()) do
-        if v:IsA("BasePart") and
-            v.Name == "Right Leg" or
-            v.Name == "Left Leg" then
-            v:Destroy()
-        end
-    end
-end
-
 local function Kill(targetPlayer)
     if targetPlayer and targetPlayer:IsA("Model") and targetPlayer:FindFirstChild("HumanoidRootPart") then
         local localRoot = Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
@@ -89,7 +80,6 @@ end
 local function Start()
     BreakVelo()
     DestroyMap()
-    SetupAtlas()
 
     while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
         task.wait()
@@ -132,7 +122,7 @@ local function AltStart()
         task.wait()
     end
 
-    getgenv().Autofarm = true
+    getgenv().Altfarm = true
 
     while altGUI.Text == "Free For All" or altGUI.Text == "Infection" and getgenv().Autofarm do
         for _, v in pairs(Players:GetPlayers()) do
@@ -147,7 +137,7 @@ local function AltStart()
         end
         task.wait()
     end
-    getgenv().Autofarm = false
+    getgenv().Altfarm = false
     workspace.Gravity = 215
 end
 
@@ -165,15 +155,18 @@ end)
 
 task.spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
-        if Players.LocalPlayer.Character and (getgenv().Mainfarm == true or getgenv().Altfarm == true) then
-            local target = game.Workspace[knifePlayer]
-            if target and Players.LocalPlayer:DistanceFromCharacter(target.Head.Position) <= 8 then
-                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(target)
-            else
-                task.wait()
+        if Players.LocalPlayer.Character then
+            for _, v in pairs(Players.LocalPlayer.Character:GetDescendants()) do
+                if v:IsA("BasePart") and v.CanCollide then
+                    v.CanCollide = false
+                end
             end
-        else
-            task.wait()
+            if getgenv().Mainfarm == true or getgenv().Altfarm == true then
+                local target = game.Workspace[knifePlayer]
+                if target and Players.LocalPlayer:DistanceFromCharacter(target.Head.Position) <= 8 then
+                    Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(target)
+                end
+            end
         end
     end)
 end)
