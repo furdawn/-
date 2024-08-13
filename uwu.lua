@@ -165,13 +165,15 @@ end)
 
 task.spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
-        if Players.LocalPlayer.Character and getgenv().Autofarm == true then
+        if Players.LocalPlayer.Character and (getgenv().Mainfarm == true or getgenv().Altfarm == true) then
             local target = game.Workspace[knifePlayer]
             if target and Players.LocalPlayer:DistanceFromCharacter(target.Head.Position) <= 8 then
                 Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(target)
             else
                 task.wait()
             end
+        else
+            task.wait()
         end
     end)
 end)
