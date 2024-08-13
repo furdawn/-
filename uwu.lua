@@ -144,7 +144,6 @@ local function Start()
 
     local targetText = mainGUI.TargetText.Text
     local targetPlayer = game.Workspace:FindFirstChild(targetText)
-    knifePlayer = targetText
 
     getgenv().Mainfarm = true
 
@@ -160,6 +159,7 @@ local function Start()
         end
 
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
+            knifePlayer = targetText
             Kill(targetPlayer)
             task.wait(0.3)
         else
