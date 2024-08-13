@@ -77,7 +77,7 @@ local function Kill(targetPlayer)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            local offset = CFrame.new(-1.25, -2.5, 3)
+            local offset = CFrame.new(-1.25, -2.5, 0)
             local targetCFrame = targetRoot.CFrame * offset
             local tween = TweenService:Create(localRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), { CFrame = targetCFrame })
             tween:Play()
@@ -168,15 +168,14 @@ end)
 coroutine.wrap(function()
     game:GetService("RunService").Stepped:Connect(function()
         if Players.LocalPlayer.Character and getgenv().Autofarm == true then
-            local target = game.Workspace[knifePlayer]
-            if target and Players.LocalPlayer:DistanceFromCharacter(target.Head.Position) <= 8 then
-                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(target)
+            if Players.LocalPlayer:DistanceFromCharacter(knifePlayer.Head.Position) <= 8 then
+                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(knifePlayer)
             else
                 task.wait()
             end
         end
     end)
-end)()
+end)
 
 Players.LocalPlayer.Idled:Connect(function()
     VirtualUser:CaptureController()
