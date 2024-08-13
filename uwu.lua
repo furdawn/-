@@ -165,11 +165,12 @@ altGUI:GetPropertyChangedSignal("Text"):Connect(function()
     end
 end)
 
-coroutine.wrap(function()
+task.spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
         if Players.LocalPlayer.Character and getgenv().Autofarm == true then
-            if Players.LocalPlayer:DistanceFromCharacter(knifePlayer.Head.Position) <= 8 then
-                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(knifePlayer)
+            local target = game.Workspace[knifePlayer]
+            if target and Players.LocalPlayer:DistanceFromCharacter(target.Head.Position) <= 8 then
+                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(target)
             else
                 task.wait()
             end
