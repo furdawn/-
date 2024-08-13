@@ -163,7 +163,7 @@ task.spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
         if Players.LocalPlayer.Character then
             for _, child in pairs(Players.LocalPlayer.Character:GetDescendants()) do
-                if child:IsA("BasePart") and v.CanCollide then
+                if child:IsA("BasePart") and child.CanCollide then
                     child.CanCollide = false
                 end
             end
