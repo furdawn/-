@@ -154,7 +154,6 @@ altGUI:GetPropertyChangedSignal("Text"):Connect(function()
     end
 end)
 
-local cooldown = false
 task.spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
         if Players.LocalPlayer.Character then
@@ -163,15 +162,18 @@ task.spawn(function()
                     v.CanCollide = false
                 end
             end
-            if getgenv().Mainfarm or getgenv().Altfarm and not cooldown then
-                cooldown = true
+            if (getgenv().Mainfarm or getgenv().Altfarm) and not cooldown then
                 local target = game.Workspace[knifePlayer]
                 if target and Players.LocalPlayer:DistanceFromCharacter(target.Head.Position) <= 5 then
                     Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(target)
                 end
-                task.delay(0.25, function()
+                coroutine.wrap(function()
+                    cooldown = true
+                    task.wait(0.8)
                     cooldown = false
-                end)
+                end)()
+            else
+                task.wait()
             end
         end
     end)
