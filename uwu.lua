@@ -173,7 +173,6 @@ local function Start()
 end
 
 local function AltStart()
-    targetText = nil
     BreakVelo()
     DestroyMap()
     SetupAtlas()
@@ -209,16 +208,23 @@ mainGUI:GetPropertyChangedSignal("Visible"):Connect(function()
 end)
 
 altGUI:GetPropertyChangedSignal("Text"):Connect(function()
-    if altGUI.Text == "Free For All" or "Infection" then
+    if altGUI.Text == "Free For All" or altGUI.Text == "Infection" then
         AltStart()
     end
 end)
 
 coroutine.wrap(function()
     game:GetService("RunService").Stepped:Connect(function()
-        print(knifePlayer)
+        if Players.LocalPlayer.Character and getgenv().Autofarm and knifePlayer then
+            local target = game.Workspace:FindFirstChild(knifePlayer)
+            if target and Players.LocalPlayer:DistanceFromCharacter(target.Head.Position) <= 8 then
+                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(knifePlayer)
+            else
+                task.wait()
+            end
+        end
     end)
-end)
+end)()
 
 coroutine.wrap(function()
     while true do
