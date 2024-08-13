@@ -215,22 +215,7 @@ altGUI:GetPropertyChangedSignal("Text"):Connect(function()
 end)
 
 coroutine.wrap(function()
-    game:GetService("RunService").Stepped:Connect(function()
-        if knifePlayer ~= nil then
-            print("Not nil")
-            if Players.LocalPlayer.Character and getgenv().Autofarm == true then
-                print("Local player and autofarm")
-                if Players.LocalPlayer:DistanceFromCharacter(game.Workspace[knifePlayer].Head.Position) <= 8 then
-                    print("Within POS")
-                    Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(knifePlayer)
-                else
-                    task.wait()
-                end
-            end
-        else
-            task.wait()
-        end
-    end)
+    print(knifePlayer)
 end)
 
 coroutine.wrap(function()
