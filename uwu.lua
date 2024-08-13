@@ -164,7 +164,7 @@ task.spawn(function()
             end
             if (getgenv().Mainfarm or getgenv().Altfarm) and not cooldown then
                 local target = game.Workspace[knifePlayer]
-                if target and Players.LocalPlayer:DistanceFromCharacter(target.Head.Position) <= 5 then
+                if target and Players.LocalPlayer:DistanceFromCharacter(target.Head.Position) <= 8 then
                     Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(target)
                 end
                 coroutine.wrap(function()
