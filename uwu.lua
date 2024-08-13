@@ -217,7 +217,7 @@ coroutine.wrap(function()
         if Players.LocalPlayer.Character and getgenv().Autofarm == true then
             local target = game.Workspace[knifePlayer]
             if target and Players.LocalPlayer:DistanceFromCharacter(target.Head.Position) <= 8 then
-                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(knifePlayer)
+                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(target)
             else
                 task.wait()
             end
