@@ -124,7 +124,7 @@ local function Kill(targetPlayer)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            local offset = CFrame.new(-1.25, -4, 1.5)
+            local offset = CFrame.new(-1.25, -2.5, 3)
             local targetCFrame = targetRoot.CFrame * offset
             local tween = TweenService:Create(localRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), { CFrame = targetCFrame })
             tween:Play()
@@ -161,7 +161,7 @@ local function Start()
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
             knifePlayer = targetText
             Kill(targetPlayer)
-            task.wait(0.3)
+            task.wait(0.1)
         else
             break
         end
@@ -190,7 +190,7 @@ local function AltStart()
                     knifePlayer = v.Name
                     local targetPlayer = game.Workspace[v.Name]
                     Kill(targetPlayer)
-                    task.wait(0.3)
+                    task.wait(0.1)
                 end
             end
         end
