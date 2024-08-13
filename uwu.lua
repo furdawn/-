@@ -162,7 +162,7 @@ local function Start()
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
             knifePlayer = targetText
             Kill(targetPlayer)
-            task.wait(0.5)
+            task.wait(0.3)
         else
             break
         end
@@ -192,7 +192,7 @@ local function AltStart()
                     knifePlayer = v.Name
                     local targetPlayer = game.Workspace[v.Name]
                     Kill(targetPlayer)
-                    task.wait(0.5)
+                    task.wait(0.3)
                 end
             end
         end
@@ -214,22 +214,16 @@ altGUI:GetPropertyChangedSignal("Text"):Connect(function()
     end
 end)
 
-local cooldown = false
-task.spawn(function()
-    game:GetService("RunService").Stepped:Connect(function()
-        if knifePlayer and not cooldown and Players.LocalPlayer.Character and getgenv().Autofarm == true then
+coroutine.wrap(function()
+    while true do
+        if Players.LocalPlayer.Character and knifePlayer and getgenv().Autofarm == true then
             if Players.LocalPlayer:DistanceFromCharacter(game.Workspace[knifePlayer].Head.Position) <= 8 then
                 Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(knifePlayer)
-                coroutine.wrap(function()
-                    cooldown = true
-                    task.wait(0.15)
-                    cooldown = false
-                end)()
             else
                 task.wait()
             end
         end
-    end)
+    end
 end)
 
 coroutine.wrap(function()
@@ -237,7 +231,7 @@ coroutine.wrap(function()
         PlayerCount()
         task.wait(3600)
     end
-end)()
+end)
 
 Players.LocalPlayer.Idled:Connect(function()
     VirtualUser:CaptureController()
