@@ -215,7 +215,9 @@ altGUI:GetPropertyChangedSignal("Text"):Connect(function()
 end)
 
 coroutine.wrap(function()
-    print(knifePlayer)
+    game:GetService("RunService").Stepped:Connect(function()
+        print(knifePlayer)
+    end)
 end)
 
 coroutine.wrap(function()
