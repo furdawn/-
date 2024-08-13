@@ -114,7 +114,6 @@ local function Start()
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
             knifePlayer = targetText
             Kill(targetPlayer)
-            task.wait(0.1)
         else
             break
         end
@@ -143,7 +142,6 @@ local function AltStart()
                     knifePlayer = v.Name
                     local targetPlayer = game.Workspace[v.Name]
                     Kill(targetPlayer)
-                    task.wait(0.1)
                 end
             end
         end
