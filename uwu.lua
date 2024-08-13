@@ -12,7 +12,7 @@ local Terrain = game.Workspace.Terrain
 Players.LocalPlayer.PlayerGui:WaitForChild("MobileShiftLock"):Destroy()
 local mainGUI = Players.LocalPlayer.PlayerGui:FindFirstChild("ScreenGui"):FindFirstChild("UI"):FindFirstChild("Target")
 local altGUI = Players.LocalPlayer.PlayerGui.ScreenGui.UI.GamemodeMessage.textD
-local targetText
+local knifePlayer
 
 Terrain.WaterWaveSize = 0
 Terrain.WaterWaveSpeed = 0
@@ -142,8 +142,9 @@ local function Start()
         task.wait()
     end
 
-    targetText = mainGUI.TargetText.Text
+    local targetText = mainGUI.TargetText.Text
     local targetPlayer = game.Workspace:FindFirstChild(targetText)
+    knifePlayer = targetText
 
     getgenv().Mainfarm = true
 
@@ -186,7 +187,7 @@ local function AltStart()
             local startTime = tick()
             while tick() - startTime < 3 do
                 if game.Workspace[v.Name] and game.Workspace[v.Name]:FindFirstChild("HumanoidRootPart") then
-                    targetText = v.Name
+                    knifePlayer = v.Name
                     local targetPlayer = game.Workspace[v.Name]
                     Kill(targetPlayer)
                     task.wait(0.3)
@@ -214,9 +215,9 @@ end)
 coroutine.wrap(function()
     game:GetService("RunService").Stepped:Connect(function()
         if Players.LocalPlayer.Character and getgenv().Autofarm == true then
-            local target = game.Workspace:FindFirstChild(targetText)
+            local target = game.Workspace[knifePlayer]
             if target and Players.LocalPlayer:DistanceFromCharacter(target.Head.Position) <= 8 then
-                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(targetText)
+                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(knifePlayer)
             else
                 task.wait()
             end
