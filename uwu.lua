@@ -35,17 +35,16 @@ for _, v in pairs(game:GetDescendants()) do
 end
 
 local function BreakVelo()
-    workspace.Gravity = 215
     for _, v in ipairs(Players.LocalPlayer.Character:GetDescendants()) do
         if v:IsA("BasePart") then
             v.Velocity, v.RotVelocity = Vector3.zero, Vector3.zero
         end
     end
     Players.LocalPlayer.Character.Animate.Disabled = true
-    workspace.Gravity = 0
 end
 
 local function DestroyMap()
+    workspace.Gravity = 0
     for _, v in pairs(Players:GetPlayers()) do
         if game.Workspace[v.Name] then
             for _, child in ipairs(game.Workspace[v.Name]:GetDescendants()) do
@@ -75,9 +74,11 @@ local function Kill(targetPlayer)
             tween.Completed:Wait()
         end
     end
+    BreakVelo()
 end
 
 local function Start()
+    workspace.Gravity = 215
     BreakVelo()
     DestroyMap()
 
@@ -90,7 +91,7 @@ local function Start()
 
     getgenv().Mainfarm = true
 
-    while mainGUI.Visible and getgenv().Mainfarm == true do
+    while mainGUI.Visible and getgenv().Mainfarm do
         local currentTarget = mainGUI.TargetText.Text
         if currentTarget ~= targetText then
             targetPlayer = game.Workspace:FindFirstChild(currentTarget)
@@ -114,9 +115,9 @@ local function Start()
 end
 
 local function AltStart()
+    workspace.Gravity = 215
     BreakVelo()
     DestroyMap()
-    SetupAtlas()
 
     while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
         task.wait()
@@ -124,7 +125,7 @@ local function AltStart()
 
     getgenv().Altfarm = true
 
-    while altGUI.Text == "Free For All" or altGUI.Text == "Infection" and getgenv().Autofarm do
+    while altGUI.Text == "Free For All" or altGUI.Text == "Infection" and getgenv().Altfarm do
         for _, v in pairs(Players:GetPlayers()) do
             local startTime = tick()
             while tick() - startTime < 3 do
@@ -153,6 +154,7 @@ altGUI:GetPropertyChangedSignal("Text"):Connect(function()
     end
 end)
 
+local cooldown = false
 task.spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
         if Players.LocalPlayer.Character then
@@ -161,11 +163,15 @@ task.spawn(function()
                     v.CanCollide = false
                 end
             end
-            if getgenv().Mainfarm == true or getgenv().Altfarm == true then
+            if getgenv().Mainfarm or getgenv().Altfarm and not cooldown then
+                cooldown = true
                 local target = game.Workspace[knifePlayer]
-                if target and Players.LocalPlayer:DistanceFromCharacter(target.Head.Position) <= 8 then
+                if target and Players.LocalPlayer:DistanceFromCharacter(target.Head.Position) <= 5 then
                     Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(target)
                 end
+                task.delay(0.25, function()
+                    cooldown = false
+                end)
             end
         end
     end)
