@@ -1,6 +1,5 @@
 repeat task.wait() until game:IsLoaded()
-getgenv().Mainfarm = nil
-getgenv().Altfarm = nil
+getgenv().Autofarm = nil
 
 local myAccounts = {"cuffedpaws", "DMADusk", "tr4nsfem"}
 
@@ -125,10 +124,9 @@ local function Kill(targetPlayer)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            local offset = CFrame.new(-1.25, 4, -1)
+            local offset = CFrame.new(-1.25, -4, 1.5)
             local targetCFrame = targetRoot.CFrame * offset
-            local distance = (localRoot.Position - targetRoot.Position).Magnitude
-            local tween = TweenService:Create(localRoot, TweenInfo.new(distance / 150, Enum.EasingStyle.Linear), { CFrame = targetCFrame })
+            local tween = TweenService:Create(localRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), { CFrame = targetCFrame })
             tween:Play()
             tween.Completed:Wait()
         end
@@ -164,6 +162,7 @@ local function Start()
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
             knifePlayer = targetText
             Kill(targetPlayer)
+            task.wait(0.5)
         else
             break
         end
@@ -183,9 +182,9 @@ local function AltStart()
         task.wait()
     end
 
-    getgenv().Altfarm = true
+    getgenv().Autofarm = true
 
-    while altGUI.Text == "Free For All" or altGUI.Text == "Infection" and getgenv().Altfarm do
+    while altGUI.Text == "Free For All" or altGUI.Text == "Infection" and getgenv().Autofarm do
         for _, v in pairs(Players:GetPlayers()) do
             local startTime = tick()
             while tick() - startTime < 3 do
@@ -193,12 +192,13 @@ local function AltStart()
                     knifePlayer = v.Name
                     local targetPlayer = game.Workspace[v.Name]
                     Kill(targetPlayer)
+                    task.wait(0.5)
                 end
             end
         end
         task.wait()
     end
-    getgenv().Altfarm = false
+    getgenv().Autofarm = false
     workspace.Gravity = 215
 end
 
@@ -217,7 +217,7 @@ end)
 local cooldown = false
 task.spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
-        if knifePlayer and not cooldown and Players.LocalPlayer.Character and getgenv().MainFarm == true or getgenv().Altfarm == true then
+        if knifePlayer and not cooldown and Players.LocalPlayer.Character and getgenv().Autofarm == true then
             if Players.LocalPlayer:DistanceFromCharacter(game.Workspace[knifePlayer].Head.Position) <= 8 then
                 Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(knifePlayer)
                 coroutine.wrap(function()
