@@ -67,7 +67,7 @@ local function Kill(targetPlayer)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            local offset = CFrame.new(0, -5, 0)
+            local offset = CFrame.new(0, -4.8, 0)
             local targetCFrame = targetRoot.CFrame * offset
             local tween = TweenService:Create(localRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), { CFrame = targetCFrame })
             tween:Play()
@@ -85,6 +85,9 @@ local function Start()
     while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
         task.wait()
     end
+
+    local knife = Players.LocalPlayer.Backpack:FindFirstChild("Knife")
+    knife.Parent = Players.LocalPlayer.Character
 
     local targetText = mainGUI.TargetText.Text
     local targetPlayer = game.Workspace:FindFirstChild(targetText)
@@ -123,13 +126,15 @@ local function AltStart()
         task.wait()
     end
 
+    local knife = Players.LocalPlayer.Backpack:FindFirstChild("Knife")
+    knife.Parent = Players.LocalPlayer.Character
+
     getgenv().Altfarm = true
 
-    while altGUI.Text == "Free For All" or altGUI.Text == "Infection" and getgenv().Altfarm do
+    while altGUI.Text == "Free For All" or (altGUI.Text == "Infection" and getgenv().Altfarm) do
         for _, v in pairs(Players:GetPlayers()) do
-            local startTime = tick()
-            while tick() - startTime < 3 do
-                if game.Workspace[v.Name] and game.Workspace[v.Name]:FindFirstChild("HumanoidRootPart") then
+            if game.Workspace[v.Name] and game.Workspace[v.Name]:FindFirstChild("HumanoidRootPart") then
+                if game.Workspace[v.Name]:FindFirstChild("Knife") or Players[v.Name]:FindFirstChild("Knife") then
                     knifePlayer = v.Name
                     local targetPlayer = game.Workspace[v.Name]
                     Kill(targetPlayer)
@@ -157,9 +162,9 @@ end)
 task.spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
         if Players.LocalPlayer.Character then
-            for _, v in pairs(Players.LocalPlayer.Character:GetDescendants()) do
-                if v:IsA("BasePart") and v.CanCollide then
-                    v.CanCollide = false
+            for _, child in pairs(Players.LocalPlayer.Character:GetDescendants()) do
+                if child:IsA("BasePart") and v.CanCollide then
+                    child.CanCollide = false
                 end
             end
             if (getgenv().Mainfarm or getgenv().Altfarm) and not cooldown then
