@@ -215,15 +215,19 @@ altGUI:GetPropertyChangedSignal("Text"):Connect(function()
 end)
 
 coroutine.wrap(function()
-    while true do
-        if Players.LocalPlayer.Character and knifePlayer and getgenv().Autofarm == true then
-            if Players.LocalPlayer:DistanceFromCharacter(game.Workspace[knifePlayer].Head.Position) <= 8 then
-                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(knifePlayer)
-            else
-                task.wait()
+    game:GetService("RunService").Stepped:Connect(function()
+        if knifePlayer ~= nil then
+            if Players.LocalPlayer.Character and getgenv().Autofarm == true then
+                if Players.LocalPlayer:DistanceFromCharacter(game.Workspace[knifePlayer].Head.Position) <= 8 then
+                    Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(knifePlayer)
+                else
+                    task.wait()
+                end
             end
+        else
+            task.wait()
         end
-    end
+    end)
 end)
 
 coroutine.wrap(function()
