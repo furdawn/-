@@ -110,6 +110,7 @@ local function Start()
         else
             break
         end
+        task.wait()
     end
     getgenv().Mainfarm = false
     workspace.Gravity = 200
@@ -137,6 +138,7 @@ local function AltStart()
                 Kill(targetPlayer)
             end
         end
+        task.wait()
     end
     getgenv().Altfarm = false
     workspace.Gravity = 200
