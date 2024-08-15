@@ -38,16 +38,13 @@ local function BreakVel()
     Players.LocalPlayer.Character.Animate.Disabled = true
     for _, v in ipairs(Players.LocalPlayer.Character:GetDescendants()) do
         if v:IsA("BasePart") then
-            v.Velocity, v.RotVelocity = Vector3.zero, Vector3.zero
+            v.Velocity = Vector3.new(0, 0, 0)
         end
     end
 end
 
 local function MapSetup()
-    workspace.Gravity = 420
-    task.wait(0.5)
     workspace.Gravity = 0
-    BreakVel()
     for _, v in ipairs(Players:GetPlayers()) do
         if game.Workspace[v.Name] then
             for _, child in ipairs(game.Workspace[v.Name]:GetDescendants()) do
@@ -80,6 +77,7 @@ local function Kill(targetPlayer)
 end
 
 local function Start()
+    workspace.Gravity = 200
     MapSetup()
     BreakVel()
 
@@ -114,9 +112,11 @@ local function Start()
         end
     end
     getgenv().Mainfarm = false
+    workspace.Gravity = 200
 end
 
 local function AltStart()
+    workspace.Gravity = 200
     MapSetup()
     BreakVel()
 
@@ -139,6 +139,7 @@ local function AltStart()
         end
     end
     getgenv().Altfarm = false
+    workspace.Gravity = 200
 end
 
 mainGUI:GetPropertyChangedSignal("Visible"):Connect(function()
