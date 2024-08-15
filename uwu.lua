@@ -20,7 +20,7 @@ Terrain.WaterTransparency = 0
 Lighting.Brightness = 0
 Lighting.GlobalShadows = false
 settings().Rendering.QualityLevel = 1
-for _, v in pairs(game:GetDescendants()) do
+for _, v in ipairs(game:GetDescendants()) do
     if v:IsA("BasePart") then
         v.Material = "Plastic"
         v.Reflectance = 0
@@ -34,18 +34,21 @@ for _, v in pairs(game:GetDescendants()) do
     end
 end
 
-local function BreakVelo()
+local function BreakVel()
+    Players.LocalPlayer.Character.Animate.Disabled = true
     for _, v in ipairs(Players.LocalPlayer.Character:GetDescendants()) do
         if v:IsA("BasePart") then
             v.Velocity, v.RotVelocity = Vector3.zero, Vector3.zero
         end
     end
-    Players.LocalPlayer.Character.Animate.Disabled = true
 end
 
-local function DestroyMap()
+local function MapSetup()
+    workspace.Gravity = 420
+    task.wait(0.5)
     workspace.Gravity = 0
-    for _, v in pairs(Players:GetPlayers()) do
+    BreakVel()
+    for _, v in ipairs(Players:GetPlayers()) do
         if game.Workspace[v.Name] then
             for _, child in ipairs(game.Workspace[v.Name]:GetDescendants()) do
                 if child:IsA("BasePart") then
@@ -54,7 +57,7 @@ local function DestroyMap()
             end
         end
     end
-    for _, v in pairs(game.Workspace.GameMap:GetDescendants()) do
+    for _, v in ipairs(game.Workspace.GameMap:GetDescendants()) do
         if v and v:IsA("BasePart") then
             v:Destroy()
         end
@@ -67,20 +70,18 @@ local function Kill(targetPlayer)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            local offset = CFrame.new(-1, -3.5, 1.25)
+            local offset = CFrame.new(-1.25, -4.5, -0.5)
             local targetCFrame = targetRoot.CFrame * offset
             local tween = TweenService:Create(localRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), { CFrame = targetCFrame })
             tween:Play()
-            tween.Completed:Wait()
         end
     end
-    BreakVelo()
+    BreakVel()
 end
 
 local function Start()
-    workspace.Gravity = 215
-    BreakVelo()
-    DestroyMap()
+    MapSetup()
+    BreakVel()
 
     while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
         task.wait()
@@ -111,16 +112,13 @@ local function Start()
         else
             break
         end
-        task.wait()
     end
     getgenv().Mainfarm = false
-    workspace.Gravity = 215
 end
 
 local function AltStart()
-    workspace.Gravity = 215
-    BreakVelo()
-    DestroyMap()
+    MapSetup()
+    BreakVel()
 
     while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
         task.wait()
@@ -132,19 +130,15 @@ local function AltStart()
     getgenv().Altfarm = true
 
     while altGUI.Text == "Free For All" or (altGUI.Text == "Infection" and getgenv().Altfarm) do
-        for _, v in pairs(Players:GetPlayers()) do
+        for _, v in ipairs(Players:GetPlayers()) do
             if game.Workspace[v.Name] and game.Workspace[v.Name]:FindFirstChild("HumanoidRootPart") then
-                if game.Workspace[v.Name]:FindFirstChild("Knife") or Players[v.Name]:FindFirstChild("Knife") then
-                    knifePlayer = v.Name
-                    local targetPlayer = game.Workspace[v.Name]
-                    Kill(targetPlayer)
-                end
+                knifePlayer = v.Name
+                local targetPlayer = game.Workspace[v.Name]
+                Kill(targetPlayer)
             end
         end
-        task.wait()
     end
     getgenv().Altfarm = false
-    workspace.Gravity = 215
 end
 
 mainGUI:GetPropertyChangedSignal("Visible"):Connect(function()
@@ -162,7 +156,7 @@ end)
 task.spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
         if Players.LocalPlayer.Character then
-            for _, child in pairs(Players.LocalPlayer.Character:GetDescendants()) do
+            for _, child in ipairs(Players.LocalPlayer.Character:GetDescendants()) do
                 if child:IsA("BasePart") and child.CanCollide then
                     child.CanCollide = false
                 end
@@ -174,7 +168,7 @@ task.spawn(function()
                 end
                 coroutine.wrap(function()
                     cooldown = true
-                    task.wait(0.75)
+                    task.wait(0.6)
                     cooldown = false
                 end)()
             else
