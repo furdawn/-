@@ -45,6 +45,11 @@ end
 
 local function MapSetup()
     workspace.Gravity = 0
+    for _, v in ipairs(game.Workspace.GameMap:GetDescendants()) do
+        if v and v:IsA("BasePart") then
+            v:Destroy()
+        end
+    end
     for _, v in ipairs(Players:GetPlayers()) do
         if game.Workspace[v.Name] then
             for _, child in ipairs(game.Workspace[v.Name]:GetDescendants()) do
@@ -52,11 +57,6 @@ local function MapSetup()
                     child.CanCollide = false
                 end
             end
-        end
-    end
-    for _, v in ipairs(game.Workspace.GameMap:GetDescendants()) do
-        if v and v:IsA("BasePart") then
-            v:Destroy()
         end
     end
 end
@@ -78,12 +78,12 @@ end
 
 local function Start()
     workspace.Gravity = 200
-    MapSetup()
-    BreakVel()
-
     while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
         task.wait()
     end
+
+    MapSetup()
+    BreakVel()
 
     local knife = Players.LocalPlayer.Backpack:FindFirstChild("Knife")
     knife.Parent = Players.LocalPlayer.Character
@@ -118,12 +118,12 @@ end
 
 local function AltStart()
     workspace.Gravity = 200
-    MapSetup()
-    BreakVel()
-
     while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
         task.wait()
     end
+
+    MapSetup()
+    BreakVel()
 
     local knife = Players.LocalPlayer.Backpack:FindFirstChild("Knife")
     knife.Parent = Players.LocalPlayer.Character
