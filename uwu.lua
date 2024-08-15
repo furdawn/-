@@ -44,7 +44,7 @@ local function BreakVel()
 end
 
 local function MapSetup()
-    workspace.Gravity = 0
+    game.Workspace.Gravity = 0
     for _, v in ipairs(game.Workspace.GameMap:GetDescendants()) do
         if v and v:IsA("BasePart") then
             v:Destroy()
@@ -77,8 +77,12 @@ local function Kill(targetPlayer)
 end
 
 local function Start()
-    workspace.Gravity = 200
+    game.Workspace.Gravity = 200
+    task.wait(0.5)
     while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
+        game.Workspace.Gravity = 0
+        local meow = Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+        meow.CFrame = rootPart.meow * CFrame.new(0, -8, 0)
         task.wait()
     end
 
@@ -113,12 +117,15 @@ local function Start()
         task.wait()
     end
     getgenv().Mainfarm = false
-    workspace.Gravity = 200
 end
 
 local function AltStart()
-    workspace.Gravity = 200
+    game.Workspace.Gravity = 200
+    task.wait(0.5)
     while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
+        game.Workspace.Gravity = 0
+        local meow = Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+        meow.CFrame = rootPart.meow * CFrame.new(0, -8, 0)
         task.wait()
     end
 
@@ -130,22 +137,21 @@ local function AltStart()
 
     getgenv().Altfarm = true
 
-    while altGUI.Text == "Free For All" or (altGUI.Text == "Infection" and getgenv().Altfarm) do
+    while getgenv().Altfarm and (altGUI.Text == "Infection" or altGUI.Text == "Free For All") do
         local players = Players:GetPlayers()
         if #players > 0 then
-            local randomIndex = math.random(1, #players)
-            local selectedPlayer = players[randomIndex]
+            local rdm = math.random(1, #players)
+            local targetPlayer = players[rdm]
 
-            if game.Workspace[selectedPlayer.Name] and game.Workspace[selectedPlayer.Name]:FindFirstChild("HumanoidRootPart") then
-                knifePlayer = selectedPlayer.Name
-                local targetPlayer = game.Workspace[selectedPlayer.Name]
+            if game.Workspace[targetPlayer.Name] and game.Workspace[targetPlayer.Name]:FindFirstChild("HumanoidRootPart") then
+                knifePlayer = targetPlayer.Name
+                local targetPlayer = game.Workspace[targetPlayer.Name]
                 Kill(targetPlayer)
             end
         end
         task.wait()
     end
     getgenv().Altfarm = false
-    workspace.Gravity = 200
 end
 
 mainGUI:GetPropertyChangedSignal("Visible"):Connect(function()
@@ -175,7 +181,7 @@ task.spawn(function()
                 end
                 coroutine.wrap(function()
                     cooldown = true
-                    task.wait(0.7)
+                    task.wait(0.65)
                     cooldown = false
                 end)()
             else
