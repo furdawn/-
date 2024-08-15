@@ -169,12 +169,12 @@ task.spawn(function()
             end
             if (getgenv().Mainfarm or getgenv().Altfarm) and not cooldown then
                 local target = game.Workspace[knifePlayer]
-                if target and Players.LocalPlayer:DistanceFromCharacter(target.Head.Position) <= 10 then
+                if target and Players.LocalPlayer:DistanceFromCharacter(target.HumanoidRootPart.Position) <= 6 then
                     Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(target)
                 end
                 coroutine.wrap(function()
                     cooldown = true
-                    task.wait(0.35)
+                    task.wait(0.75)
                     cooldown = false
                 end)()
             else
