@@ -131,10 +131,14 @@ local function AltStart()
     getgenv().Altfarm = true
 
     while altGUI.Text == "Free For All" or (altGUI.Text == "Infection" and getgenv().Altfarm) do
-        for _, v in ipairs(Players:GetPlayers()) do
-            if game.Workspace[v.Name] and game.Workspace[v.Name]:FindFirstChild("HumanoidRootPart") then
-                knifePlayer = v.Name
-                local targetPlayer = game.Workspace[v.Name]
+        local players = Players:GetPlayers()
+        if #players > 0 then
+            local randomIndex = math.random(1, #players)
+            local selectedPlayer = players[randomIndex]
+
+            if game.Workspace[selectedPlayer.Name] and game.Workspace[selectedPlayer.Name]:FindFirstChild("HumanoidRootPart") then
+                knifePlayer = selectedPlayer.Name
+                local targetPlayer = game.Workspace[selectedPlayer.Name]
                 Kill(targetPlayer)
             end
         end
