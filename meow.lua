@@ -52,11 +52,9 @@ local function MapSetup()
             v:Destroy()
         end
     end
-    for _, v in pairs(game.Workspace.LocalPlayer:GetChildren()) do
-        for _, v in pairs(v:GetDescendants()) do
-            if v:IsA("BasePart") then
-                v.CanCollide = false
-            end
+    for _, v in pairs(Players.LocalPlayer.Character:GetDescendants()) do
+        if v and v:IsA("BasePart") then
+            v.CanCollide = false
         end
     end
 end
