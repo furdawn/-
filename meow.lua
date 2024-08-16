@@ -167,7 +167,7 @@ task.spawn(function()
                 end
                 coroutine.wrap(function()
                     cooldown = true
-                    task.wait(0.65)
+                    task.wait(0.7)
                     cooldown = false
                 end)()
             else
