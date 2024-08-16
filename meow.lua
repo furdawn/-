@@ -99,8 +99,10 @@ local function Start()
             if knife then
                 knife.Parent = Players.LocalPlayer.Character
             end
+
             knifePlayer = targetText
             Kill(targetPlayer)
+            task.wait()
         else
             break
         end
@@ -116,28 +118,37 @@ local function AltStart()
 
     getgenv().Altfarm = true
 
-    local playerList = Players:GetPlayers()
-    local currentIndex = 1
-
     while getgenv().Altfarm and (altGUI.Text == "Infection" or altGUI.Text == "Free For All") do
-        local targetPlayer = playerList[currentIndex]
-        if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
-            local startTime = tick()
-            local knife = Players.LocalPlayer.Backpack:FindFirstChild("Knife")
-            if knife then
-                knife.Parent = Players.LocalPlayer.Character
-            end
+        local playerList = Players:GetPlayers()
+        local currentIndex = 1
 
-            while tick() - startTime < 2 and targetPlayer:FindFirstChild("HumanoidRootPart") do
-                Kill(targetPlayer)
-            end
+        while getgenv().Altfarm and (altGUI.Text == "Infection" or altGUI.Text == "Free For All") do
+            local targetPlayer = playerList[currentIndex]
+            if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
+                local startTime = tick()
 
-            currentIndex = currentIndex + 1
-            if currentIndex > #playerList then
-                currentIndex = 1
+                local knife = Players.LocalPlayer.Backpack:FindFirstChild("Knife")
+                if knife then
+                    knife.Parent = Players.LocalPlayer.Character
+                end
+
+                while tick() - startTime < 2 and getgenv().Altfarm and targetPlayer:FindFirstChild("HumanoidRootPart") do
+                    Kill(targetPlayer)
+                    task.wait()
+                end
+
+                currentIndex = currentIndex + 1
+                if currentIndex > #playerList then
+                    currentIndex = 1
+                end
+            else
+                currentIndex = currentIndex + 1
+                if currentIndex > #playerList then
+                    currentIndex = 1
+                end
             end
+            task.wait()
         end
-        task.wait(1)
     end
     getgenv().Altfarm = false
     Workspace.Gravity = 200
