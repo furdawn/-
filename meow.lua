@@ -69,7 +69,7 @@ local function Kill(targetPlayer)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            local offset = CFrame.new(-1.25, -4.5, 0.5)
+            local offset = CFrame.new(-1.25, -5.5, 0.5)
             local targetCFrame = targetRoot.CFrame * offset
             local tween = TweenService:Create(localRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), { CFrame = targetCFrame })
             tween:Play()
@@ -132,10 +132,15 @@ local function AltStart()
                 end
                 knifePlayer = targetPlayer.Name
                 local targetPlayer = game.Workspace[targetPlayer.Name]
-                Kill(targetPlayer)
+
+                local startTime = tick()
+                while tick() - startTime < 3 do
+                    Kill(targetPlayer)
+                    task.wait(0.1)
+                end
             end
         end
-        task.wait()
+        task.wait(1)
     end
     getgenv().Altfarm = false
 end
@@ -162,7 +167,7 @@ task.spawn(function()
             end
             if (getgenv().Mainfarm or getgenv().Altfarm) and not cooldown then
                 local target = game.Workspace[knifePlayer]
-                if target and Players.LocalPlayer:DistanceFromCharacter(target.HumanoidRootPart.Position) <= 6.5 then
+                if target and Players.LocalPlayer:DistanceFromCharacter(target.HumanoidRootPart.Position) <= 8 then
                     Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(target)
                 end
                 coroutine.wrap(function()
