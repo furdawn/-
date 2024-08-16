@@ -40,12 +40,12 @@ local function BreakVel()
             v.Velocity = Vector3.new(0, 0, 0)
         end
     end
-    Players.LocalPlayer.Character.Animate.Disabled = true
 end
 
 local function MapSetup()
     game.Workspace.Gravity = 215
     task.wait(1.25)
+    Players.LocalPlayer.Character.Animate.Disabled = true
     game.Workspace.Gravity = 0
     for _, v in ipairs(game.Workspace.GameMap:GetDescendants()) do
         if v and v:IsA("BasePart") then
@@ -65,7 +65,7 @@ local function Kill(targetPlayer)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            local offset = CFrame.new(-1.25, -3, 0)
+            local offset = CFrame.new(-1.5, -3.25, 0)
             local targetCFrame = targetRoot.CFrame * offset
             local tween = TweenService:Create(localRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), { CFrame = targetCFrame })
             tween:Play()
