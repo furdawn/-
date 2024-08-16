@@ -52,12 +52,10 @@ local function MapSetup()
             v:Destroy()
         end
     end
-    for _, v in ipairs(Players:GetPlayers()) do
-        if game.Workspace[v.Name] then
-            for _, child in ipairs(game.Workspace[v.Name]:GetDescendants()) do
-                if child:IsA("BasePart") then
-                    child.CanCollide = false
-                end
+    for _, v in pairs(game.Workspace.LocalPlayer:GetChildren()) do
+        for _, v in pairs(v:GetDescendants()) do
+            if v:IsA("BasePart") then
+                v.CanCollide = false
             end
         end
     end
@@ -111,6 +109,7 @@ local function Start()
         task.wait()
     end
     getgenv().Mainfarm = false
+    game.Workspace.Gravity = 200
 end
 
 local function AltStart()
@@ -119,30 +118,31 @@ local function AltStart()
 
     getgenv().Altfarm = true
 
+    local playerList = Players:GetPlayers()
+    local currentIndex = 1
+
     while getgenv().Altfarm and (altGUI.Text == "Infection" or altGUI.Text == "Free For All") do
-        local players = Players:GetPlayers()
-        if #players > 0 then
-            local rdm = math.random(1, #players)
-            local targetPlayer = players[rdm]
+        local targetPlayer = playerList[currentIndex]
+        if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
+            local startTime = tick()
+            local knife = Players.LocalPlayer.Backpack:FindFirstChild("Knife")
+            if knife then
+                knife.Parent = Players.LocalPlayer.Character
+            end
 
-            if game.Workspace[targetPlayer.Name] and game.Workspace[targetPlayer.Name]:FindFirstChild("HumanoidRootPart") then
-                local knife = Players.LocalPlayer.Backpack:FindFirstChild("Knife")
-                if knife then
-                    knife.Parent = Players.LocalPlayer.Character
-                end
-                knifePlayer = targetPlayer.Name
-                local targetPlayer = game.Workspace[targetPlayer.Name]
+            while tick() - startTime < 2 and targetPlayer:FindFirstChild("HumanoidRootPart") do
+                Kill(targetPlayer)
+            end
 
-                local startTime = tick()
-                while tick() - startTime < 3 do
-                    Kill(targetPlayer)
-                    task.wait(0.1)
-                end
+            currentIndex = currentIndex + 1
+            if currentIndex > #playerList then
+                currentIndex = 1
             end
         end
         task.wait(1)
     end
     getgenv().Altfarm = false
+    Workspace.Gravity = 200
 end
 
 mainGUI:GetPropertyChangedSignal("Visible"):Connect(function()
@@ -159,25 +159,18 @@ end)
 
 task.spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
-        if Players.LocalPlayer.Character then
-            for _, v in ipairs(Players.LocalPlayer.Character:GetDescendants()) do
-                if v:IsA("BasePart") and v.CanCollide then
-                    v.CanCollide = false
-                end
+        if Players.LocalPlayer.Character and (getgenv().Mainfarm or getgenv().Altfarm) and not cooldown then
+            local target = game.Workspace[knifePlayer]
+            if target and Players.LocalPlayer:DistanceFromCharacter(target.HumanoidRootPart.Position) <= 8 then
+                Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(target)
             end
-            if (getgenv().Mainfarm or getgenv().Altfarm) and not cooldown then
-                local target = game.Workspace[knifePlayer]
-                if target and Players.LocalPlayer:DistanceFromCharacter(target.HumanoidRootPart.Position) <= 8 then
-                    Players.LocalPlayer.PlayerScripts.localknifehandler.HitCheck:Fire(target)
-                end
-                coroutine.wrap(function()
-                    cooldown = true
-                    task.wait(0.75)
-                    cooldown = false
-                end)()
-            else
-                task.wait()
-            end
+            coroutine.wrap(function()
+                cooldown = true
+                task.wait(0.75)
+                cooldown = false
+            end)()
+        else
+            task.wait()
         end
     end)
 end)
