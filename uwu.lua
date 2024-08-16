@@ -81,8 +81,10 @@ local function Start()
     task.wait(0.5)
     while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
         game.Workspace.Gravity = 0
-        local meow = Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
-        meow.CFrame = rootPart.meow * CFrame.new(0, -5, 0)
+        local character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
+        local meow = character:WaitForChild("HumanoidRootPart")
+        meow.CFrame = meow.CFrame * CFrame.new(0, -5.5, 0)
+        wait(0.1)
         task.wait()
     end
 
@@ -124,8 +126,10 @@ local function AltStart()
     task.wait(0.5)
     while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
         game.Workspace.Gravity = 0
-        local meow = Players.LocalPlayer.Character:WaitForChild("HumanoidRootPart")
-        meow.CFrame = rootPart.meow * CFrame.new(0, -5, 0)
+        local character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
+        local meow = character:WaitForChild("HumanoidRootPart")
+        meow.CFrame = meow.CFrame * CFrame.new(0, -5.5, 0)
+        wait(0.1)
         task.wait()
     end
 
