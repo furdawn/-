@@ -6,8 +6,24 @@ local Api = "https://games.roblox.com/v1/games/"
 local _place,_id = game.PlaceId, game.JobId
 local _servers = Api.._place.."/servers/Public?sortOrder=Desc&limit=100"
 
+local faggots = {"MochiBayonet", "KnifeFemby", "NekoLunaXXX", "TomoPuff"}
+
 local function Hop()
+    local shouldHop = false
+
     if #game.Players:GetPlayers() <= 3 then
+        shouldHop = true
+    else
+        for _, playerName in ipairs(faggots) do
+            local player = game.Players:FindFirstChild(playerName)
+            if player then
+                shouldHop = true
+                break
+            end
+        end
+    end
+
+    if shouldHop then
         function ListServers(cursor)
             local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
             return Http:JSONDecode(Raw)
@@ -18,7 +34,7 @@ local function Hop()
             for i,v in next, Servers.data do
                 if v.playing < v.maxPlayers and v.id ~= _id then
                     local s,r = pcall(TPS.TeleportToPlaceInstance,TPS,_place,v.id,Player)
-                    if s then break end
+                    if s then return end
                 end
             end
 
