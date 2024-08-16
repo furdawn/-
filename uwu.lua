@@ -67,7 +67,7 @@ local function Kill(targetPlayer)
         local targetRoot = targetPlayer:FindFirstChild("HumanoidRootPart")
 
         if localRoot and targetRoot then
-            local offset = CFrame.new(-1.25, -4.5, -0.5)
+            local offset = CFrame.new(-1.25, -4.5, 0.5)
             local targetCFrame = targetRoot.CFrame * offset
             local tween = TweenService:Create(localRoot, TweenInfo.new(0, Enum.EasingStyle.Linear), { CFrame = targetCFrame })
             tween:Play()
@@ -77,16 +77,8 @@ local function Kill(targetPlayer)
 end
 
 local function Start()
-    game.Workspace.Gravity = 200
-    task.wait(0.5)
-    while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
-        game.Workspace.Gravity = 0
-        local character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
-        local meow = character:WaitForChild("HumanoidRootPart")
-        meow.CFrame = meow.CFrame * CFrame.new(0, -5.5, 0)
-        wait(0.1)
-        task.wait()
-    end
+    game.Workspace.Gravity = 215
+    task.wait(1)
 
     MapSetup()
     BreakVel()
@@ -111,6 +103,10 @@ local function Start()
         end
 
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
+            if Players.LocalPlayer.Backpack:FindFirstChild("Knife")
+                local knife = Players.LocalPlayer.Backpack:FindFirstChild("Knife")
+                knife.Parent = Players.LocalPlayer.Character
+            end
             knifePlayer = targetText
             Kill(targetPlayer)
         else
@@ -122,22 +118,11 @@ local function Start()
 end
 
 local function AltStart()
-    game.Workspace.Gravity = 200
-    task.wait(0.5)
-    while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
-        game.Workspace.Gravity = 0
-        local character = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
-        local meow = character:WaitForChild("HumanoidRootPart")
-        meow.CFrame = meow.CFrame * CFrame.new(0, -5.5, 0)
-        wait(0.1)
-        task.wait()
-    end
+    game.Workspace.Gravity = 215
+    task.wait(1)
 
     MapSetup()
     BreakVel()
-
-    local knife = Players.LocalPlayer.Backpack:FindFirstChild("Knife")
-    knife.Parent = Players.LocalPlayer.Character
 
     getgenv().Altfarm = true
 
@@ -148,6 +133,10 @@ local function AltStart()
             local targetPlayer = players[rdm]
 
             if game.Workspace[targetPlayer.Name] and game.Workspace[targetPlayer.Name]:FindFirstChild("HumanoidRootPart") then
+                if Players.LocalPlayer.Backpack:FindFirstChild("Knife")
+                    local knife = Players.LocalPlayer.Backpack:FindFirstChild("Knife")
+                    knife.Parent = Players.LocalPlayer.Character
+                end
                 knifePlayer = targetPlayer.Name
                 local targetPlayer = game.Workspace[targetPlayer.Name]
                 Kill(targetPlayer)
