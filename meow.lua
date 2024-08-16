@@ -111,9 +111,22 @@ local function Start()
     game.Workspace.Gravity = 200
 end
 
+local function AltStart()
+    while #Players.LocalPlayer.Backpack:GetChildren() == 0 do
+        task.wait()
+    end
+    Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Dead)
+end
+
 mainGUI:GetPropertyChangedSignal("Visible"):Connect(function()
     if mainGUI.Visible then
         Start()
+    end
+end)
+
+altGUI:GetPropertyChangedSignal("Text"):Connect(function()
+    if altGUI.Text == "Infection" or "Free For All" then
+        AltStart()
     end
 end)
 
