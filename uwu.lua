@@ -83,9 +83,6 @@ local function Start()
     MapSetup()
     BreakVel()
 
-    local knife = Players.LocalPlayer.Backpack:FindFirstChild("Knife")
-    knife.Parent = Players.LocalPlayer.Character
-
     local targetText = mainGUI.TargetText.Text
     local targetPlayer = game.Workspace:FindFirstChild(targetText)
 
