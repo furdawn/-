@@ -35,15 +35,17 @@ for _, v in ipairs(game:GetDescendants()) do
 end
 
 local function BreakVel()
-    Players.LocalPlayer.Character.Animate.Disabled = true
     for _, v in ipairs(Players.LocalPlayer.Character:GetDescendants()) do
         if v:IsA("BasePart") then
             v.Velocity = Vector3.new(0, 0, 0)
         end
     end
+    Players.LocalPlayer.Character.Animate.Disabled = true
 end
 
 local function MapSetup()
+    game.Workspace.Gravity = 215
+    task.wait(1.25)
     game.Workspace.Gravity = 0
     for _, v in ipairs(game.Workspace.GameMap:GetDescendants()) do
         if v and v:IsA("BasePart") then
@@ -77,9 +79,6 @@ local function Kill(targetPlayer)
 end
 
 local function Start()
-    game.Workspace.Gravity = 215
-    task.wait(1)
-
     MapSetup()
     BreakVel()
 
@@ -100,8 +99,8 @@ local function Start()
         end
 
         if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
-            if Players.LocalPlayer.Backpack:FindFirstChild("Knife")
-                local knife = Players.LocalPlayer.Backpack:FindFirstChild("Knife")
+            local knife = Players.LocalPlayer.Backpack:FindFirstChild("Knife")
+            if knife then
                 knife.Parent = Players.LocalPlayer.Character
             end
             knifePlayer = targetText
@@ -115,9 +114,6 @@ local function Start()
 end
 
 local function AltStart()
-    game.Workspace.Gravity = 215
-    task.wait(1)
-
     MapSetup()
     BreakVel()
 
@@ -130,8 +126,8 @@ local function AltStart()
             local targetPlayer = players[rdm]
 
             if game.Workspace[targetPlayer.Name] and game.Workspace[targetPlayer.Name]:FindFirstChild("HumanoidRootPart") then
-                if Players.LocalPlayer.Backpack:FindFirstChild("Knife")
-                    local knife = Players.LocalPlayer.Backpack:FindFirstChild("Knife")
+                local knife = Players.LocalPlayer.Backpack:FindFirstChild("Knife")
+                if knife then
                     knife.Parent = Players.LocalPlayer.Character
                 end
                 knifePlayer = targetPlayer.Name
@@ -159,9 +155,9 @@ end)
 task.spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
         if Players.LocalPlayer.Character then
-            for _, child in ipairs(Players.LocalPlayer.Character:GetDescendants()) do
-                if child:IsA("BasePart") and child.CanCollide then
-                    child.CanCollide = false
+            for _, v in ipairs(Players.LocalPlayer.Character:GetDescendants()) do
+                if v:IsA("BasePart") and v.CanCollide then
+                    v.CanCollide = false
                 end
             end
             if (getgenv().Mainfarm or getgenv().Altfarm) and not cooldown then
