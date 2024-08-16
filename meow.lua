@@ -1,6 +1,5 @@
 repeat task.wait() until game:IsLoaded()
 getgenv().Mainfarm = nil
-getgenv().Altfarm = nil
 
 local TweenService = game:GetService("TweenService")
 local VirtualUser = game:GetService("VirtualUser")
@@ -112,63 +111,15 @@ local function Start()
     game.Workspace.Gravity = 200
 end
 
-local function AltStart()
-    MapSetup()
-    BreakVel()
-
-    getgenv().Altfarm = true
-
-    while getgenv().Altfarm and (altGUI.Text == "Infection" or altGUI.Text == "Free For All") do
-        local playerList = Players:GetPlayers()
-        local currentIndex = 1
-
-        while getgenv().Altfarm and (altGUI.Text == "Infection" or altGUI.Text == "Free For All") do
-            local targetPlayer = playerList[currentIndex]
-            if targetPlayer and targetPlayer:FindFirstChild("HumanoidRootPart") then
-                local startTime = tick()
-
-                local knife = Players.LocalPlayer.Backpack:FindFirstChild("Knife")
-                if knife then
-                    knife.Parent = Players.LocalPlayer.Character
-                end
-
-                while tick() - startTime < 2 and getgenv().Altfarm and targetPlayer:FindFirstChild("HumanoidRootPart") do
-                    Kill(targetPlayer)
-                    task.wait()
-                end
-
-                currentIndex = currentIndex + 1
-                if currentIndex > #playerList then
-                    currentIndex = 1
-                end
-            else
-                currentIndex = currentIndex + 1
-                if currentIndex > #playerList then
-                    currentIndex = 1
-                end
-            end
-            task.wait()
-        end
-    end
-    getgenv().Altfarm = false
-    Workspace.Gravity = 200
-end
-
 mainGUI:GetPropertyChangedSignal("Visible"):Connect(function()
     if mainGUI.Visible then
         Start()
     end
 end)
 
-altGUI:GetPropertyChangedSignal("Text"):Connect(function()
-    if altGUI.Text == "Free For All" or altGUI.Text == "Infection" then
-        AltStart()
-    end
-end)
-
 task.spawn(function()
     game:GetService("RunService").Stepped:Connect(function()
-        if Players.LocalPlayer.Character and (getgenv().Mainfarm or getgenv().Altfarm) and not cooldown then
+        if Players.LocalPlayer.Character and getgenv().Mainfarm and not cooldown then
             local target = game.Workspace:FindFirstChild(knifePlayer)
             if target and target:FindFirstChild("HumanoidRootPart") then
                 if Players.LocalPlayer:DistanceFromCharacter(target.HumanoidRootPart.Position) <= 8 then
