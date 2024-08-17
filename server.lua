@@ -43,6 +43,6 @@ local function Checker()
 end
 
 while true do
-    Hop()
+    Checker()
     task.wait(5400)
 end
