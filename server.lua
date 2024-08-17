@@ -9,37 +9,36 @@ local _servers = Api.._place.."/servers/Public?sortOrder=Desc&limit=100"
 local faggots = {"MochiBayonet", "KnifeFemby", "NekoLunaXXX", "TomoPuff"}
 
 local function Hop()
-    local shouldHop = false
-
-    if #game.Players:GetPlayers() <= 3 then
-        shouldHop = true
-    else
-        for _, playerName in ipairs(faggots) do
-            local player = game.Players:FindFirstChild(playerName)
-            if player then
-                shouldHop = true
-                break
-            end
-        end
+    function ListServers(cursor)
+        local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
+        return Http:JSONDecode(Raw)
     end
 
-    if shouldHop == true then
-        function ListServers(cursor)
-            local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
-            return Http:JSONDecode(Raw)
+    local Next; repeat
+        local Servers = ListServers(Next)
+        for i,v in next, Servers.data do
+            if v.playing < v.maxPlayers and v.id ~= _id then
+                local s,r = pcall(TPS.TeleportToPlaceInstance,TPS,_place,v.id,Player)
+                if s then return end
+            end
         end
 
-        local Next; repeat
-            local Servers = ListServers(Next)
-            for i,v in next, Servers.data do
-                if v.playing < v.maxPlayers and v.id ~= _id then
-                    local s,r = pcall(TPS.TeleportToPlaceInstance,TPS,_place,v.id,Player)
-                    if s then return end
-                end
+        Next = Servers.nextPageCursor
+    until not Next
+end
+local function Checker()
+    local meow = #Players:GetPlayers()
+    if meow <= 3 then
+        Hop()
+        return
+    end
+    for _, player in pairs(Players:GetPlayers()) do
+        for _, v in pairs(faggots) do
+            if player.Name == v then
+                Hop()
+                return
             end
-
-            Next = Servers.nextPageCursor
-        until not Next
+        end
     end
 end
 
