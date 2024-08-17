@@ -124,7 +124,7 @@ mainGUI:GetPropertyChangedSignal("Visible"):Connect(function()
 end)
 
 altGUI:GetPropertyChangedSignal("Text"):Connect(function()
-    if altGUI.Text == "Infection" or "Free For All" then
+    if altGUI.Text == "Infection" or altGUI.Text == "Free For All" or altGUI.Text == "Juggernaut" then
         AltStart()
     end
 end)
