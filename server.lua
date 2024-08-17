@@ -44,5 +44,5 @@ end
 
 while true do
     Checker()
-    task.wait(5400)
+    task.wait(3200)
 end
