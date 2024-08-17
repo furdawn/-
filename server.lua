@@ -23,7 +23,7 @@ local function Hop()
         end
     end
 
-    if shouldHop then
+    if shouldHop == true then
         function ListServers(cursor)
             local Raw = game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
             return Http:JSONDecode(Raw)
