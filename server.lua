@@ -6,7 +6,7 @@ local Api = "https://games.roblox.com/v1/games/"
 local _place,_id = game.PlaceId, game.JobId
 local _servers = Api.._place.."/servers/Public?sortOrder=Desc&limit=100"
 
-local faggots = {"MochiBayonet", "KnifeFemby", "NekoLunaXXX", "TomoPuff"}
+local faggots = {"MochiBayonet", "KnifeFemby", "NekoLunaXXX", "TomoPuff", "cuffedpaws", "koi_ish"}
 
 local function Hop()
     function ListServers(cursor)
